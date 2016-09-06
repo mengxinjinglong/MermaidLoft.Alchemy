@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8921B3AD-5166-4383-BDEA-DF9CB1837436}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9274B72F-77E6-453E-A4D8-EDF60FA718E0}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MermaidLoft.Alchemy.QuickWeb", "src\MermaidLoft.Alchemy.QuickWeb\MermaidLoft.Alchemy.QuickWeb.xproj", "{E1663A6F-2859-4C98-BB26-5D17CE14748C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1663A6F-2859-4C98-BB26-5D17CE14748C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1663A6F-2859-4C98-BB26-5D17CE14748C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1663A6F-2859-4C98-BB26-5D17CE14748C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1663A6F-2859-4C98-BB26-5D17CE14748C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E1663A6F-2859-4C98-BB26-5D17CE14748C} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
+	EndGlobalSection
+EndGlobal

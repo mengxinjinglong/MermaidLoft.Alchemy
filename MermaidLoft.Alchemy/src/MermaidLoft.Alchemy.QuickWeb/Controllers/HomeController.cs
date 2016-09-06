@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Dapper;
 
 namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
@@ -31,5 +30,33 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             return View();
         }
+
+        public object Mysql()
+        {
+            try
+            {
+                ConnectionConfig.Instance.SetConnectString("server=127.0.0.1;database=Alchemy;uid=root;pwd=123456;");
+                using (IDbConnection connection = ConnectionConfig.Instance.GetConnection())
+                {
+                    connection.Open();
+                    //connection.Insert(new User {Id=Guid.NewGuid().ToString(),Account = "Mercurial",PasswordContent = "123567",UserName = "墨丘利",Version = 0}, "User");
+                    return connection.QueryList<User>(null,"User");
+                }
+            }
+            catch (Exception exception)
+            {
+                return exception;
+            }
+        }
+    }
+
+
+    public class User
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Account { get; set; }
+        public string PasswordContent { get; set; }
+        public int Version { get; set; }
     }
 }

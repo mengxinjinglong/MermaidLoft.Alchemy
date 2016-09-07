@@ -2,10 +2,9 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Dapper": "1.50.2",
+    "Autofac": "4.1.0",
     "Infrastructure": "1.0.0-*",
-    "NETStandard.Library": "1.6.0",
-    "SapientGuardian.MySql.Data": "6.9.813"
+    "NETStandard.Library": "1.6.0"
   },
 
   "frameworks": {

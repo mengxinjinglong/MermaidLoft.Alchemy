@@ -9548,8 +9548,8 @@ jQuery.offset = {
 			props.left = ( options.left - curOffset.left ) + curLeft;
 		}
 
-		if ( "using" in options ) {
-			options.using.call( elem, props );
+		if ( "Infrastructure" in options ) {
+			options.Infrastructure.call( elem, props );
 
 		} else {
 			curElem.css( props );

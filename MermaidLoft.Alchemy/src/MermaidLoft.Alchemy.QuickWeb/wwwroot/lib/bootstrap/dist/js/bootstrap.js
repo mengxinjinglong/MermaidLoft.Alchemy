@@ -1513,7 +1513,7 @@ if (typeof jQuery === 'undefined') {
     // $.fn.offset doesn't round pixel values
     // so we use setOffset directly with our own function B-0
     $.offset.setOffset($tip[0], $.extend({
-      using: function (props) {
+      Infrastructure: function (props) {
         $tip.css({
           top: Math.round(props.top),
           left: Math.round(props.left)

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MermaidLoft.Alchemy.Common;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -20,6 +21,8 @@ namespace MermaidLoft.Alchemy.QuickWeb
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+            //初始化配置信息
+            ConfigSettings.Initialize();
         }
 
         public IConfigurationRoot Configuration { get; }

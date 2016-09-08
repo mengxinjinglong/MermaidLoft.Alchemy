@@ -21,7 +21,13 @@
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Infrastructure.Dapper": "1.0.0-*",
-    "Infrastructure": "1.0.0-*"  },
+    "Infrastructure": "1.0.0-*",
+    "Infrastructure.JsonNet": "1.0.0-*",
+    "Infrastructure.Autofac": "1.0.0-*",
+    "Infrastructure.NLog": "1.0.0-*",
+    "Infrastructure.SeriLog": "1.0.0-*",
+    "MermaidLoft.Alchemy.BaseDomain": "1.0.0-*",
+    "MermaidLoft.Alchemy.Common": "1.0.0-*"  },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

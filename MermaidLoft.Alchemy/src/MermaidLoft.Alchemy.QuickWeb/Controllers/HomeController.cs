@@ -2,6 +2,7 @@
 using System.Data;
 using Microsoft.AspNetCore.Mvc;
 using Infrastructure.Dapper;
+using MermaidLoft.Alchemy.BaseDomain.UserDomain;
 
 namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
@@ -48,15 +49,5 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 return exception;
             }
         }
-    }
-
-
-    public class User
-    {
-        public string Id { get; set; }
-        public string UserName { get; set; }
-        public string Account { get; set; }
-        public string PasswordContent { get; set; }
-        public int Version { get; set; }
     }
 }

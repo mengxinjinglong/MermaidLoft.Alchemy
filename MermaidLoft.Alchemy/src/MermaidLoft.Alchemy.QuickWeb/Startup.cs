@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MermaidLoft.Alchemy.Common;
+using Infrastructure.Dapper;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -22,6 +23,7 @@ namespace MermaidLoft.Alchemy.QuickWeb
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
             //初始化配置信息
+            ConnectionConfig.Instance.SetConnectString("server=127.0.0.1;database=Alchemy;uid=root;pwd=123456;");
             ConfigSettings.Initialize();
         }
 

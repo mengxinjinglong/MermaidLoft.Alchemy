@@ -293,7 +293,7 @@ namespace Infrastructure.Dapper
         /// <param name="commandTimeout"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IEnumerable<T> QueryPaged<T>(this IDbConnection connection, dynamic condition, string table, string orderBy, int pageIndex, int pageSize, string columns = "*", bool isOr = false, IDbTransaction transaction = null, int? commandTimeout = null)
+        public static IEnumerable<T> QueryPaged<T>(this IDbConnection connection, object condition, string table, string orderBy, int pageIndex, int pageSize, string columns = "*", bool isOr = false, IDbTransaction transaction = null, int? commandTimeout = null)
         {
             var conditionObj = condition as object;
             var whereFields = string.Empty;
@@ -303,9 +303,13 @@ namespace Infrastructure.Dapper
                 var separator = isOr ? " OR " : " AND ";
                 whereFields = " WHERE " + string.Join(separator, properties.Select(p => p + " = @" + p));
             }
-            var sql = string.Format("SELECT {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {1}) AS RowNumber, {0} FROM {2}{3}) AS Total WHERE RowNumber >= {4} AND RowNumber <= {5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
-
-            return connection.Query<T>(sql, conditionObj, transaction, true, commandTimeout);
+            if (columns == "*")
+            {
+                columns = string.Format("{0}.{1}",table,columns);
+            }
+            var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
+            
+            return connection.Query<T>(sql, condition, transaction, true, commandTimeout);
         }
         /// <summary>Query paged data async from a single table.
         /// </summary>
@@ -330,7 +334,11 @@ namespace Infrastructure.Dapper
                 var separator = isOr ? " OR " : " AND ";
                 whereFields = " WHERE " + string.Join(separator, properties.Select(p => p + " = @" + p));
             }
-            var sql = string.Format("SELECT {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {1}) AS RowNumber, {0} FROM {2}{3}) AS Total WHERE RowNumber >= {4} AND RowNumber <= {5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
+            if (columns == "*")
+            {
+                columns = string.Format("{0}.{1}", table, columns);
+            }
+            var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
 
             return connection.QueryAsync<T>(sql, conditionObj, transaction, commandTimeout);
         }

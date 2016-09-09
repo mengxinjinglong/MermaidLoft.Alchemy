@@ -22,5 +22,13 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
                 return connection.QueryList<UserDto>(new { UserName = userName }, ConfigSettings.UserTable);
             }
         }
+
+        public IEnumerable<User> FindUsersForPage(string userName,int pageIndex, int pageSize)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                return connection.QueryPaged<User>(new { UserName = userName }, ConfigSettings.UserTable,"UserName",pageIndex,pageSize);
+            }
+        }
     }
 }

@@ -36,13 +36,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             try
             {
-                ConnectionConfig.Instance.SetConnectString("server=127.0.0.1;database=Alchemy;uid=root;pwd=123456;");
-                using (IDbConnection connection = ConnectionConfig.Instance.GetConnection())
-                {
-                    connection.Open();
-                    //connection.Insert(new User {Id=Guid.NewGuid().ToString(),Account = "Mercurial",PasswordContent = "123567",UserName = "墨丘利",Version = 0}, "User");
-                    return connection.QueryList<User>(null,"User");
-                }
+                //new UserService().Add(new User { Id=Guid.NewGuid().ToString(),UserName="美人鱼",PasswordContent="123qwe",Account= "Mermaid", Version=0});
+                return new UserQueryService().FindUsersForPage("美人鱼",1,10);
             }
             catch (Exception exception)
             {

@@ -301,14 +301,14 @@ namespace Infrastructure.Dapper
             if (properties.Count > 0)
             {
                 var separator = isOr ? " OR " : " AND ";
-                whereFields = " WHERE " + string.Join(separator, properties.Select(p => p + " = @" + p));
+                whereFields = " WHERE " + string.Join(separator, properties.Select(p => p + " like @" + p));
             }
             if (columns == "*")
             {
                 columns = string.Format("{0}.{1}",table,columns);
             }
-            var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
-            
+            //var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
+            var sql = string.Format("SELECT {0} FROM {2}{3} ORDER BY {1} limit {4},{5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize, pageSize);
             return connection.Query<T>(sql, condition, transaction, true, commandTimeout);
         }
         /// <summary>Query paged data async from a single table.
@@ -332,14 +332,14 @@ namespace Infrastructure.Dapper
             if (properties.Count > 0)
             {
                 var separator = isOr ? " OR " : " AND ";
-                whereFields = " WHERE " + string.Join(separator, properties.Select(p => p + " = @" + p));
+                whereFields = " WHERE " + string.Join(separator, properties.Select(p => p + " like @" + p));
             }
             if (columns == "*")
             {
                 columns = string.Format("{0}.{1}", table, columns);
             }
-            var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
-
+            //var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
+            var sql = string.Format("SELECT {0} FROM {2}{3} ORDER BY {1} limit {4},{5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize, pageSize);
             return connection.QueryAsync<T>(sql, conditionObj, transaction, commandTimeout);
         }
 

@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.Common;
-using System.Data;
 
 namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
 {

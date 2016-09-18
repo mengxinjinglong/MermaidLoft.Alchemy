@@ -2,108 +2,382 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+<div ng-app="alchemyApp" ng-controller="imageShowController">
+    <div class="search-result-wrap search-result-wrap-block clearfix" p-id="732">
+        <div class="block-search-box tag-wrap" p-id="733" ng-repeat="item in productItems">
+            <div class="pic-box" p-id="734">
+                <a class="search-box-img img-loaded" href="{{item.auctionUrl}}" target="_blank" goldclick="true"
+                   p-id="735"><span class="empty-icon-bg" p-id="736"></span><img src="{{item.pictUrl}}" p-id="737"></a>
             </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+            <div class="box-content" _ie_fix_="" mx-mouseenter="showContent()" mx-mouseleave="hideContent()" p-id="738">
+                <div class="content-line" p-id="739">
+                    <a class="color-m content-title" href="{{item.auctionUrl}}" target="_blank" title="{{item.title}}"
+                       goldclick="true" data-spm-click="gostr=/alimama.11;locaid=d5d3d3cdd;itemid=526404708154&amp;pvid=10_61.153.225.150_441_1474180557628&amp;actionid=1000"
+                       p-id="740" data-spm-anchor-id="a219t.7900221/10.1998910419.116"><span p-id="742">{{item.title}}</span></a>
+                </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="http://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=699562">Add an appsetting in config and access it in app.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699318">Add client packages using Bower.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run & Deploy</h2>
-        <ul>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="http://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
+            </div>
+            <div class="box-shop-info dxjh-guide-show" p-id="797">
+                <span class="shop-title" _ie_fix_="" mx-mouseenter="showShopInfo(938198529,1)" mx-mouseleave="hideShopInfo(938198529)"
+                      p-id="798">
+                    <span class="shop-hd" p-id="799">
+                        <span class="pubfont icon-dianpu shop-icon" p-id="800"></span>
+                        <a vclick-ignore="true" title="点击进入店铺推广详情页" href="/myunion.htm?#!/promo/self/shop_detail?userNumberId=938198529" data-spm-click="gostr=/alimama.11;locaid=dab027959"
+                           target="_blank" p-id="801" data-spm-anchor-id="a219t.7900221/10.1998910419.117"><span p-id="803">{{item.shopTitle}}</span></a>
+                    </span>
+                    <div class="shop-bd" mx-vframe="true" p-id="804" id="mx_n_22"></div>
+                </span><span class="tags-container fr" p-id="805"><!--deleted-806--><span class="tag tag-tmall mr10" title="天猫店铺" p-id="807"></span></span>
+            </div>
+        </div>
+        <script src="~/js/angular.min.js" asp-append-version="true"></script>
+        <script>
+var app = angular.module('alchemyApp', []);
+app.controller('imageShowController', function($scope,$http) {
+    $scope.content = "can you see me?";
+    $scope.productItems =[{
+tkSpecialCampaignIdRateMap: null,
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 938198529,
+userType: 1,
+auctionId: 526404708154,
+shopTitle: "埃伦旗舰店",
+biz30day: 3157,
+tkRate: 18.5,
+nick: "埃伦旗舰店",
+pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/TB1sBV_LXXXXXb0XVXXXXXXXXXX_!!0-item_pic.jpg",
+title: "埃伦2016秋装新款印花蕾丝连衣裙欧美时尚圆领修身开叉系带连衣裙",
+includeDxjh: 0,
+reservePrice: 298,
+tkCommFee: 55.13,
+totalFee: 33405.9,
+totalNum: 1182,
+zkPrice: 298,
+auctionUrl: "http://item.taobao.com/item.htm?id=526404708154",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 0,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-836788765",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 44960738,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 800308693,
+userType: 1,
+auctionId: 534764084703,
+shopTitle: "fxmongyi旗舰店",
+biz30day: 92,
+tkRate: 12.5,
+nick: "fxmongyi旗舰店",
+pictUrl: "http://img03.taobaocdn.com/bao/uploaded/i3/TB16nbvKFXXXXcmaXXXXXXXXXXX_!!0-item_pic.jpg",
+title: "菲梦伊2016夏季新款个性潮印花连衣裙修身中长款包臀气质<span class=H>女装</span>8096",
+includeDxjh: 1,
+reservePrice: 455,
+tkCommFee: 39.75,
+totalFee: 4522.72,
+totalNum: 136,
+zkPrice: 318,
+auctionUrl: "http://item.taobao.com/item.htm?id=534764084703",
+dayLeft: 35,
+tk3rdRate: null,
+rlRate: 30.1,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1506654617",
+eventRate: 16.5,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 204150836,
+userType: 0,
+auctionId: 534887494807,
+shopTitle: "OPENLADY女侠店",
+biz30day: 95,
+tkRate: 15,
+nick: "open_女侠",
+pictUrl: "http://img01.taobaocdn.com/bao/uploaded/i1/204150836/TB2hIpEsFXXXXcaXpXXXXXXXXXX_!!204150836.jpg",
+title: "openlady韩版高腰开叉V领系带收腰纯色短袖连衣裙短裙子夏季<span class=H>女装</span>",
+includeDxjh: 1,
+reservePrice: 188,
+tkCommFee: 28.2,
+totalFee: 1161.46,
+totalNum: 35,
+zkPrice: 188,
+auctionUrl: "http://item.taobao.com/item.htm?id=534887494807",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 0,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1506469858",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 34069475,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 2069568072,
+userType: 1,
+auctionId: 536700178794,
+shopTitle: "衣舒阁旗舰店",
+biz30day: 5741,
+tkRate: 18.5,
+nick: "衣舒阁旗舰店",
+pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/TB1R_sRLXXXXXXeXpXXXXXXXXXX_!!0-item_pic.jpg",
+title: "<span class=H>女装</span>秋装2016新款潮初秋季韩版名媛中袖a型针织连衣裙秋款 中长款",
+includeDxjh: 1,
+reservePrice: 258,
+tkCommFee: 31.08,
+totalFee: 14883.1,
+totalNum: 356,
+zkPrice: 168,
+auctionUrl: "http://item.taobao.com/item.htm?id=536700178794",
+dayLeft: 27,
+tk3rdRate: null,
+rlRate: 34.88,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1761500537",
+eventRate: 25.5,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 123216004,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 898571545,
+userType: 1,
+auctionId: 537220773676,
+shopTitle: "海青蓝旗舰店",
+biz30day: 1773,
+tkRate: 12.5,
+nick: "海青蓝旗舰店",
+pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/TB1vyWrMVXXXXbsXpXXXXXXXXXX_!!0-item_pic.jpg",
+title: "海青蓝2016秋装新款纯色修身连衣裙两件套西装外套时尚套装女6201",
+includeDxjh: 1,
+reservePrice: 830,
+tkCommFee: 62.25,
+totalFee: 4989.28,
+totalNum: 104,
+zkPrice: 498,
+auctionUrl: "http://item.taobao.com/item.htm?id=537220773676",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 40,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1391894668",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 204150836,
+userType: 0,
+auctionId: 534958216799,
+shopTitle: "OPENLADY女侠店",
+biz30day: 80,
+tkRate: 15,
+nick: "open_女侠",
+pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/204150836/TB2aL1YtVXXXXX9XXXXXXXXXXXX_!!204150836.jpg",
+title: "openlady宽松高腰显瘦交叉网格无袖背心连衣裙中裙子<span class=H>女装</span>夏季黑色",
+includeDxjh: 1,
+reservePrice: 199,
+tkCommFee: 29.85,
+totalFee: 1242.38,
+totalNum: 45,
+zkPrice: 199,
+auctionUrl: "http://item.taobao.com/item.htm?id=534958216799",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 0,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1424737097",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 2202422863,
+userType: 0,
+auctionId: 537240017388,
+shopTitle: "猫猫原创女装",
+biz30day: 8010,
+tkRate: 25,
+nick: "猫猫女装998",
+pictUrl: "http://image.taobao.com/bao/uploaded/i8/TB19L6eLpXXXXa3XVXXYXGcGpXX_M2.SS2",
+title: "2016新款<span class=H>女装</span>秋装韩版中长款套装连衣裙女大码长袖裙名媛气质长裙",
+includeDxjh: 1,
+reservePrice: 588,
+tkCommFee: 49.5,
+totalFee: 0,
+totalNum: 0,
+zkPrice: 198,
+auctionUrl: "http://item.taobao.com/item.htm?id=537240017388",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 66.32,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1307543021",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 471594703,
+userType: 0,
+auctionId: 534312114273,
+shopTitle: "bob定制高端女装",
+biz30day: 79,
+tkRate: 15,
+nick: "桐杭之恋",
+pictUrl: "http://img01.taobaocdn.com/bao/uploaded/i1/471594703/TB2ks0JtXXXXXclXpXXXXXXXXXX_!!471594703.jpg",
+title: "<span class=H>女装</span>夏装2016新款潮韩版短袖蕾丝连衣裙女夏季中长款修身雪纺裙子",
+includeDxjh: 1,
+reservePrice: 599,
+tkCommFee: 25.2,
+totalFee: 1663.98,
+totalNum: 77,
+zkPrice: 168,
+auctionUrl: "http://item.taobao.com/item.htm?id=534312114273",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 71.95,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-551932114",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 50010850,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 204150836,
+userType: 0,
+auctionId: 535283239698,
+shopTitle: "OPENLADY女侠店",
+biz30day: 74,
+tkRate: 15,
+nick: "open_女侠",
+pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/204150836/TB2qaabsFXXXXb2XXXXXXXXXXXX_!!204150836.jpg",
+title: "openlady韩版高腰宽松假两件露背露肩拼色吊带连衣裙中裙子<span class=H>女装</span>夏",
+includeDxjh: 1,
+reservePrice: 158,
+tkCommFee: 23.7,
+totalFee: 408.38,
+totalNum: 22,
+zkPrice: 158,
+auctionUrl: "http://item.taobao.com/item.htm?id=535283239698",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 0,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-1153482920",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+},
+{
+tkSpecialCampaignIdRateMap: null,
+rootCatId: 0,
+eventCreatorId: 0,
+leafCatId: 123216004,
+debugInfo: null,
+rootCatScore: 0,
+sellerId: 2844470210,
+userType: 0,
+auctionId: 534586713058,
+shopTitle: "右炫官方企业店",
+biz30day: 1295,
+tkRate: 15,
+nick: "youxuan右炫",
+pictUrl: "http://img02.taobaocdn.com/bao/uploaded/i2/2844470210/TB2PZAlrVXXXXayXpXXXXXXXXXX_!!2844470210.jpg",
+title: "2016夏新款职业装刘亦菲同款小西服套装女时尚气质<span class=H>女装</span>西装两件套",
+includeDxjh: 0,
+reservePrice: 609,
+tkCommFee: 49.35,
+totalFee: 598.86,
+totalNum: 31,
+zkPrice: 329,
+auctionUrl: "http://item.taobao.com/item.htm?id=534586713058",
+dayLeft: -17062,
+tk3rdRate: null,
+rlRate: 45.97,
+hasRecommended: 0,
+hasSame: 0,
+sameItemPid: "-519247560",
+eventRate: null,
+hasUmpBonus: null,
+isBizActivity: null,
+umpBonus: null
+}];
+
+    //$http.get("data.json")
+    //.success(function(response) {
+
+        //console.log(response);
+        //console.log(response.data.pageList);//[data/pageList]
+        //$scope.productItems = response.data.pageList;
+    //}).error(function(data,state){
+    //    console.log(data);
+    //    console.log(state);
+    //});
+});
+        </script>
     </div>
 </div>

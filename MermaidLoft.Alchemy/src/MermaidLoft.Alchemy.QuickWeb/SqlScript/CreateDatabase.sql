@@ -33,3 +33,7 @@ create table Product
   Version int default 0,
   PRIMARY KEY (Id)
 );
+
+2016-09-18:
+alter table User add column ShopTitle varchar(255);
+alter table Product add column ShopTitle varchar(255);

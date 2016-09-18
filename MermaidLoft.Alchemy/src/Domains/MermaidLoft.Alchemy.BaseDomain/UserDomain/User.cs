@@ -11,6 +11,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string ShopUserNameId { get; set; }
+        public string ShopTitle { get; set; }
         public EnumUserType UserType { get; set; }
         public EnumUserStatus Status { get; set; }
         public DateTime AddTime { get; set; }

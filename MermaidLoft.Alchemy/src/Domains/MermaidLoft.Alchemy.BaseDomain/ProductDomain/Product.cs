@@ -11,6 +11,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain
         public double DiscountPrice { get; set; }
         public string PictureUrl { get; set; }
         public string UserId { get; set; }
+        public string ShopTitle { get; set; }
         public DateTime AddTime { get; set; }
         public int Version { get; set; }
     }

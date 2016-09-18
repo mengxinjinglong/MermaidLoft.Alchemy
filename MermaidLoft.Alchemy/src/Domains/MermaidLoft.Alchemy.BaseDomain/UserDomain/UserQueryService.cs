@@ -7,11 +7,11 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
 {
     public class UserQueryService
     {
-        public User FindUser(string userId)
+        public User FindUser(object condition)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryList<User>(new { Id=userId}, ConfigSettings.UserTable).SingleOrDefault();
+                return connection.QueryList<User>(condition, ConfigSettings.UserTable).SingleOrDefault();
             }
         }
 

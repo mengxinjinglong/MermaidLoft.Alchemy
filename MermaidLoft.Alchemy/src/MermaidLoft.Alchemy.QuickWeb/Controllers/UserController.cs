@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MermaidLoft.Alchemy.BaseDomain.UserDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
+using Infrastructure.Utilities;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,6 +32,11 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             return View();
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
         #endregion
 
         #region WebApi
@@ -41,26 +47,74 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             var user = _queryService.FindUser(new {UserName=userName });
             if (user != null)
             {
-                
+                if (user.PasswordContent == SecurityCodeUtil.Md5(secureCode))
+                {
+                    return new ResultMessage
+                    {
+                        Success = true,
+                        Status = EnumStatus.Success,
+                        Data = user,
+                    };
+                }
             }
             return new ResultMessage {
+                Success = false,
                 Status = EnumStatus.Failure,
-                Message = "登陆失败，请确认账号和密码是否正确。" };
+                Message = "登陆失败，请确认账号或密码是否正确。" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public User Get(string id)
+        public ResultMessage Get(string id)
         {
-            return  _queryService.FindUser(new { Id = id });
-            
+            try
+            {
+                return new ResultMessage
+                {
+                    Success = true,
+                    Status = EnumStatus.Success,
+                    Data = _queryService.FindUser(new { Id = id })
+                };
+            }
+            catch(Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
         }
 
         // POST api/values
         [HttpPost]
-        public void Post(User user)
+        public ResultMessage Post(User user)
         {
-
+            try
+            {
+                user.Id = Guid.NewGuid().ToString();
+                user.AddTime = DateTime.Now;
+                user.LastLoginTime = DateTime.Now;
+                user.Status = EnumUserStatus.Normal;
+                user.UserType = EnumUserType.Normal;
+                user.Version = 0;
+                var result = _service.Add(user);
+                return new ResultMessage
+                {
+                    Success = result,
+                    Status = result?EnumStatus.Success:EnumStatus.Failure,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
         }
 
         // PUT api/values/5

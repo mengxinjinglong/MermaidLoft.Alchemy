@@ -9,19 +9,19 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
         {
         }
 
-        public void Add(User user)
+        public bool Add(User user)
         {
             using (var connection =ConnectionConfig.Instance.GetConnection())
             {
-                connection.Insert(user,ConfigSettings.UserTable);
+                return connection.Insert(user,ConfigSettings.UserTable)>0;
             }
         }
 
-        public void Update(User user)
+        public bool Update(User user)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                connection.Update(user, new { Id=user.Id },ConfigSettings.UserTable);
+                return connection.Update(user, new { Id=user.Id },ConfigSettings.UserTable)>0;
             }
         }
     }

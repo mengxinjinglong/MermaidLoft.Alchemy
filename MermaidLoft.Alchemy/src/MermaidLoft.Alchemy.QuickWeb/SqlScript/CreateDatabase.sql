@@ -37,3 +37,6 @@ create table Product
 2016-09-18:
 alter table User add column ShopTitle varchar(255);
 alter table Product add column ShopTitle varchar(255);
+
+2016-09-20:
+alter table User change PasswordContent SecureCode varchar(255);

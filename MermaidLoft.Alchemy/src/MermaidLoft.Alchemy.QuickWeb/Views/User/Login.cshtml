@@ -9,14 +9,14 @@
         <span class="form-title">欢迎使用，</span>
         <span class="form-subtitle">请登陆.</span>
     </div>
-    <div class="alert alert-danger display-hide" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+    <div class="alert alert-danger display-hide" ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
         <button class="close" data-close="alert"></button>
         <span> Enter any username and password. </span>
     </div>
     <div class="form-group">
         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
         <label class="control-label visible-ie8 visible-ie9">用户账号</label>
-        <input ng-model="user.userName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" name="username" />
+        <input ng-model="user.account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" name="account" />
     </div>
     <div class="form-group">
         <label class="control-label visible-ie8 visible-ie9">登录密码</label>
@@ -28,24 +28,30 @@
 </form>
 <!-- END LOGIN FORM -->
 
+<script src="~/js/angular.min.js" asp-append-version="true"></script>
 <script>
 		var app = angular.module('LoginApp', []);
 		app.controller('userCtrl', function($scope,$http) {
-			$scope.login = function()
-			{
-				console.log($scope.user);
-				$http.post('User/Login',$scope.user).success(function(response){
+		    $scope.login = function()
+		    {
+		        console.log($scope.user);
+		        $http({method: "post",
+		            data: $scope.user,//Form Data = {"id":1,"value":"hello"}
+		        url: "/user/LoginOn"
+		        })
+		        //$http.post('/user/LoginOn', $scope.user)
+                    .success(function (response) {
 				    console.log(response);
-				    if (response.status == 'success')
+				    if (response.status == 0)
 					{
-							//window.location.href = 'index';
+				        alert('登陆成功');
+				        //window.location.href = 'index';
 						}else{
 							alert(response.message);
 						}
-					console.log(response);
 				}).error(function(response){
 					console.log('ERROR:'+response);
-					alert(response.message);
+					alert(response);
 				});
 			}
 		});

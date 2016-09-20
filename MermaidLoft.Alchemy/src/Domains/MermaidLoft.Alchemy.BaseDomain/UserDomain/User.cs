@@ -7,7 +7,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
         public string Id { get; set; }
         public string UserName { get; set; }
         public string Account { get; set; }
-        public string PasswordContent { get; set; }
+        public string SecureCode { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string ShopUserNameId { get; set; }

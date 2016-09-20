@@ -7,8 +7,7 @@
 <!-- BEGIN Register FORM -->
 <form class="login-form" ng-app="registerApp" ng-controller="userRegisterCtrl">
     <div class="form-title">
-        <span class="form-title">欢迎使用，</span>
-        <span class="form-subtitle">请登陆.</span>
+        <span class="form-title">注册用户</span>
     </div>
     @*ng-show="loginForm.Username.$dirty && loginForm.Username.$invalid"*@
     <div class="alert alert-danger display-hide" >
@@ -65,9 +64,8 @@
 		    $scope.register = function ()
 			{
 			    console.log($scope.user);
-		        $http.post('/User/Post', $scope.user).success(function (response) {
-				    console.log(response);
-				    if (response.status == 'success')
+		        $http.post('/user/post', $scope.user).success(function (response) {
+				    if (response.status == 0)
 				    {
 				        alter(response);
 							//window.location.href = 'index';

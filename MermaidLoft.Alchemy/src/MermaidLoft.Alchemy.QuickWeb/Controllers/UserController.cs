@@ -39,15 +39,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
         #endregion
 
-        #region WebApi
-        // GET: api/values
+        #region Api
         [HttpPost]
-        public ResultMessage LoginOn(string userName,string secureCode)
+        public ResultMessage LoginOn([FromBody]User u)
         {
-            var user = _queryService.FindUser(new {UserName=userName });
+            var user = _queryService.FindUser(new {Account= u.Account });
             if (user != null)
             {
-                if (user.PasswordContent == SecurityCodeUtil.Md5(secureCode))
+                if (user.SecureCode == SecurityCodeUtil.Md5(u   .SecureCode))
                 {
                     return new ResultMessage
                     {
@@ -63,8 +62,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 Message = "登陆失败，请确认账号或密码是否正确。" };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet]
         public ResultMessage Get(string id)
         {
             try
@@ -86,14 +84,37 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 };
             }
         }
-
-        // POST api/values
-        [HttpPost]
-        public ResultMessage Post(User user)
+        [HttpGet]
+        public ResultMessage GetPage(string userName,string account,int pageIndex, int pageSize)
         {
             try
             {
+                return new ResultMessage
+                {
+                    Success = true,
+                    Status = EnumStatus.Success,
+                    Data = _queryService.FindUsersForPage(userName,pageIndex,pageSize)
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
+        }
+
+        [HttpPost]
+        public ResultMessage Post([FromBody]User user)
+        {
+            //没有添加[FromBody]，无法获取到user内容，user值为默认值 as user = new User();
+            try
+            {
                 user.Id = Guid.NewGuid().ToString();
+                user.SecureCode = SecurityCodeUtil.Md5(user.SecureCode);
                 user.AddTime = DateTime.Now;
                 user.LastLoginTime = DateTime.Now;
                 user.Status = EnumUserStatus.Normal;
@@ -118,14 +139,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(User user)
+        [HttpPut]
+        public void Put([FromBody]User user)
         {
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete()]
+        public void Delete(string id)
         {
         }
         #endregion

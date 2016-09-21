@@ -9,6 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MermaidLoft.Alchemy.Common;
 using Infrastructure.Dapper;
+using System.Net.Http;
+using HtmlAgilityPack;
+using System.Text;
+using System.Net;
+using System.Threading;
+using Infrastructure.Spider;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -37,7 +43,7 @@ namespace MermaidLoft.Alchemy.QuickWeb
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -62,4 +68,5 @@ namespace MermaidLoft.Alchemy.QuickWeb
             });
         }
     }
-}
+
+    }

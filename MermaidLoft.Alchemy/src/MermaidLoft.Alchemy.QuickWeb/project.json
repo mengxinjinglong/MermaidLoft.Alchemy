@@ -27,7 +27,8 @@
     "Infrastructure.NLog": "1.0.0-*",
     "Infrastructure.SeriLog": "1.0.0-*",
     "MermaidLoft.Alchemy.BaseDomain": "1.0.0-*",
-    "MermaidLoft.Alchemy.Common": "1.0.0-*"  },
+    "MermaidLoft.Alchemy.Common": "1.0.0-*",
+    "HtmlAgilityPack.NetCore": "1.5.0.1"  },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

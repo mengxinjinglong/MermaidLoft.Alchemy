@@ -107,6 +107,29 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public ResultMessage GetPage1(int pageIndex, int pageSize)
+        {
+            try
+            {
+                return new ResultMessage
+                {
+                    Success = true,
+                    Status = EnumStatus.Success,
+                    Data = _queryService.FindUsersForPage(pageIndex, pageSize)
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
+        }
+
         [HttpPost]
         public ResultMessage Post([FromBody]User user)
         {

@@ -4,7 +4,6 @@
 /// <reference path="js/datatables.bootstrap.js" />
 /// <reference path="js/datatables.min.js" />
 /// <reference path="js/jquery.min.js" />
-/// <reference path="js/jquery.slimscroll.min.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/table-datatables-buttons.min.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />

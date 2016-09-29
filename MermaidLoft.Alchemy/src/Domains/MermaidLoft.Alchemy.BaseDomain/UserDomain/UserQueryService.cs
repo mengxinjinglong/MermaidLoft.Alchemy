@@ -1,4 +1,5 @@
-﻿using Infrastructure.Dapper;
+﻿using Dapper;
+using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,15 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
                 return connection.QueryPaged<User>(new { UserName = userName }, ConfigSettings.UserTable,"UserName",pageIndex,pageSize);
+            }
+        }
+
+        public IEnumerable<User> FindUsersForPage(int pageIndex, int pageSize)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                var sql = string.Format("SELECT * FROM User limit {0},{1}", (pageIndex - 1) * pageSize, pageSize);
+                return connection.Query<User>(sql);
             }
         }
     }

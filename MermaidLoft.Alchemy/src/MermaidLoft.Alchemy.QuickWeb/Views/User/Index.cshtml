@@ -37,13 +37,25 @@
                                         <th> 操作 </th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    <tr ng-repeat="item in userItems">
+                                        <td> {{item.userName}} </td>
+                                        <td> {{item.account}} </td>
+                                        <td> {{item.email}} </td>
+                                        <td> {{item.phoneNumber}} </td>
+                                        <td> {{item.shopUserNameId}} </td>
+                                        <td> {{item.shopTitle}} </td>
+                                        <td> 
+                                         <button id='editrow' class='btn btn-primary' data-toggle='modal' data-target='#editUserModal' ng-click="editUser(item.id)" type='button'><i class='fa fa-edit'></i></button>
+                                         <button id='delrow' class='btn btn-primary' ng-click="deleteUser(item.id)" type='button'><i class='fa fa-trash-o'></i></button> </td>
+                                    </tr>
+                                </tbody>
                             </table>
 
-                            <!-- Pagation start -->
+                            <!-- Pagation start https://angular-ui.github.io/bootstrap/ -->
                             <div>
                                 <ul uib-pagination total-items="totalItems" ng-model="currentPage" boundary-links="true" 
-                                    ng-change="pageChanged()"
+                                    ng-change="pageChanged()" items-per-page="pageSize"  max-size="maxSize" rotate="true" boundary-link-numbers="true"
                                     first-text="首页" previous-text="上一页" next-text="下一页" last-text="尾页"></ul>
                             </div>
                             <!-- Pagation end -->
@@ -83,48 +95,48 @@
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">用户账号</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.Account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" />
+                                            <input ng-model="user.account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">用户名</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.UserName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" />
+                                            <input ng-model="user.userName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">登录密码</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.SecureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" />
+                                            <input ng-model="user.secureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">邮箱</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.Email" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="邮箱" />
+                                            <input ng-model="user.email" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="邮箱" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">联系方式</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.PhoneNumber" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="联系方式" />
+                                            <input ng-model="user.phoneNumber" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="联系方式" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">用户账号ID</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.ShopUserNameId" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号ID" />
+                                            <input ng-model="user.shopUserNameId" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号ID" />
                                         </div>
                                     </div>
                                     <div class="form-group last">
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">店铺名称</label>
                                         <div class="col-md-9">
-                                            <input ng-model="user.ShopTitle" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
+                                            <input ng-model="user.shopTitle" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
                                         </div>
                                     </div>
                                 </div>
@@ -187,86 +199,102 @@
         };
 
         //初始化表格
-        var table = $("#example").dataTable({
-            language: lang,  //提示信息
-            autoWidth: false,  //禁用自动调整列宽
-            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
-            processing: true,  //隐藏加载提示,自行处理
-            serverSide: true,  //启用服务器端分页
-            searching: false,  //禁用原生搜索
-            orderMulti: false,  //启用多列排序
-            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
-            renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
-            pagingType: "simple_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
-            columnDefs: [{
-                "targets": 'nosort',  //列的样式名
-                "orderable": true    //包含上样式名‘nosort’的禁止排序
-            },  {
-                "targets": -1,
-                //"data": null,
-                //"defaultContent":""
-                render: function (data, type, row, meta) {
-                    return "<button id='editrow' class='btn btn-primary' data-toggle='modal' data-target='#editUserModal' ng-click='editUser()' type='button'><i class='fa fa-edit'></i></button> " +
-                    "<button id='delrow' class='btn btn-primary'  ng-click='deleteUser(\"" + row.id + "\")' type='button'><i class='fa fa-trash-o'></i></button>"
-                }
-            }
-            ],
-            ajax: function (data, callback, settings) {
-                //封装请求参数
-                var param = {};
-                param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
-                param.start = data.start;//开始的记录序号
-                param.page = (data.start / data.length) + 1;//当前页码
-                console.log(param);
-                //ajax请求数据
-                $.ajax({
-                    type: "GET",
-                    url: "/user/getpage1?pageIndex=" + param.page + "&pageSize=" + param.limit,
-                    cache: false,  //禁用缓存
-                    data: param,  //传入组装的参数
-                    dataType: "json",
-                    success: function (result) {
-                        //console.log(result);
-                        //setTimeout仅为测试延迟效果
-                        setTimeout(function () {
-                            //封装返回数据
-                            //console.log(result);
-                            //console.log(data.draw);
-                            var returnData = {};
-                            returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
-                            //返回当前页面总数
-                            returnData.recordsTotal = result.data.length;//返回数据全部记录
-                            //查询结果总数
-                            returnData.recordsFiltered = 18;//后台不实现过滤功能，每次查询均视作全部结果
-                            returnData.data = result.data;//返回的数据列表
-                            //console.log(returnData);
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(returnData);
-                        }, 200);
-                    }
-                });
-            },
-            //列表表头字段
-            columns: [
-                { "data": "account" },
-                { "data": "userName" },
-                { "data": "email" },
-                { "data": "phoneNumber" },
-                { "data": "shopUserNameId" },
-                { "data": "shopTitle" },
-                { "data": null }
-            ]
-        }).api();
+        //var table = $("#example").dataTable({
+        //    language: lang,  //提示信息
+        //    autoWidth: false,  //禁用自动调整列宽
+        //    stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+        //    processing: true,  //隐藏加载提示,自行处理
+        //    serverSide: true,  //启用服务器端分页
+        //    searching: false,  //禁用原生搜索
+        //    orderMulti: false,  //启用多列排序
+        //    order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+        //    renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+        //    pagingType: "simple_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+        //    columnDefs: [{
+        //        "targets": 'nosort',  //列的样式名
+        //        "orderable": true    //包含上样式名‘nosort’的禁止排序
+        //    },  {
+        //        "targets": -1,
+        //        //"data": null,
+        //        //"defaultContent":""
+        //        render: function (data, type, row, meta) {
+        //            return "<button id='editrow' class='btn btn-primary' data-toggle='modal' data-target='#editUserModal' ng-click='editUser()' type='button'><i class='fa fa-edit'></i></button> " +
+        //            "<button id='delrow' class='btn btn-primary'  ng-click='deleteUser(\"" + row.id + "\")' type='button'><i class='fa fa-trash-o'></i></button>"
+        //        }
+        //    }
+        //    ],
+        //    ajax: function (data, callback, settings) {
+        //        //封装请求参数
+        //        var param = {};
+        //        param.limit = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+        //        param.start = data.start;//开始的记录序号
+        //        param.page = (data.start / data.length) + 1;//当前页码
+        //        console.log(param);
+        //        //ajax请求数据
+        //        $.ajax({
+        //            type: "GET",
+        //            url: "/user/getpage1?pageIndex=" + param.page + "&pageSize=" + param.limit,
+        //            cache: false,  //禁用缓存
+        //            data: param,  //传入组装的参数
+        //            dataType: "json",
+        //            success: function (result) {
+        //                //console.log(result);
+        //                //setTimeout仅为测试延迟效果
+        //                setTimeout(function () {
+        //                    //封装返回数据
+        //                    //console.log(result);
+        //                    //console.log(data.draw);
+        //                    var returnData = {};
+        //                    returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+        //                    //返回当前页面总数
+        //                    returnData.recordsTotal = result.data.length;//返回数据全部记录
+        //                    //查询结果总数
+        //                    returnData.recordsFiltered = 18;//后台不实现过滤功能，每次查询均视作全部结果
+        //                    returnData.data = result.data;//返回的数据列表
+        //                    //console.log(returnData);
+        //                    //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+        //                    //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+        //                    callback(returnData);
+        //                }, 200);
+        //            }
+        //        });
+        //    },
+        //    //列表表头字段
+        //    columns: [
+        //        { "data": "account" },
+        //        { "data": "userName" },
+        //        { "data": "email" },
+        //        { "data": "phoneNumber" },
+        //        { "data": "shopUserNameId" },
+        //        { "data": "shopTitle" },
+        //        { "data": null }
+        //    ]
+        //}).api();
         //此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
     });
 
     var app = angular.module('alchemyApp', ['ui.bootstrap']);
 
     app.controller('userController', function ($scope, $http) {
-
         $scope.totalItems = 64;
-        $scope.currentPage = 4;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+        //$scope.bigTotalItems = 175;
+        //$scope.bigCurrentPage = 1;
+        $scope.pageSize = 6;
+        $scope.userItems = null;
+        
+
+        $scope.refreshPage = function () {
+            $http.get("/user/getpage1?pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize).success(function (response) {
+                console.log(response.data);
+                $scope.userItems = response.data;
+            }).error(function (response) {
+                console.log('ERROR:' + response);
+            });
+        };
+        //获取分页数据
+        $scope.refreshPage();
 
         $scope.setPage = function (pageNo) {
             $scope.currentPage = pageNo;
@@ -274,25 +302,28 @@
         };
 
         $scope.pageChanged = function () {
+            console.log('---------------');
+            console.log('currentPage:' + $scope.currentPage);
+            console.log('bigCurrentPage:' + $scope.bigCurrentPage);
+            console.log('totalItems:' + $scope.totalItems);
+            console.log('bigTotalItems:' + $scope.bigTotalItems);
             console.log('Page changed to: ' + $scope.currentPage);
+            $scope.refreshPage();
         };
 
-        $scope.maxSize = 5;
-        $scope.bigTotalItems = 175;
-        $scope.bigCurrentPage = 1;
+        
 
-        $scope.editUser = function () {
-            alert("edit");
+        $scope.editUser = function (id) {
             $http.get('/user/get/'+id).success(function (response) {
                 console.log(response.data);
                 $scope.user = response.data;
+                $scope.user.secureCode = "";
             }).error(function (response) {
                 console.log('ERROR:' + response);
             });
         };
 
-        $scope.deleteUser = function () {
-            alert("delete");
+        $scope.deleteUser = function (id) {
             $http.get('/user/get/' + id).success(function (response) {
                 console.log(response.data);
                 $scope.user = response.data;

@@ -5,19 +5,19 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain
 {
     public class ProductService
     {
-        public void Add(Product product)
+        public bool Add(Product product)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                connection.Insert(product, ConfigSettings.ProductTable);
+               return connection.Insert(product, ConfigSettings.ProductTable) > 0;
             }
         }
 
-        public void Update(Product product)
+        public bool Update(Product product)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                connection.Update(product, new { Id = product.Id }, ConfigSettings.ProductTable);
+                return connection.Update(product, new { Id = product.Id }, ConfigSettings.ProductTable) > 0;
             }
         }
     }

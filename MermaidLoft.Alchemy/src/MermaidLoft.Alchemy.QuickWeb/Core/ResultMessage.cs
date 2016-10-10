@@ -8,6 +8,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Core
         public EnumStatus Status { get; set; }
         public object Data { get; set; }
         public string Message { get; set; }
+        public int TotalCount { get; set; }
 
         public ResultMessage()
         {

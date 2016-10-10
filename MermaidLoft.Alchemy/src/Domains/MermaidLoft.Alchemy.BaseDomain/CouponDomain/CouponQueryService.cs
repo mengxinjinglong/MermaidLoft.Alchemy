@@ -27,7 +27,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryPaged<Coupon>(new { Title = title }, ConfigSettings.CouponTable, "ProductName", pageIndex, pageSize);
+                return connection.QueryPaged<Coupon>(null, ConfigSettings.CouponTable, "AddTime", pageIndex, pageSize);
             }
         }
     }

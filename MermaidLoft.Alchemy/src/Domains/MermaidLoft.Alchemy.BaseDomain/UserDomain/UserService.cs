@@ -13,7 +13,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
         {
             using (var connection =ConnectionConfig.Instance.GetConnection())
             {
-                return connection.Insert(user,ConfigSettings.UserTable)>0;
+                return connection.Insert(user, ConfigSettings.UserTable) > 0;
             }
         }
 
@@ -21,7 +21,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.Update(user, new { Id=user.Id },ConfigSettings.UserTable)>0;
+                return connection.Update(user, new { Id = user.Id }, ConfigSettings.UserTable) > 0;
             }
         }
     }

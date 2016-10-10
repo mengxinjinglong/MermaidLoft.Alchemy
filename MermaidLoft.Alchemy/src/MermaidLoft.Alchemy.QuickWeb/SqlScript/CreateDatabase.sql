@@ -40,3 +40,24 @@ alter table Product add column ShopTitle varchar(255);
 
 2016-09-20:
 alter table User change PasswordContent SecureCode varchar(255);
+
+2016-10-09:
+create table Coupon
+(
+  Id varchar(36) NOT NULL ,
+  UserId varchar(36) NOT NULL ,
+  BaseUrl varchar(255) DEFAULT NULL,
+  Title varchar(255) DEFAULT NULL,
+  ShopName varchar(255) DEFAULT NULL,
+  Url  varchar(255) DEFAULT NULL,
+  ProductUrl  varchar(255) DEFAULT NULL,
+  ProductDescription  varchar(255) DEFAULT NULL,
+  RestCount int DEFAULT 0,
+  Description text,
+  StartDate datetime DEFAULT now(),
+  EndDate datetime DEFAULT now(),
+  AddTime datetime DEFAULT now(),
+  Version int default 0,
+  IsExpired bit default 0,
+  PRIMARY KEY (Id)
+);

@@ -3,6 +3,7 @@
 *@
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "用户管理界面";
 }
 <div ng-app="alchemyApp" ng-controller="userController">
     <div class="page-content-inner">
@@ -38,7 +39,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in userItems">
+                                    <tr ng-repeat="item in pageItems">
                                         <td> {{item.userName}} </td>
                                         <td> {{item.account}} </td>
                                         <td> {{item.email}} </td>
@@ -160,10 +161,11 @@
 <script src="/js/jquery.min.js" asp-append-version="true"></script>
 <script src="/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
 
-<script src="/js/jquery.slimscroll.min.js" asp-append-version="true"></script>
+@*<script src="/js/jquery.slimscroll.min.js" asp-append-version="true"></script>
 <script src="/js/datatable.js" asp-append-version="true"></script>
 <script src="/js/datatables.min.js" asp-append-version="true"></script>
-<script src="/js/datatables.bootstrap.js" asp-append-version="true"></script>
+<script src="/js/datatables.bootstrap.js" asp-append-version="true"></script>*@
+
 <script src="/js/modal.js" asp-append-version="true"></script>
 
 <script src="/js/angular.min.js" asp-append-version="true"></script>
@@ -281,14 +283,14 @@
         $scope.maxSize = 5;
         //$scope.bigTotalItems = 175;
         //$scope.bigCurrentPage = 1;
-        $scope.pageSize = 6;
-        $scope.userItems = null;
+        $scope.pageSize = 10;
+        $scope.pageItems = null;
         
 
         $scope.refreshPage = function () {
             $http.get("/user/getpage1?pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize).success(function (response) {
                 console.log(response.data);
-                $scope.userItems = response.data;
+                $scope.pageItems = response.data;
             }).error(function (response) {
                 console.log('ERROR:' + response);
             });
@@ -341,7 +343,7 @@
                 action = "user/update";
             }
             $http.post(action, $scope.user).success(function (response) {
-                if (response.status == 'success') {
+                if (response.status == 0) {
                     $scope.user = null;
                     window.location.href = 'index';
                 } else {

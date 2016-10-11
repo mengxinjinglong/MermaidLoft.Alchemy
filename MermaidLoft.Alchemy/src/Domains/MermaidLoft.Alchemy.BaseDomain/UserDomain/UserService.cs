@@ -24,5 +24,13 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
                 return connection.Update(user, new { Id = user.Id }, ConfigSettings.UserTable) > 0;
             }
         }
+
+        public bool Delete(string id)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                return connection.Delete(new { Id = id }, ConfigSettings.UserTable) > 0;
+            }
+        }
     }
 }

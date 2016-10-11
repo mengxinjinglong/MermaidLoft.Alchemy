@@ -160,14 +160,51 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        public void Put([FromBody]User user)
+        public ResultMessage Put([FromBody]User user)
         {
+            try
+            {
+                var result = _service.Update(user);
+                return new ResultMessage
+                {
+                    Success = result,
+                    Status = result ? EnumStatus.Success : EnumStatus.Failure,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
         }
 
         // DELETE api/values/5
-        [HttpDelete()]
-        public void Delete(string id)
+        [HttpDelete]
+        [Route("user/delete")]
+        public ResultMessage Delete(string id)
         {
+            try
+            {
+                var result = _service.Delete(id);
+                return new ResultMessage
+                {
+                    Success = result,
+                    Status = result ? EnumStatus.Success : EnumStatus.Failure,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
         }
         #endregion
     }

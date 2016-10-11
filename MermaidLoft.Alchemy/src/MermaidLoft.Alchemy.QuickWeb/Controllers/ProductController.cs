@@ -55,7 +55,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         [HttpGet]
-        public ResultMessage GetPage(string userName, string account, int pageIndex, int pageSize)
+        public ResultMessage GetPage(string productName, int pageIndex, int pageSize)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = _queryService.FindProductsForPage(userName, pageIndex, pageSize)
+                    Data = _queryService.FindProductsForPage(productName, pageIndex, pageSize)
                 };
             }
             catch (Exception exception)
@@ -106,14 +106,51 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        public void Put([FromBody]Product product)
+        public ResultMessage Put([FromBody]Product product)
         {
+            try
+            {
+                var result = _service.Update(product);
+                return new ResultMessage
+                {
+                    Success = result,
+                    Status = result ? EnumStatus.Success : EnumStatus.Failure,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
         }
 
         // DELETE api/values/5
-        [HttpDelete()]
-        public void Delete(string id)
+        [HttpDelete]
+        [Route("product/delete")]
+        public ResultMessage Delete(string id)
         {
+            try
+            {
+                var result = _service.Delete(id);
+                return new ResultMessage
+                {
+                    Success = result,
+                    Status = result ? EnumStatus.Success : EnumStatus.Failure,
+                };
+            }
+            catch (Exception exception)
+            {
+                return new ResultMessage
+                {
+                    Success = false,
+                    Status = EnumStatus.Failure,
+                    Message = exception.Message
+                };
+            }
         }
         #endregion
     }

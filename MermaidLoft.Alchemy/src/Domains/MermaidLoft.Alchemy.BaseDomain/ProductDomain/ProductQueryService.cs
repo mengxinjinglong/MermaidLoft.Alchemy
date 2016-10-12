@@ -27,7 +27,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryPaged<Product>(new { ProductName = productName }, ConfigSettings.ProductTable, "ProductName", pageIndex, pageSize);
+                return connection.QueryPaged<Product>(null, ConfigSettings.ProductTable, "ProductName", pageIndex, pageSize);
             }
         }
     }

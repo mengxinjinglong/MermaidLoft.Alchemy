@@ -47,8 +47,8 @@
                                         <td> {{item.shopUserNameId}} </td>
                                         <td> {{item.shopTitle}} </td>
                                         <td> 
-                                         <button id='editrow' class='btn btn-primary' data-toggle='modal' data-target='#editUserModal' ng-click="editUser(item.id)" type='button'><i class='fa fa-edit'></i></button>
-                                         <button id='delrow' class='btn btn-primary' ng-click="deleteUser(item.id)" type='button'><i class='fa fa-trash-o'></i></button> </td>
+                                         <button id='editrow' class='btn btn-primary' data-toggle='modal' data-target='#editUserModal' ng-click="edit(item.id)" type='button'><i class='fa fa-edit'></i></button>
+                                         <button id='delrow' class='btn btn-primary' ng-click="delete(item.id)" type='button'><i class='fa fa-trash-o'></i></button> </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn green" ng-click="saveUser()">保存</button>
+                    <button type="button" class="btn green" ng-click="save()">保存</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -325,7 +325,6 @@
         };
 
         $scope.delete = function (id) {
-            alert(id);
             $http.delete('/user/delete?id=' + id).success(function (response) {
                 console.log(response.data);
                 if (response.status == 0) {

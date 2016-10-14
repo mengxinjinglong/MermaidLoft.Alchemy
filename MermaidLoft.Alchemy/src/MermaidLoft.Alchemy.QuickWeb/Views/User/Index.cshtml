@@ -39,6 +39,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!--无数据-->
+                                    <tr ng-if="pageItems.length == 0">
+                                        <td class="text-center" colspan="8">暂无数据</td>
+                                    </tr>
+                                    <!--有数据-->
                                     <tr ng-repeat="item in pageItems">
                                         <td> {{item.userName}} </td>
                                         <td> {{item.account}} </td>

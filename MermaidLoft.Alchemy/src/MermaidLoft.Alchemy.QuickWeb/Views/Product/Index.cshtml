@@ -41,6 +41,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!--无数据-->
+                                    <tr ng-if="pageItems.length == 0">
+                                        <td class="text-center" colspan="7">暂无数据</td>
+                                    </tr>
+                                    <!--有数据-->
                                     <tr ng-repeat="item in pageItems">
                                         <td> {{item.productName}} </td>
                                         <td> {{item.url}} </td>

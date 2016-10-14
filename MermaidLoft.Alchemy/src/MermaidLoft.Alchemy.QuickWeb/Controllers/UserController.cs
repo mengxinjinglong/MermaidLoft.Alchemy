@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MermaidLoft.Alchemy.BaseDomain.UserDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
 using Infrastructure.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,12 +15,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         UserService _service;
         public UserController()
         {
+            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             _queryService = new UserQueryService();
             _service = new UserService();
 
         }
         #region View
         // GET: /<controller>/
+        //[Authorize(Roles = "Users")]
         public IActionResult Index()
         {
             return View();
@@ -207,5 +210,10 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         #endregion
+    }
+
+    public class UserIdentity : Microsoft.AspNetCore.Identity.IUserLoginStore
+    {
+
     }
 }

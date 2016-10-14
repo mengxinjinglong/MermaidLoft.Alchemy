@@ -15,6 +15,7 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using Infrastructure.Spider;
+using Microsoft.AspNetCore.Http;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -45,6 +46,17 @@ namespace MermaidLoft.Alchemy.QuickWeb
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //Authentication 2016.10.14
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "MyCookieMiddlewareInstance",
+                LoginPath = new PathString("/User/Index"),
+                AccessDeniedPath = new PathString("/Home/Error"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
+
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

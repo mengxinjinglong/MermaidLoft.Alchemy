@@ -16,6 +16,7 @@ using System.Net;
 using System.Threading;
 using Infrastructure.Spider;
 using Microsoft.AspNetCore.Http;
+using MermaidLoft.Alchemy.BaseDomain.UserDomain;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -39,6 +40,9 @@ namespace MermaidLoft.Alchemy.QuickWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<User, IdentityRole>();
+
+
             // Add framework services.
             services.AddMvc();
         }
@@ -81,4 +85,4 @@ namespace MermaidLoft.Alchemy.QuickWeb
         }
     }
 
-    }
+}

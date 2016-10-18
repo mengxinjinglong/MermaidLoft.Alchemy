@@ -166,6 +166,7 @@ table tr:nth-child(even) {
     </div>
     <!-- END HEADER -->
     <div class="container body-content" align="center">
+        @Html.AntiForgeryToken()
         @RenderBody()
     </div>
     <div class="page-footer" style="margin-top:10px;">

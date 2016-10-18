@@ -27,6 +27,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         #region View
         // GET: /<controller>/
         //[Authorize(Roles = "Users")]
+        [ValidateAntiForgeryToken]
         public IActionResult Index()
         {
             return View();

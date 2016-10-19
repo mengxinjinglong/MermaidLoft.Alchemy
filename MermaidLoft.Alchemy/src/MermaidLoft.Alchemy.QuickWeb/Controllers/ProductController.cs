@@ -1,5 +1,6 @@
 ﻿using MermaidLoft.Alchemy.BaseDomain.ProductDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -20,19 +21,17 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         #region VIEW
         // GET: /<controller>/
+        [Authorize(Roles = "Users")]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Edit(string id)
-        {
-            return View();
-        }
+        
         #endregion
 
         #region API
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage Get(string id)
         {
             try
@@ -55,6 +54,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage GetPage(string productName, int pageIndex, int pageSize)
         {
             try
@@ -78,6 +78,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Users")]
         public ResultMessage Post([FromBody]Product product)
         {
             //没有添加[FromBody]，无法获取到user内容，user值为默认值 as user = new User();
@@ -106,6 +107,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         // PUT api/values/5
         [HttpPut]
+        [Authorize(Roles = "Users")]
         public ResultMessage Put([FromBody]Product product)
         {
             try
@@ -131,6 +133,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         // DELETE api/values/5
         [HttpDelete]
         [Route("product/delete")]
+        [Authorize(Roles = "Users")]
         public ResultMessage Delete(string id)
         {
             try

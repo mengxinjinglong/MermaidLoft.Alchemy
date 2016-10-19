@@ -1,30 +1,31 @@
 ﻿using System;
-using System.Data;
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.BaseDomain.UserDomain;
-using MermaidLoft.Alchemy.BaseDomain.ProductDomain;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
     public class HomeController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
-        }
 
+        }
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
+            HttpContext.Authentication.SignOutAsync("UserToken");
             return View();
         }
 

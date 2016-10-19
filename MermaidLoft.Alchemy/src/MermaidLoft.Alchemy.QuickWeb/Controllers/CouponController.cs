@@ -4,6 +4,7 @@ using MermaidLoft.Alchemy.BaseDomain.CouponDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
 using Infrastructure.Spider;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,6 +23,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         #region View
         // GET: /<controller>/
+        [Authorize(Roles = "Users")]
         public IActionResult Index()
         {
             return View();
@@ -30,6 +32,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         #region Api
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage Get(string id)
         {
             try
@@ -52,6 +55,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage GetPage(string title, int pageIndex, int pageSize)
         {
             try
@@ -75,6 +79,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Users")]
         public ResultMessage SpiderCoupon([FromBody]string url)
         {
             try
@@ -122,6 +127,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Users")]
         public ResultMessage Post([FromBody]Coupon coupon)
         {
             //没有添加[FromBody]，无法获取到user内容，user值为默认值 as user = new User();
@@ -150,6 +156,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         // PUT api/values/5
         [HttpPut]
+        [Authorize(Roles = "Users")]
         public ResultMessage Put([FromBody]Coupon coupon)
         {
             try
@@ -175,6 +182,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         // DELETE api/values/5
         [HttpDelete]
         [Route("coupon/delete")]
+        [Authorize(Roles = "Users")]
         public ResultMessage Delete(string id)
         {
             try

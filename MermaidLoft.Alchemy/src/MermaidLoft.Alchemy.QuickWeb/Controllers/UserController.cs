@@ -6,6 +6,8 @@ using Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http.Authentication;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,24 +22,25 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             _queryService = new UserQueryService();
             _service = new UserService();
-            //AuthenticationManager.SignOut();
-           // new UserManager<User>().CreateIdentityAsync();
 
         }
         #region View
         // GET: /<controller>/
         //[Authorize(Roles = "Users")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = "Users")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -51,8 +54,21 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             var user = _queryService.FindUser(new {Account= u.Account });
             if (user != null)
             {
-                if (user.SecureCode == SecurityCodeUtil.Md5(u   .SecureCode))
+                if (user.SecureCode == SecurityCodeUtil.Md5(u.SecureCode))
                 {
+                    var claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+                    claims.Add(new Claim(ClaimTypes.Role, "Users"));
+                    var identity = new ClaimsIdentity(claims, "claimsLogin");
+
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                    HttpContext.Authentication.SignInAsync("UserToken", principal,
+                     new AuthenticationProperties
+                     {
+                         ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+                         IsPersistent = false,
+                         //AllowRefresh = false
+                    });
                     return new ResultMessage
                     {
                         Success = true,
@@ -66,8 +82,16 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 Status = EnumStatus.Failure,
                 Message = "登陆失败，请确认账号或密码是否正确。" };
         }
+        [HttpPost]
+        [Authorize(Roles = "Users")]
+        public ResultMessage LoginOut()
+        {
+            HttpContext.Authentication.SignOutAsync("UserToken");
+            return null;
+        }
 
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage Get(string id)
         {
             try
@@ -90,6 +114,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage GetPage(string userName,string account,int pageIndex, int pageSize)
         {
             try
@@ -113,6 +138,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Users")]
         public ResultMessage GetPage1(int pageIndex, int pageSize)
         {
             try
@@ -136,6 +162,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Users")]
         public ResultMessage Post([FromBody]User user)
         {
             //没有添加[FromBody]，无法获取到user内容，user值为默认值 as user = new User();
@@ -168,6 +195,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         // PUT api/values/5
         [HttpPut]
+        [Authorize(Roles = "Users")]
         public ResultMessage Put([FromBody]User user)
         {
             try
@@ -193,6 +221,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         // DELETE api/values/5
         [HttpDelete]
         [Route("user/delete")]
+        [Authorize(Roles = "Users")]
         public ResultMessage Delete(string id)
         {
             try

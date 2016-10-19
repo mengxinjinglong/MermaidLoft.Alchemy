@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MermaidLoft.Alchemy.Common;
 using Infrastructure.Dapper;
-using System.Net.Http;
-using HtmlAgilityPack;
-using System.Text;
-using System.Net;
-using System.Threading;
-using Infrastructure.Spider;
+using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using MermaidLoft.Alchemy.BaseDomain.UserDomain;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -53,8 +44,8 @@ namespace MermaidLoft.Alchemy.QuickWeb
             //Authentication 2016.10.14
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationScheme = "MyCookieMiddlewareInstance",
-                LoginPath = new PathString("/User/Index"),
+                AuthenticationScheme = "UserToken",
+                LoginPath = new PathString("/User/Login"),
                 AccessDeniedPath = new PathString("/Home/Error"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true
@@ -63,7 +54,6 @@ namespace MermaidLoft.Alchemy.QuickWeb
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,6 +64,7 @@ namespace MermaidLoft.Alchemy.QuickWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -83,6 +74,7 @@ namespace MermaidLoft.Alchemy.QuickWeb
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+        
     }
 
 }

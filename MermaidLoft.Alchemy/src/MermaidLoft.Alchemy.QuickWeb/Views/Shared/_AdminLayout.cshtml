@@ -55,8 +55,8 @@ table tr:nth-child(even) {
             <div class="container">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="index.html">
-                        <img src="../assets/layouts/layout3/img/logo-default.jpg" alt="logo" class="logo-default">
+                    <a href="/home/index">
+                        <h1>诗语情裳</h1>
                     </a>
                 </div>
                 <!-- END LOGO -->
@@ -64,21 +64,20 @@ table tr:nth-child(even) {
                 <a href="javascript:;" class="menu-toggler"></a>
                 <!-- END RESPONSIVE MENU TOGGLER -->
                 <!-- BEGIN TOP NAVIGATION MENU -->
+@using System.Security.Claims;
+@if (User.Identities.Any(u => u.IsAuthenticated))
+{
                 <div class="top-menu">
                     <ul class="nav navbar-nav pull-right">
-                        <!-- BEGIN NOTIFICATION DROPDOWN -->
-                        <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                        <!-- BEGIN TODO DROPDOWN -->
+                        <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="icon-bell"></i>
-                                <span class="badge badge-default">7</span>
+                                <i class="icon-home"></i>
                             </a>
                         </li>
-                        <!-- END NOTIFICATION DROPDOWN -->
-                        <!-- BEGIN TODO DROPDOWN -->
-                        <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <i class="icon-calendar"></i>
-                                <span class="badge badge-default">3</span>
+                        <li class="dropdown dropdown-user dropdown-dark" id="header_task_bar">
+                            <a href="/home/index" class="dropdown-toggle" target="_blank">
+                                <span class="username username-hide-mobile">网站首页</span>
                             </a>
                         </li>
                         <!-- END TODO DROPDOWN -->
@@ -88,27 +87,29 @@ table tr:nth-child(even) {
                         <!-- BEGIN INBOX DROPDOWN -->
                         <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <span class="circle">3</span>
-                                <span class="corner"></span>
+                                <i class="icon-user"></i>
                             </a>
                         </li>
                         <!-- END INBOX DROPDOWN -->
                         <!-- BEGIN USER LOGIN DROPDOWN -->
                         <li class="dropdown dropdown-user dropdown-dark">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <img alt="" class="img-circle" src="../assets/layouts/layout3/img/avatar9.jpg">
-                                <span class="username username-hide-mobile">Nick</span>
+                                <span class="username username-hide-mobile">
+                                    欢迎登陆：
+                                    @User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Name).Value
+                                </span>
                             </a>
                         </li>
                         <!-- END USER LOGIN DROPDOWN -->
                         <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                         <li class="dropdown dropdown-extended quick-sidebar-toggler">
                             <span class="sr-only">Toggle Quick Sidebar</span>
-                            <i class="icon-logout"></i>
+                                <i class="icon-logout"></i>
                         </li>
                         <!-- END QUICK SIDEBAR TOGGLER -->
                     </ul>
                 </div>
+}                
                 <!-- END TOP NAVIGATION MENU -->
             </div>
         </div>
@@ -175,25 +176,5 @@ table tr:nth-child(even) {
             <a href="#">Purchase Metronic!</a>
         </div>
     </div>
-    @*<environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        <script src="~/js/angular.min.js" asp-append-version="true"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-        <script src="~/js/angular.min.js" asp-append-version="true"></script>
-    </environment>
-
-    @RenderSection("scripts", required: false)*@
 </body>
 </html>

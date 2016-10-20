@@ -87,7 +87,7 @@
 
 
     <!-- 模态框（Modal） -->
-    <div id="editModal" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div id="editModal" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 @*<div class="modal-header">
@@ -173,12 +173,30 @@
                                             <input ng-model="coupon.productUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品网址" />
                                         </div>
                                     </div>
-
+                                    <div class="form-group">
+                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                        <label class="col-md-3 control-label">商品图片地址</label>
+                                        <div class="col-md-9">
+                                            <input ng-model="coupon.pictureUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品网址" />
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                         <label class="col-md-3 control-label">商品描述</label>
                                         <div class="col-md-9">
                                             <input ng-model="coupon.productDescription" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="商品描述" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                        <label class="col-md-3 control-label">店铺名称</label>
+                                        <div class="col-md-9">
+                                            <input ng-model="product.shopTitle" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
                                         </div>
                                     </div>
                                 </div>

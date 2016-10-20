@@ -51,6 +51,7 @@ create table Coupon
   ShopName varchar(255) DEFAULT NULL,
   Url  varchar(255) DEFAULT NULL,
   ProductUrl  varchar(255) DEFAULT NULL,
+  PictureUrl varchar(255) DEFAULT NULL,
   ProductDescription  varchar(255) DEFAULT NULL,
   RestCount int DEFAULT 0,
   Description text,
@@ -61,3 +62,6 @@ create table Coupon
   IsExpired bit default 0,
   PRIMARY KEY (Id)
 );
+
+2016.10.20:
+alter table Coupon add column PictureUrl varchar(255);

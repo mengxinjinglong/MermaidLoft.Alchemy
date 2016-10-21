@@ -32,10 +32,8 @@
                                 <thead>
                                     <tr>
                                         <th> 商品名称 </th>
-                                        <th> 商品网址 </th>
                                         <th>  原价</th>
                                         <th> 折扣价 </th>
-                                        <th> 图片网址 </th>
                                         <th> 店铺名称 </th>
                                         <th> 操作 </th>
                                     </tr>
@@ -47,11 +45,9 @@
                                     </tr>
                                     <!--有数据-->
                                     <tr ng-repeat="item in pageItems">
-                                        <td> {{item.productName}} </td>
-                                        <td> {{item.url}} </td>
+                                        <td> <a href="{{item.url}}" target="_blank" >{{item.productName}} </a></td>
                                         <td> {{item.price}} </td>
                                         <td> {{item.discountPrice}} </td>
-                                        <td> {{item.pictureUrl}} </td>
                                         <td> {{item.shopTitle}} </td>
                                         <td>
                                             <button id='editrow' class='btn btn-primary' data-toggle='modal' data-target='#editModal' ng-click="edit(item.id)" type='button'><i class='fa fa-edit'></i></button>
@@ -78,8 +74,8 @@
 
 
     <!-- 模态框（Modal） -->
-    <div id="editModal" class="modal fade" tabindex="-1" aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog">
+    <div id="editModal" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="portlet light bordered">
@@ -92,46 +88,55 @@
                         <div class="portlet-body form">
                             <!-- BEGIN FORM-->
                             <form action="#" class="form-horizontal">
-                                <div class="form-body">
-                                    <div class="form-group">
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="col-md-3 control-label">商品名称</label>
-                                        <div class="col-md-7">
-                                            <input ng-model="product.productName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="商品名称" />
+                                <div class="form-body row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">商品名称</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="product.productName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="商品名称" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">商品网址</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="product.url" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="商品网址" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">原价</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="product.price" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="原价" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">折扣价</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="product.discountPrice" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="折扣价" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">图片网址</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="product.pictureUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="图片网址" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">店铺名称</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="product.shopTitle" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="col-md-3 control-label">商品网址</label>
-                                        <div class="col-md-9">
-                                            <input ng-model="product.url" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="商品网址" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">原价</label>
-                                        <div class="col-md-9">
-                                            <input ng-model="product.price" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="原价" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="col-md-3 control-label">折扣价</label>
-                                        <div class="col-md-9">
-                                            <input ng-model="product.discountPrice" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="折扣价" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="col-md-3 control-label">图片网址</label>
-                                        <div class="col-md-9">
-                                            <input ng-model="product.pictureUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="图片网址" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                        <label class="col-md-3 control-label">店铺名称</label>
-                                        <div class="col-md-9">
-                                            <input ng-model="product.shopTitle" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <img height="220" width="220" src="{{product.pictureUrl}}" />
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +195,7 @@
 
         $scope.delete = function (id) {
             alert(id);
-            $http.delete('/product/delete?id='+id).success(function (response) {
+            $http.delete('/product/delete?id=' + id).success(function (response) {
                 console.log(response.data);
                 if (response.status == 0) {
                     alert("删除成功！");

@@ -2,33 +2,74 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = null;
 }
-<div class="content">
-    <!-- BEGIN LOGIN FORM -->
-    <form class="login-form" ng-app="LoginApp" ng-controller="userCtrl">
-        <div class="form-title">
-            <span class="form-title">欢迎使用，</span>
-            <span class="form-subtitle">请登陆.</span>
-        </div>
-        <div class="alert alert-danger display-hide" ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
-            <button class="close" data-close="alert"></button>
-            <span> Enter any username and password. </span>
-        </div>
-        <div class="form-group">
-            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-            <label class="control-label visible-ie8 visible-ie9">用户账号</label>
-            <input ng-model="user.account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" name="account" />
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">登录密码</label>
-            <input ng-model="user.secureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" name="password" />
-        </div>
-        <div class="form-actions">
-            <button ng-click="login()" class="btn red btn-block uppercase">登陆</button>
-        </div>
-    </form>
-    <!-- END LOGIN FORM -->
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MermaidLoft.Alchemy</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/datatables.min.css">
+        <link rel="stylesheet" href="~/css/datatables.bootstrap.css">
+        <link rel="stylesheet" href="~/css/components.min.css">
+        <link rel="stylesheet" href="~/css/plugins.min.css">
+        <link rel="stylesheet" href="~/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="~/css/login.min.css">
+        <link rel="stylesheet" href="~/css/layout.min.css">
+        <link rel="stylesheet" href="~/css/default.min.css">
+
+ 
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/neat.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/font_1467774138_8826983.css" asp-append-version="true" />
+    </environment>
+
+</head>
+<body class="login">
+    <!-- BEGIN LOGO -->
+    <div class="logo">
+        <a href="index.html">
+            <img src="../assets/pages/img/logo-big.png" alt="" />
+        </a>
+    </div>
+
+    <div class="content">
+        <!-- BEGIN LOGIN FORM -->
+        <form class="login-form" ng-app="LoginApp" ng-controller="userCtrl">
+            <div class="form-title">
+                <span class="form-title">欢迎使用，</span>
+                <span class="form-subtitle">请登陆.</span>
+            </div>
+            <div class="alert alert-danger display-hide" ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
+                <button class="close" data-close="alert"></button>
+                <span> Enter any username and password. </span>
+            </div>
+            <div class="form-group">
+                <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                <label class="control-label visible-ie8 visible-ie9">用户账号</label>
+                <input ng-model="user.account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" name="account" />
+            </div>
+            <div class="form-group">
+                <label class="control-label visible-ie8 visible-ie9">登录密码</label>
+                <input ng-model="user.secureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" name="password" />
+            </div>
+            <div class="form-actions">
+                <button ng-click="login()" class="btn red btn-block uppercase">登陆</button>
+            </div>
+        </form>
+        <!-- END LOGIN FORM -->
+    </div>
     <script src="~/js/angular.min.js" asp-append-version="true"></script>
     <script>
         var app = angular.module('LoginApp', []);
@@ -56,3 +97,6 @@
             }
         });
     </script>
+
+</body>
+</html>

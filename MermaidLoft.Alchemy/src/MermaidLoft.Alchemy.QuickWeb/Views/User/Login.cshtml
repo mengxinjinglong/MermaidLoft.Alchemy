@@ -57,36 +57,53 @@
 
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
-        <form class="login-form" ng-app="LoginApp" ng-controller="userCtrl">
+        <form class="login-form" name="loginForm" id="loginForm"
+               ng-app="LoginApp" ng-controller="userCtrl"
+               ng-submit="login(loginForm.$valid)" novalidate>
             <div class="form-title">
                 <span class="form-title">欢迎使用，</span>
                 <span class="form-subtitle">请登陆.</span>
             </div>
-            <div class="alert alert-danger display-hide" ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
-                <button class="close" data-close="alert"></button>
+            <div class="alert alert-danger" ng-show="loginForm.account.$dirty && loginForm.account.$invalid">
+                <button class="close" data-close="alert" ></button>
                 <span> Enter any username and password. </span>
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9">用户账号</label>
-                <input ng-model="user.account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" name="account" />
+                <input ng-model="user.account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" name="account" id="account" />
             </div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9">登录密码</label>
-                <input ng-model="user.secureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" name="password" />
+                <input ng-model="user.secureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" name="password" id="password" />
             </div>
             <div class="form-actions">
-                <button ng-click="login()" class="btn red btn-block uppercase">登陆</button>
+                <button type="submit" class="btn red btn-block uppercase">登陆</button>
             </div>
+            消息提示：{{loginForm.$valid}}-
+            {{loginForm.$invalid}}-
+            {{loginForm.account.$dirty && loginForm.account.$valid}}-
+            {{loginForm.account.$dirty && loginForm.account.$invalid}}
         </form>
         <!-- END LOGIN FORM -->
     </div>
     <script src="~/js/angular.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/jquery.custom.msgbox.js" asp-append-version="true"></script>
     <script>
         var app = angular.module('LoginApp', []);
         app.controller('userCtrl', function ($scope, $http) {
-            $scope.login = function () {
-                console.log($scope.user);
+            $scope.login = function (isValid) {
+                if ($scope.loginForm.account.$invalid)
+                {
+                    $.MsgBox.Alert("温馨提示", "用户账号不能为空！");
+                    return;
+                }
+                if ($scope.loginForm.password.$invalid) {
+                    $.MsgBox.Alert("温馨提示", "密码不能为空！");
+                    return;
+                }
+                if (!isValid) return;
                 $http({
                     method: "post",
                     data: $scope.user,//Form Data = {"id":1,"value":"hello"}
@@ -96,10 +113,9 @@
                     .success(function (response) {
                         console.log(response);
                         if (response.status == 0) {
-                            alert('登陆成功');
                             window.location.href = '/user/index';
                         } else {
-                            alert(response.message);
+                            $.MsgBox.Alert("温馨提示", response.message);
                         }
                     }).error(function (response) {
                         console.log('ERROR:' + response);

@@ -51,31 +51,41 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         [HttpPost]
         public ResultMessage LoginOn([FromBody]User u)
         {
-            var user = _queryService.FindUser(new {Account= u.Account });
-            if (user != null)
+            var message = "";
+            try
             {
-                if (user.SecureCode == SecurityCodeUtil.Md5(u.SecureCode))
+                Ensure.NotNullOrEmpty(u.Account,"用户账号");
+                Ensure.NotNullOrEmpty(u.SecureCode,"密码");
+                var user = _queryService.FindUser(new { Account = u.Account });
+                if (user != null)
                 {
-                    var claims = new List<Claim>();
-                    claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-                    claims.Add(new Claim(ClaimTypes.Role, "Users"));
-                    var identity = new ClaimsIdentity(claims, "claimsLogin");
-
-                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                    HttpContext.Authentication.SignInAsync("UserToken", principal,
-                     new AuthenticationProperties
-                     {
-                         ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
-                         IsPersistent = false,
-                         //AllowRefresh = false
-                    });
-                    return new ResultMessage
+                    if (user.SecureCode == SecurityCodeUtil.Md5(u.SecureCode))
                     {
-                        Success = true,
-                        Status = EnumStatus.Success,
-                        Data = user,
-                    };
+                        var claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+                        claims.Add(new Claim(ClaimTypes.Role, "Users"));
+                        var identity = new ClaimsIdentity(claims, "claimsLogin");
+
+                        ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                        HttpContext.Authentication.SignInAsync("UserToken", principal,
+                         new AuthenticationProperties
+                         {
+                             ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
+                             IsPersistent = false,
+                             //AllowRefresh = false
+                         });
+                        return new ResultMessage
+                        {
+                            Success = true,
+                            Status = EnumStatus.Success,
+                            Data = user,
+                        };
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+                message = exception.Message;
             }
             return new ResultMessage {
                 Success = false,

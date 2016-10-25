@@ -55,7 +55,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "Users")]
+
+        //[Authorize(Roles = "Users")]
         public ResultMessage GetPage(string title, int pageIndex, int pageSize)
         {
             try

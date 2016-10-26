@@ -7,13 +7,13 @@ namespace Infrastructure.Utilities
         public static void NotNull<T>(T argument, string argumentName) where T : class
         {
             if (argument == null)
-                throw new ArgumentNullException(argumentName + " should not be null.");
+                throw new ArgumentNullException(argumentName + "不能位空.");
         }
 
         public static void NotNullOrEmpty(string argument, string argumentName)
         {
             if (string.IsNullOrEmpty(argument))
-                throw new ArgumentNullException(argument, argumentName + " should not be null or empty.");
+                throw new ArgumentNullException(argument, argumentName + "不能位空.");
         }
 
         public static void Positive(int number, string argumentName)

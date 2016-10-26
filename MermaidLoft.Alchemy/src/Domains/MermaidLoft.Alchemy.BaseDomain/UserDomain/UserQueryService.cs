@@ -16,11 +16,11 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
             }
         }
 
-        public IEnumerable<UserDto> FindUsers(string userName)
+        public IEnumerable<User> FindUsers(string account)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryList<UserDto>(new { UserName = userName }, ConfigSettings.UserTable);
+                return connection.QueryList<User>(new { Account = account }, ConfigSettings.UserTable);
             }
         }
 

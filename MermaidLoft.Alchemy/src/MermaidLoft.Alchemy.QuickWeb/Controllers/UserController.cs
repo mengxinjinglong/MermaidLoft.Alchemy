@@ -4,10 +4,10 @@ using MermaidLoft.Alchemy.BaseDomain.UserDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
 using Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -87,10 +87,12 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             {
                 message = exception.Message;
             }
-            return new ResultMessage {
+            return new ResultMessage
+            {
                 Success = false,
                 Status = EnumStatus.Failure,
-                Message = "登陆失败，请确认账号或密码是否正确。" };
+                Message = string.IsNullOrEmpty(message) ? "登陆失败，请确认账号或密码是否正确。" : message
+            };
         }
         [HttpPost]
         [Authorize(Roles = "Users")]
@@ -185,6 +187,11 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 user.Status = EnumUserStatus.Normal;
                 user.UserType = EnumUserType.Normal;
                 user.Version = 0;
+                var userList = _queryService.FindUsers(user.Account);
+                if (userList!=null&&userList.Any())
+                {
+                    throw new Exception("用户账号已存在，请重新输入！");
+                }
                 var result = _service.Add(user);
                 return new ResultMessage
                 {

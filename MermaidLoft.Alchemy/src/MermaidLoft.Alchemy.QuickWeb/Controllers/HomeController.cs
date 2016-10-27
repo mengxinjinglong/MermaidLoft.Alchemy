@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http.Authentication;
+using System.Threading.Tasks;
 
 namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
@@ -34,7 +35,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             return View();
         }
 
-        public object Mysql()
+        public async Task<object> Mysql()
         {
             try
             {
@@ -50,7 +51,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 //    UserId= "0abf8ccf-3bde-4dac-b31f-5a43895f002e",
                 //    Version=0,
                 //});
-                return new UserQueryService().FindUsersForPage("%",1,10);
+                return await new UserQueryService().FindUsersForPageAsync("%",1,10);
             }
             catch (Exception exception)
             {

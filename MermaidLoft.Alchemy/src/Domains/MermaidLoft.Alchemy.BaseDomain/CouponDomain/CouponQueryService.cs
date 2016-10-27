@@ -2,32 +2,33 @@
 using MermaidLoft.Alchemy.Common;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain
 {
     public class CouponQueryService
     {
-        public Coupon FindCoupon(string couponId)
+        public async Task<Coupon> FindCouponAsync(string couponId)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryList<Coupon>(new { Id = couponId }, ConfigSettings.CouponTable).SingleOrDefault();
+                return (await connection.QueryListAsync<Coupon>(new { Id = couponId }, ConfigSettings.CouponTable)).SingleOrDefault();
             }
         }
 
-        public IEnumerable<Coupon> FindCoupons(string userId)
+        public async Task<IEnumerable<Coupon>> FindCouponsAsync(string userId)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryList<Coupon>(new { UserId = userId }, ConfigSettings.CouponTable);
+                return await connection.QueryListAsync<Coupon>(new { UserId = userId }, ConfigSettings.CouponTable);
             }
         }
 
-        public IEnumerable<Coupon> FindCouponsForPage(string title, int pageIndex, int pageSize)
+        public async Task<IEnumerable<Coupon>> FindCouponsForPageAsync(string title, int pageIndex, int pageSize)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.QueryPaged<Coupon>(null, ConfigSettings.CouponTable, "AddTime", pageIndex, pageSize);
+                return await connection.QueryPagedAsync<Coupon>(null, ConfigSettings.CouponTable, "AddTime", pageIndex, pageSize);
             }
         }
     }

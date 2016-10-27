@@ -22,7 +22,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
     public enum EnumUserType
     {
         Admin = 0,
-        Normal=1,
+        User =1,
     }
 
     public enum EnumUserStatus

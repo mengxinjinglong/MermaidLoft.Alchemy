@@ -1,31 +1,32 @@
 ﻿using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.Common;
+using System.Threading.Tasks;
 
 namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain
 {
     public class ProductService
     {
-        public bool Add(Product product)
+        public async Task<bool> AddAsync(Product product)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-               return connection.Insert(product, ConfigSettings.ProductTable) > 0;
+               return await connection.InsertAsync(product, ConfigSettings.ProductTable) > 0;
             }
         }
 
-        public bool Update(Product product)
+        public async Task<bool> UpdateAsync(Product product)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.Update(product, new { Id = product.Id }, ConfigSettings.ProductTable) > 0;
+                return await connection.UpdateAsync(product, new { Id = product.Id }, ConfigSettings.ProductTable) > 0;
             }
         }
 
-        public bool Delete(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.Delete(new { Id = id }, ConfigSettings.ProductTable) > 0;
+                return await connection.DeleteAsync(new { Id = id }, ConfigSettings.ProductTable) > 0;
             }
         }
     }

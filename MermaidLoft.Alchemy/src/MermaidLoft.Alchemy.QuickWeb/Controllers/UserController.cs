@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Authentication;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,7 +29,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         // GET: /<controller>/
         //[Authorize(Roles = "Users")]
         //[ValidateAntiForgeryToken]
-        [Authorize(Roles = "Users")]
+        [Authorize(Roles = UserType.User)]
         public IActionResult Index()
         {
             return View();
@@ -49,25 +50,31 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         #region Api
         [HttpPost]
-        public ResultMessage LoginOn([FromBody]User u)
+        public async Task<ResultMessage> LoginOn([FromBody]User u)
         {
             var message = "";
             try
             {
                 Ensure.NotNullOrEmpty(u.Account,"用户账号");
                 Ensure.NotNullOrEmpty(u.SecureCode,"密码");
-                var user = _queryService.FindUser(new { Account = u.Account });
+                var user = await _queryService.FindUserAsync(new { Account = u.Account });
                 if (user != null)
                 {
                     if (user.SecureCode == SecurityCodeUtil.Md5(u.SecureCode))
                     {
                         var claims = new List<Claim>();
                         claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-                        claims.Add(new Claim(ClaimTypes.Role, "Users"));
+                        claims.Add(new Claim(ClaimTypes.PrimarySid, user.Id));
+                        if (user.UserType == EnumUserType.Admin)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, UserType.Admin));
+                        }
+                        claims.Add(new Claim(ClaimTypes.Role, UserType.User));
                         var identity = new ClaimsIdentity(claims, "claimsLogin");
 
                         ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                        HttpContext.Authentication.SignInAsync("UserToken", principal,
+                        
+                        await HttpContext.Authentication.SignInAsync("UserToken", principal,
                          new AuthenticationProperties
                          {
                              ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
@@ -95,16 +102,16 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             };
         }
         [HttpPost]
-        [Authorize(Roles = "Users")]
-        public ResultMessage LoginOut()
+        [Authorize(Roles = UserType.User)]
+        public async Task<ResultMessage> LoginOut()
         {
-            HttpContext.Authentication.SignOutAsync("UserToken");
+            await HttpContext.Authentication.SignOutAsync("UserToken");
             return null;
         }
 
         [HttpGet]
-        [Authorize(Roles = "Users")]
-        public ResultMessage Get(string id)
+        [Authorize(Roles = UserType.User)]
+        public async Task<ResultMessage> Get(string id)
         {
             try
             {
@@ -112,7 +119,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = _queryService.FindUser(new { Id = id })
+                    Data = _queryService.FindUserAsync(new { Id = id })
                 };
             }
             catch(Exception exception)
@@ -126,8 +133,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
         }
         [HttpGet]
-        [Authorize(Roles = "Users")]
-        public ResultMessage GetPage(string userName,string account,int pageIndex, int pageSize)
+        [Authorize(Roles = UserType.Admin)]
+        public async Task<ResultMessage> GetPage(string userName,string account,int pageIndex, int pageSize)
         {
             try
             {
@@ -135,7 +142,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = _queryService.FindUsersForPage(userName,pageIndex,pageSize)
+                    Data = _queryService.FindUsersForPageAsync(userName,pageIndex,pageSize)
                 };
             }
             catch (Exception exception)
@@ -150,8 +157,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Users")]
-        public ResultMessage GetPage1(int pageIndex, int pageSize)
+        [Authorize(Roles = UserType.Admin)]
+        public async Task<ResultMessage> GetPage1(int pageIndex, int pageSize)
         {
             try
             {
@@ -174,8 +181,9 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Users")]
-        public ResultMessage Post([FromBody]User user)
+        [AllowAnonymous]
+        [Authorize(Roles = UserType.User)]
+        public async Task<ResultMessage> Post([FromBody]User user)
         {
             //没有添加[FromBody]，无法获取到user内容，user值为默认值 as user = new User();
             try
@@ -185,14 +193,13 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 user.AddTime = DateTime.Now;
                 user.LastLoginTime = DateTime.Now;
                 user.Status = EnumUserStatus.Normal;
-                user.UserType = EnumUserType.Normal;
+                user.UserType = EnumUserType.User;
                 user.Version = 0;
-                var userList = _queryService.FindUsers(user.Account);
-                if (userList!=null&&userList.Any())
-                {
-                    throw new Exception("用户账号已存在，请重新输入！");
-                }
-                var result = _service.Add(user);
+               
+                //验证
+                await new UserValidator().ValidatorAsync(_queryService,user);
+
+                var result = await _service.Add(user);
                 return new ResultMessage
                 {
                     Success = result,
@@ -212,12 +219,17 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         // PUT api/values/5
         [HttpPut]
-        [Authorize(Roles = "Users")]
-        public ResultMessage Put([FromBody]User user)
+        [Authorize(Roles = UserType.User)]
+        public async Task<ResultMessage> Put([FromBody]User user)
         {
             try
             {
-                var result = _service.Update(user);
+                if (HttpContext.User.HasClaim(item => item.Type == ClaimTypes.PrimarySid && item.Value != user.Id)
+                    && !HttpContext.User.Claims.Any(item=>item.Type==ClaimTypes.Role&&item.Value=="Admin"))
+                {
+                    throw new Exception("您无权操作非当前用户信息！");
+                }
+                var result = await _service.Update(user);
                 return new ResultMessage
                 {
                     Success = result,
@@ -238,12 +250,12 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         // DELETE api/values/5
         [HttpDelete]
         [Route("user/delete")]
-        [Authorize(Roles = "Users")]
-        public ResultMessage Delete(string id)
+        [Authorize(Roles = UserType.User)]
+        public async Task<ResultMessage> Delete(string id)
         {
             try
             {
-                var result = _service.Delete(id);
+                var result = await _service.Delete(id);
                 return new ResultMessage
                 {
                     Success = result,

@@ -1,31 +1,32 @@
 ﻿using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.Common;
+using System.Threading.Tasks;
 
 namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain
 {
     public class CouponService
     {
-        public bool Add(Coupon coupon)
+        public async Task<bool> AddAsync(Coupon coupon)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.Insert(coupon, ConfigSettings.CouponTable) > 0;
+                return await connection.InsertAsync(coupon, ConfigSettings.CouponTable) > 0;
             }
         }
 
-        public bool Update(Coupon coupon)
+        public async Task<bool> UpdateAsync(Coupon coupon)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-               return connection.Update(coupon, new { Id = coupon.Id }, ConfigSettings.CouponTable) > 0;
+               return await connection.UpdateAsync(coupon, new { Id = coupon.Id }, ConfigSettings.CouponTable) > 0;
             }
         }
 
-        public bool Delete(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return connection.Delete(new { Id = id }, ConfigSettings.CouponTable) > 0;
+                return await connection.DeleteAsync(new { Id = id }, ConfigSettings.CouponTable) > 0;
             }
         }
     }

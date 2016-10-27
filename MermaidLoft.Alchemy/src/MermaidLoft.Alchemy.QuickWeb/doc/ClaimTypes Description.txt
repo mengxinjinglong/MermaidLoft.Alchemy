@@ -1,0 +1,108 @@
+﻿System_CAPS_pubfieldSystem_CAPS_static	Actor	
+http://schemas.xmlsoap.org/ws/2009/09/identity/claims/actor。
+System_CAPS_pubfieldSystem_CAPS_static	Anonymous	
+指定匿名用户; 请求的 URIhttp://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous。
+System_CAPS_pubfieldSystem_CAPS_static	Authentication	
+指定关于标识是否进行身份验证详细信息的声明的 URI、 http://schemas.xmlsoap.org/ws/2005/05/identity/claims/authenticated 中。
+System_CAPS_pubfieldSystem_CAPS_static	AuthenticationInstant	
+指定的实体进行身份验证; 的时刻声明 URIhttp://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationinstant。
+System_CAPS_pubfieldSystem_CAPS_static	AuthenticationMethod	
+指定与该实体进行身份验证; 该方法声明 URIhttp://schemas.microsoft.com/ws/2008/06/identity/claims/authenticationmethod。
+System_CAPS_pubfieldSystem_CAPS_static	AuthorizationDecision	
+声明对实体; 指定的授权决定的 URIhttp://schemas.xmlsoap.org/ws/2005/05/identity/claims/authorizationdecision。
+System_CAPS_pubfieldSystem_CAPS_static	CookiePath	
+指定的 cookie 路径; 请求的 URIhttp://schemas.microsoft.com/ws/2008/06/identity/claims/cookiepath。
+System_CAPS_pubfieldSystem_CAPS_static	Country	
+Uri，该 URI 指定实体所在，http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country 国家/地区的声明。
+System_CAPS_pubfieldSystem_CAPS_static	DateOfBirth	
+指定实体的出生日期声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth。
+System_CAPS_pubfieldSystem_CAPS_static	DenyOnlyPrimaryGroupSid	
+指定对于实体; 仅拒绝主组 SID 声明 URIhttp://schemas.microsoft.com/ws/2008/06/identity/claims/denyonlyprimarygroupsid。 deny-only SID 禁止指定的实体访问可保护对象。
+System_CAPS_pubfieldSystem_CAPS_static	DenyOnlyPrimarySid	
+指定对于实体; 仅拒绝主 SID 声明 URIhttp://schemas.microsoft.com/ws/2008/06/identity/claims/denyonlyprimarysid。 deny-only SID 禁止指定的实体访问可保护对象。
+System_CAPS_pubfieldSystem_CAPS_static	DenyOnlySid	
+指定实体的 deny-only 安全标识符 (SID) 的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/denyonlysid。 deny-only SID 禁止指定的实体访问可保护对象。
+System_CAPS_pubfieldSystem_CAPS_static	DenyOnlyWindowsDeviceGroup	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/denyonlywindowsdevicegroup。
+System_CAPS_pubfieldSystem_CAPS_static	Dns	
+指定的 DNS 名称的声明的 URI 相关联的使用者备用名称的 X.509 证书、 颁发者为计算机名或 http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dns。
+System_CAPS_pubfieldSystem_CAPS_static	Dsa	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/dsa。
+System_CAPS_pubfieldSystem_CAPS_static	Email	
+声明的指定实体的电子邮件地址的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/email。
+System_CAPS_pubfieldSystem_CAPS_static	Expiration	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/expiration。
+System_CAPS_pubfieldSystem_CAPS_static	Expired	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/expired。
+System_CAPS_pubfieldSystem_CAPS_static	Gender	
+声明的指定实体的性别 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/gender。
+System_CAPS_pubfieldSystem_CAPS_static	GivenName	
+指定实体的给定名称的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname。
+System_CAPS_pubfieldSystem_CAPS_static	GroupSid	
+指定的实体的组的 SID 声明的 URI http://schemas.microsoft.com/ws/2008/06/identity/claims/groupsid。
+System_CAPS_pubfieldSystem_CAPS_static	Hash	
+指定哈希值的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/hash。
+System_CAPS_pubfieldSystem_CAPS_static	HomePhone	
+指定实体的住宅电话号码的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/homephone。
+System_CAPS_pubfieldSystem_CAPS_static	IsPersistent	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/ispersistent。
+System_CAPS_pubfieldSystem_CAPS_static	Locality	
+Uri，该 URI 指定实体所在的区域，http://schemas.xmlsoap.org/ws/2005/05/identity/claims/locality 的声明。
+System_CAPS_pubfieldSystem_CAPS_static	MobilePhone	
+指定实体的移动电话号码的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone。
+System_CAPS_pubfieldSystem_CAPS_static	Name	
+指定实体的名称的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name。
+System_CAPS_pubfieldSystem_CAPS_static	NameIdentifier	
+指定实体的名称的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier。
+System_CAPS_pubfieldSystem_CAPS_static	OtherPhone	
+指定实体的备用电话号码的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/otherphone。
+System_CAPS_pubfieldSystem_CAPS_static	PostalCode	
+指定实体的邮政编码声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/postalcode。
+System_CAPS_pubfieldSystem_CAPS_static	PrimaryGroupSid	
+指定主声明的 URI 组的实体的 SID http://schemas.microsoft.com/ws/2008/06/identity/claims/primarygroupsid。
+System_CAPS_pubfieldSystem_CAPS_static	PrimarySid	
+声明的指定实体的主 SID URI http://schemas.microsoft.com/ws/2008/06/identity/claims/primarysid。
+System_CAPS_pubfieldSystem_CAPS_static	Role	
+指定实体的角色声明的 URI http://schemas.microsoft.com/ws/2008/06/identity/claims/role。
+System_CAPS_pubfieldSystem_CAPS_static	Rsa	
+声明的指定 RSA 密钥，http://schemas.xmlsoap.org/ws/2005/05/identity/claims/rsa URI。
+System_CAPS_pubfieldSystem_CAPS_static	SerialNumber	
+声明的指定串行号、 http://schemas.microsoft.com/ws/2008/06/identity/claims/serialnumber URI。
+System_CAPS_pubfieldSystem_CAPS_static	Sid	
+指定一个安全标识符 (SID) 的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid。
+System_CAPS_pubfieldSystem_CAPS_static	Spn	
+指定服务主体名称 (SPN) 声明的 URI 声明，http://schemas.xmlsoap.org/ws/2005/05/identity/claims/spn。
+System_CAPS_pubfieldSystem_CAPS_static	StateOrProvince	
+指定的州或省市自治区的实体所在，http://schemas.xmlsoap.org/ws/2005/05/identity/claims/stateorprovince 声明 URI。
+System_CAPS_pubfieldSystem_CAPS_static	StreetAddress	
+声明的指定实体的街道地址的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/streetaddress。
+System_CAPS_pubfieldSystem_CAPS_static	Surname	
+声明的指定实体的姓氏 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname。
+System_CAPS_pubfieldSystem_CAPS_static	System	
+声明的标识系统实体的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/system。
+System_CAPS_pubfieldSystem_CAPS_static	Thumbprint	
+指定一个指纹的声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/thumbprint。 指纹是 X.509 证书的全局唯一 SHA-1 哈希。
+System_CAPS_pubfieldSystem_CAPS_static	Upn	
+指定用户主体名称 (UPN) 声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn。
+System_CAPS_pubfieldSystem_CAPS_static	Uri	
+指定一个 URI，声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri。
+System_CAPS_pubfieldSystem_CAPS_static	UserData	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata。
+System_CAPS_pubfieldSystem_CAPS_static	Version	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/version。
+System_CAPS_pubfieldSystem_CAPS_static	Webpage	
+声明的指定实体，该网页的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/webpage。
+System_CAPS_pubfieldSystem_CAPS_static	WindowsAccountName	
+指定 Windows 域帐户名称的实体的声明的 URI http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsaccountname。
+System_CAPS_pubfieldSystem_CAPS_static	WindowsDeviceClaim	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsdeviceclaim。
+System_CAPS_pubfieldSystem_CAPS_static	WindowsDeviceGroup	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsdevicegroup。
+System_CAPS_pubfieldSystem_CAPS_static	WindowsFqbnVersion	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsfqbnversion。
+System_CAPS_pubfieldSystem_CAPS_static	WindowsSubAuthority	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/windowssubauthority。
+System_CAPS_pubfieldSystem_CAPS_static	WindowsUserClaim	
+http://schemas.microsoft.com/ws/2008/06/identity/claims/windowsuserclaim。
+System_CAPS_pubfieldSystem_CAPS_static	X500DistinguishedName	
+X.509 证书的可分辨的名称声明的 URI http://schemas.xmlsoap.org/ws/2005/05/identity/claims/x500distinguishedname。 X.500 标准规定了用于定义使用的 X.509 证书的可分辨的名称的方法。

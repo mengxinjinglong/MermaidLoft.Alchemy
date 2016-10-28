@@ -16,14 +16,12 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
     public class UserController : Controller
     {
-        UserQueryService _queryService;
-        UserService _service;
-        public UserController()
+        private readonly IUserQueryService _queryService;
+        private readonly IUserService _service;
+        public UserController(IUserQueryService queryService, IUserService service)
         {
-            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            _queryService = new UserQueryService();
-            _service = new UserService();
-
+            _queryService = queryService;
+            _service = service;
         }
         #region View
         // GET: /<controller>/
@@ -166,7 +164,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = _queryService.FindUsersForPage(pageIndex, pageSize)
+                    Data = _queryService.FindUsersForPageAsync(pageIndex, pageSize)
                 };
             }
             catch (Exception exception)
@@ -199,7 +197,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 //验证
                 await new UserValidator().ValidatorAsync(_queryService,user);
 
-                var result = await _service.Add(user);
+                var result = await _service.AddAsync(user);
                 return new ResultMessage
                 {
                     Success = result,
@@ -229,7 +227,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     throw new Exception("您无权操作非当前用户信息！");
                 }
-                var result = await _service.Update(user);
+                var result = await _service.UpdateAsync(user);
                 return new ResultMessage
                 {
                     Success = result,
@@ -255,7 +253,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             try
             {
-                var result = await _service.Delete(id);
+                var result = await _service.DeleteAsync(id);
                 return new ResultMessage
                 {
                     Success = result,

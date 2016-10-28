@@ -7,7 +7,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
 {
     public class UserValidator
     {
-        public async Task<bool> ValidatorAsync(UserQueryService querySerice,User user)
+        public async Task<bool> ValidatorAsync(IUserQueryService querySerice,User user)
         {
             Ensure.NotNull(querySerice, "UserValidator.UserQueryService");
             Ensure.NotNull(user, "UserValidator.User");

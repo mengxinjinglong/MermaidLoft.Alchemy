@@ -2,15 +2,15 @@
 using MermaidLoft.Alchemy.Common;
 using System.Threading.Tasks;
 
-namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
+namespace MermaidLoft.Alchemy.BaseDomain.UserDomain.Implementation
 {
-    public class UserService
+    public class UserService: IUserService
     {
         public UserService()
         {
         }
 
-        public async Task<bool> Add(User user)
+        public async Task<bool> AddAsync(User user)
         {
             using (var connection =ConnectionConfig.Instance.GetConnection())
             {
@@ -18,7 +18,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
             }
         }
 
-        public async Task<bool> Update(User user)
+        public async Task<bool> UpdateAsync(User user)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
@@ -26,7 +26,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
             }
         }
 
-        public async Task<bool> Delete(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {

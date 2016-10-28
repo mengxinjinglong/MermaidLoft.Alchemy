@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain
+namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
 {
-    public class ProductQueryService
+    public class ProductQueryService:IProductQueryService
     {
         public async Task<Product> FindProductAsync(string productId)
         {

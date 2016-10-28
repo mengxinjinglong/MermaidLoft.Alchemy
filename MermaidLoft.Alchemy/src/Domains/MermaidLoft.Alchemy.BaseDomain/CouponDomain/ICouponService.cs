@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Threading.Tasks;
 
 namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain
 {
-    public class ICouponService
+    public interface ICouponService
     {
+        Task<bool> AddAsync(Coupon coupon);
+        Task<bool> UpdateAsync(Coupon coupon);
+        Task<bool> DeleteAsync(string id);
     }
 }

@@ -2,9 +2,9 @@
 using MermaidLoft.Alchemy.Common;
 using System.Threading.Tasks;
 
-namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain
+namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
 {
-    public class CouponService
+    public class CouponService: ICouponService
     {
         public async Task<bool> AddAsync(Coupon coupon)
         {

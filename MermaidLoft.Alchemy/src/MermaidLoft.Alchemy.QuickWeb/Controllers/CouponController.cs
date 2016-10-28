@@ -13,13 +13,12 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
     public class CouponController : Controller
     {
-        CouponQueryService _queryService;
-        CouponService _service;
-        public CouponController()
+        private readonly ICouponQueryService _queryService;
+        private readonly ICouponService _service;
+        public CouponController(ICouponQueryService queryService, ICouponService service)
         {
-            _queryService = new CouponQueryService();
-            _service = new CouponService();
-
+            _queryService = queryService;
+            _service = service;
         }
 
         #region View

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain
+namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
 {
-    public class CouponQueryService
+    public class CouponQueryService:ICouponQueryService
     {
         public async Task<Coupon> FindCouponAsync(string couponId)
         {

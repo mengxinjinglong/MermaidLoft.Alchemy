@@ -2,9 +2,9 @@
 using MermaidLoft.Alchemy.Common;
 using System.Threading.Tasks;
 
-namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain
+namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
 {
-    public class ProductService
+    public class ProductService:IProductService
     {
         public async Task<bool> AddAsync(Product product)
         {

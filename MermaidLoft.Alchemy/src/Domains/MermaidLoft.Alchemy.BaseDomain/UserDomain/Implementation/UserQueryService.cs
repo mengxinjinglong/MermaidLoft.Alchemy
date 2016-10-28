@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
+namespace MermaidLoft.Alchemy.BaseDomain.UserDomain.Implementation
 {
-    public class UserQueryService
+    public class UserQueryService: IUserQueryService
     {
         public async Task<User> FindUserAsync(object condition)
         {
@@ -33,7 +33,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
             }
         }
 
-        public async Task<IEnumerable<User>> FindUsersForPage(int pageIndex, int pageSize)
+        public async Task<IEnumerable<User>> FindUsersForPageAsync(int pageIndex, int pageSize)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {

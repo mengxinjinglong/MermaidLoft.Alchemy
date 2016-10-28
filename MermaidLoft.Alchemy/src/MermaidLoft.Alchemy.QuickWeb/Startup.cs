@@ -5,9 +5,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MermaidLoft.Alchemy.Common;
 using Infrastructure.Dapper;
-using System.Collections.Generic;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using MermaidLoft.Alchemy.BaseDomain.UserDomain;
+using MermaidLoft.Alchemy.BaseDomain.UserDomain.Implementation;
+using MermaidLoft.Alchemy.BaseDomain.ProductDomain;
+using MermaidLoft.Alchemy.BaseDomain.CouponDomain;
+using MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation;
+using MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation;
+using System;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -27,15 +35,36 @@ namespace MermaidLoft.Alchemy.QuickWeb
         }
 
         public IConfigurationRoot Configuration { get; }
+        public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-           // services.AddIdentity<User, IdentityRole>();
+            // services.AddIdentity<User, IdentityRole>();
 
+            //services.AddSingleton<IUserService,UserService>();
+            //services.AddSingleton<IUserQueryService, UserQueryService>();
+            //services.AddSingleton<IProductService, ProductService>();
+            //services.AddSingleton<IProductQueryService, ProductQueryService>();
+            //services.AddSingleton<ICouponService, CouponService>();
+            //services.AddSingleton<ICouponQueryService, CouponQueryService>();
 
             // Add framework services.
             services.AddMvc();
+            var builder = new ContainerBuilder();
+            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            builder.RegisterType<UserQueryService>().As<IUserQueryService>().SingleInstance();
+            builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
+            builder.RegisterType<ProductQueryService>().As<IProductQueryService>().SingleInstance();
+            builder.RegisterType<CouponService>().As<ICouponService>().SingleInstance();
+            builder.RegisterType<CouponQueryService>().As<ICouponQueryService>().SingleInstance();
+
+            //builder.RegisterAssemblyTypes(new Assembly[] {
+            //    Assembly.Load(new AssemblyName("MermaidLoft.Alchemy.BaseDomain"))
+            //}).As(t => t.GetInterfaces()[0]);
+            builder.Populate(services);
+            ApplicationContainer = builder.Build();
+            return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

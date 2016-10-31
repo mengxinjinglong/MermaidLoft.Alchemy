@@ -6,16 +6,11 @@ using Microsoft.Extensions.Logging;
 using MermaidLoft.Alchemy.Common;
 using Infrastructure.Dapper;
 using Microsoft.AspNetCore.Http;
-using MermaidLoft.Alchemy.BaseDomain.UserDomain;
-using MermaidLoft.Alchemy.BaseDomain.UserDomain.Implementation;
-using MermaidLoft.Alchemy.BaseDomain.ProductDomain;
-using MermaidLoft.Alchemy.BaseDomain.CouponDomain;
-using MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation;
-using MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation;
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Linq;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -52,16 +47,22 @@ namespace MermaidLoft.Alchemy.QuickWeb
             // Add framework services.
             services.AddMvc();
             var builder = new ContainerBuilder();
-            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
-            builder.RegisterType<UserQueryService>().As<IUserQueryService>().SingleInstance();
-            builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
-            builder.RegisterType<ProductQueryService>().As<IProductQueryService>().SingleInstance();
-            builder.RegisterType<CouponService>().As<ICouponService>().SingleInstance();
-            builder.RegisterType<CouponQueryService>().As<ICouponQueryService>().SingleInstance();
+            //builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            //builder.RegisterType<UserQueryService>().As<IUserQueryService>().SingleInstance();
+            //builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();
+            //builder.RegisterType<ProductQueryService>().As<IProductQueryService>().SingleInstance();
+            //builder.RegisterType<CouponService>().As<ICouponService>().SingleInstance();
+            //builder.RegisterType<CouponQueryService>().As<ICouponQueryService>().SingleInstance();
+
+            builder.RegisterAssemblyTypes(new Assembly[] {
+                Assembly.Load(new AssemblyName("MermaidLoft.Alchemy.BaseDomain"))
+            })//.Where(item =>item.Name.EndsWith("Service"))
+              .AsImplementedInterfaces();//仅仅注册实现接口class的type
 
             //builder.RegisterAssemblyTypes(new Assembly[] {
             //    Assembly.Load(new AssemblyName("MermaidLoft.Alchemy.BaseDomain"))
-            //}).As(t => t.GetInterfaces()[0]);
+            //});//注册dll中class的type，不包括interface
+
             builder.Populate(services);
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);
@@ -93,7 +94,7 @@ namespace MermaidLoft.Alchemy.QuickWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
@@ -103,7 +104,7 @@ namespace MermaidLoft.Alchemy.QuickWeb
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-        
+
     }
 
 }

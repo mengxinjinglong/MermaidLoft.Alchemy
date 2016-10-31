@@ -57,7 +57,8 @@ namespace MermaidLoft.Alchemy.QuickWeb
             builder.RegisterAssemblyTypes(new Assembly[] {
                 Assembly.Load(new AssemblyName("MermaidLoft.Alchemy.BaseDomain"))
             })//.Where(item =>item.Name.EndsWith("Service"))
-              .AsImplementedInterfaces();//仅仅注册实现接口class的type
+              .AsImplementedInterfaces()
+              .SingleInstance();//仅仅注册实现接口class的type
 
             //builder.RegisterAssemblyTypes(new Assembly[] {
             //    Assembly.Load(new AssemblyName("MermaidLoft.Alchemy.BaseDomain"))

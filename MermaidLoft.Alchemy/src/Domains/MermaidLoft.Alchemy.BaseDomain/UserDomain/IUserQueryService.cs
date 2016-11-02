@@ -8,6 +8,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain
         Task<User> FindUserAsync(object condition);
         Task<IEnumerable<User>> FindUsersAsync(string account);
         Task<IEnumerable<User>> FindUsersForPageAsync(string userName, int pageIndex, int pageSize);
+        Task<int> GetCountAsync(string userName);
         Task<IEnumerable<User>> FindUsersForPageAsync(int pageIndex, int pageSize);
     }
 }

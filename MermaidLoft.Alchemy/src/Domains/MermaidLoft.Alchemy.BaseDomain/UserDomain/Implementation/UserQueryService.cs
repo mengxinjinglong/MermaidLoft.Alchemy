@@ -29,7 +29,25 @@ namespace MermaidLoft.Alchemy.BaseDomain.UserDomain.Implementation
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return await connection.QueryPagedAsync<User>(new { UserName = userName }, ConfigSettings.UserTable,"UserName",pageIndex,pageSize);
+                var sql = string.Format("SELECT * FROM {0} {1} limit {2},{3}",
+                    ConfigSettings.UserTable, 
+                    string.IsNullOrEmpty(userName) ?
+                        "" : " where UserName = @UserName ",
+                    (pageIndex - 1) * pageSize, pageSize);
+                return await connection.QueryAsync<User>(sql, 
+                    string.IsNullOrEmpty(userName) ?
+                        null : new { UserName = userName });
+            }
+        }
+
+        public async Task<int> GetCountAsync(string userName)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                return await connection.GetCountAsync(
+                    string.IsNullOrEmpty(userName) ?
+                        null : new { UserName = userName },
+                    ConfigSettings.UserTable);
             }
         }
 

@@ -11,6 +11,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Linq;
+using MermaidLoft.Alchemy.QuickWeb.Core;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -46,7 +47,8 @@ namespace MermaidLoft.Alchemy.QuickWeb
 
             // Add framework services.
             services.AddMvc();
-            var builder = new ContainerBuilder();
+            var builder = new ContainerBuilder(); 
+            builder.RegisterType<AuthorizeValidator>().As<IAuthorizeValidator>().SingleInstance();
             //builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             //builder.RegisterType<UserQueryService>().As<IUserQueryService>().SingleInstance();
             //builder.RegisterType<ProductService>().As<IProductService>().SingleInstance();

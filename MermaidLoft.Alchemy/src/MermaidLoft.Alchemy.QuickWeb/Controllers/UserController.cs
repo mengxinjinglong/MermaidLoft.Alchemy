@@ -18,16 +18,20 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
     {
         private readonly IUserQueryService _queryService;
         private readonly IUserService _service;
-        public UserController(IUserQueryService queryService, IUserService service)
+        private readonly IAuthorizeValidator _authorizeValidator;
+        public UserController(IUserQueryService queryService, 
+            IUserService service,
+            IAuthorizeValidator authorizeValidator)
         {
             _queryService = queryService;
             _service = service;
+            _authorizeValidator = authorizeValidator;
         }
         #region View
         // GET: /<controller>/
         //[Authorize(Roles = "Users")]
         //[ValidateAntiForgeryToken]
-        [Authorize(Roles = UserType.User)]
+        [Authorize(Roles = UserType.Admin)]
         public IActionResult Index()
         {
             return View();
@@ -36,12 +40,20 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("index","home");
+            }
             return View();
         }
 
         [AllowAnonymous]
         public IActionResult Register()
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("index", "home");
+            }
             return View();
         }
         #endregion
@@ -113,6 +125,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             try
             {
+                await _authorizeValidator.ValidateSelfOperationAsync(HttpContext.User,id);
+
                 return new ResultMessage
                 {
                     Success = true,
@@ -140,6 +154,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
+                    TotalCount = await _queryService.GetCountAsync(userName),
                     Data = _queryService.FindUsersForPageAsync(userName,pageIndex,pageSize)
                 };
             }
@@ -164,7 +179,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = _queryService.FindUsersForPageAsync(pageIndex, pageSize)
+                    TotalCount = await _queryService.GetCountAsync(""),
+                    Data = _queryService.FindUsersForPageAsync("",pageIndex, pageSize)
                 };
             }
             catch (Exception exception)
@@ -222,11 +238,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             try
             {
-                if (HttpContext.User.HasClaim(item => item.Type == ClaimTypes.PrimarySid && item.Value != user.Id)
-                    && !HttpContext.User.Claims.Any(item=>item.Type==ClaimTypes.Role&&item.Value=="Admin"))
-                {
-                    throw new Exception("您无权操作非当前用户信息！");
-                }
+                await _authorizeValidator.ValidateSelfOperationAsync(HttpContext.User,user.Id);
+
                 var result = await _service.UpdateAsync(user);
                 return new ResultMessage
                 {
@@ -248,11 +261,16 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         // DELETE api/values/5
         [HttpDelete]
         [Route("user/delete")]
-        [Authorize(Roles = UserType.User)]
+        [Authorize(Roles = UserType.Admin)]
         public async Task<ResultMessage> Delete(string id)
         {
             try
             {
+                if (await _authorizeValidator.ValidateSelfAsync(HttpContext.User, id))
+                {
+                    throw new Exception("您无法删除当前登陆用户！");
+                }
+
                 var result = await _service.DeleteAsync(id);
                 return new ResultMessage
                 {

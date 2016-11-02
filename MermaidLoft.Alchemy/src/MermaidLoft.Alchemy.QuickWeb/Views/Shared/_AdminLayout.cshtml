@@ -140,12 +140,15 @@ table tr:nth-child(even) {
                                 <span class="arrow"></span>
                             </a>
                         </li>
-                        <li class="menu-dropdown mega-menu-dropdown">
-                            <a href="/user/index">
-                                用户管理
-                                <span class="arrow"></span>
-                            </a>
-                        </li>
+                        @if (ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"])
+                        {
+                            <li class="menu-dropdown mega-menu-dropdown">
+                                <a href="/user/index">
+                                    用户管理
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
+                        }
                         <li class="menu-dropdown classic-menu-dropdown ">
                             <a href="/coupon/index">
                                 优惠券

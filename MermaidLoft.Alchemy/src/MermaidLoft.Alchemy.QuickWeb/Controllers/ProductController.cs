@@ -13,10 +13,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
     {
         private readonly IProductQueryService _queryService;
         private readonly IProductService _service;
-        public ProductController(IProductQueryService queryService, IProductService service)
+        private readonly IAuthorizeValidator _authorizeValidator;
+        public ProductController(IProductQueryService queryService, 
+            IProductService service,
+            IAuthorizeValidator authorizeValidator)
         {
             _queryService = queryService;
             _service = service;
+            _authorizeValidator = authorizeValidator;
         }
 
         #region VIEW

@@ -24,6 +24,7 @@ namespace Infrastructure.Spider
             response.EnsureSuccessStatusCode();
             byte[] contentBytes = response.Content.ReadAsByteArrayAsync().Result;
             Encoding htmlCharset = Encoding.GetEncoding(encodingName);
+            
             return htmlCharset.GetString(contentBytes);
         }
     }

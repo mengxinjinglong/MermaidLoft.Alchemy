@@ -121,7 +121,7 @@
                 $http.post('/user/post', $scope.user).success(function (response) {
                     if (response.status == 0) {
                         alter(response);
-                        //window.location.href = 'index';
+                        window.location.href = 'index';
                     } else {
                         alert(response.message);
                     }

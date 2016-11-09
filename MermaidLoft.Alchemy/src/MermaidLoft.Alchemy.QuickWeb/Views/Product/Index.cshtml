@@ -174,7 +174,7 @@
         $scope.pageItems = null;
 
         $scope.refreshPage = function () {
-            $http.get("/product/getpage?pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize).success(function (response) {
+            $http.get("/product/getpage?pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize+"&userId="+'@ViewData["userId"]').success(function (response) {
                 console.log(response.data);
                 $scope.pageItems = response.data;
             }).error(function (response) {
@@ -211,8 +211,8 @@
 
         $scope.save = function () {
             console.log($scope.product);
-            $scope.product.userId = "1";
             if ($scope.product.id == null || $scope.product.id.length == 0) {
+                $scope.product.userId = '@ViewData["userId"]';
                 $http.post('/product/post', $scope.product).success(function (response) {
                     if (response.status == 0) {
                         alert("新增成功！");

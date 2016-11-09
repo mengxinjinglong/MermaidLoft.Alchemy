@@ -24,11 +24,20 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
             }
         }
 
-        public async Task<IEnumerable<Coupon>> FindCouponsForPageAsync(string title, int pageIndex, int pageSize)
+        public async Task<IEnumerable<Coupon>> FindCouponsForPageAsync(string userId, string title, int pageIndex, int pageSize)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return await connection.QueryPagedAsync<Coupon>(null, ConfigSettings.CouponTable, "AddTime", pageIndex, pageSize);
+                object condition;
+                if (string.IsNullOrEmpty(title))
+                {
+                    condition = new { UserId = userId };
+                }
+                else
+                {
+                    condition = new { UserId = userId, Title = title };
+                }
+                return await connection.QueryPagedAsync<Coupon>(condition, ConfigSettings.CouponTable, "AddTime", pageIndex, pageSize);
             }
         }
     }

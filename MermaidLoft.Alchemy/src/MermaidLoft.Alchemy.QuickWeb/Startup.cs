@@ -12,6 +12,7 @@ using Autofac.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Linq;
 using MermaidLoft.Alchemy.QuickWeb.Core;
+using System.Text;
 
 namespace MermaidLoft.Alchemy.QuickWeb
 {
@@ -44,7 +45,8 @@ namespace MermaidLoft.Alchemy.QuickWeb
             //services.AddSingleton<IProductQueryService, ProductQueryService>();
             //services.AddSingleton<ICouponService, CouponService>();
             //services.AddSingleton<ICouponQueryService, CouponQueryService>();
-
+            //注册EncodingProvider，默认情况下均不支持，引入System.Text.Encoding.CodePages
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             // Add framework services.
             services.AddMvc();
             var builder = new ContainerBuilder(); 

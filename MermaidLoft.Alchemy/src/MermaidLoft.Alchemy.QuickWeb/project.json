@@ -32,7 +32,8 @@
     "Microsoft.AspNetCore.Authorization": "1.0.0",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Identity": "1.0.0",
-    "Autofac.Extensions.DependencyInjection": "4.0.0" },
+    "Autofac.Extensions.DependencyInjection": "4.0.0",
+    "System.Text.Encoding.CodePages": "4.0.1" },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

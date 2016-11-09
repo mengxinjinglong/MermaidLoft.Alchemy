@@ -114,8 +114,12 @@
                             <!-- END USER LOGIN DROPDOWN -->
                             <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                             <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                                <span class="sr-only">Toggle Quick Sidebar</span>
-                                <i class="icon-logout"></i>
+                                <form asp-area="" asp-controller="User" asp-action="LoginOff" method="post" id="logoutForm" class="navbar-right">
+                                    <button type="submit" style="list-style:none;">
+                                        <span class="sr-only">Toggle Quick Sidebar</span>
+                                        <i class="icon-logout"></i>
+                                    </button>
+                                </form>
                             </li>
                             <!-- END QUICK SIDEBAR TOGGLER -->
 }

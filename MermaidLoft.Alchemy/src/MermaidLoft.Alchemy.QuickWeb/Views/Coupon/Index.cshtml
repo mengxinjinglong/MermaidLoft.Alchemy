@@ -239,7 +239,7 @@
         $scope.pageItems = null;
 
         $scope.refreshPage = function () {
-            $http.get("/coupon/getpage?pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize).success(function (response) {
+            $http.get("/coupon/getpage?title=&pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize+"&userId="+'@ViewData["userId"]').success(function (response) {
                 console.log(response.data);
                 $scope.pageItems = response.data;
             }).error(function (response) {
@@ -295,10 +295,11 @@
             });
         };
 
+
         $scope.save = function () {
             console.log($scope.coupon);
-            $scope.coupon.userId = "1";
             if ($scope.coupon.id == null || $scope.coupon.id.length == 0) {
+                $scope.coupon.userId = '@ViewData["userId"]';
                 $http.post('/coupon/post', $scope.coupon).success(function (response) {
                     if (response.status == 0) {
                         alert("新增成功！");

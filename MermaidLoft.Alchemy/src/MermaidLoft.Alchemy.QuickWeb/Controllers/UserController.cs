@@ -56,6 +56,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        [Authorize(Roles = UserType.User)]
+        public async Task<IActionResult> LoginOff()
+        {
+            await HttpContext.Authentication.SignOutAsync("UserToken");
+            return RedirectToAction("index", "home");
+        }
         #endregion
 
         #region Api

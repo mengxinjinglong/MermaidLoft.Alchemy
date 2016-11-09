@@ -3,6 +3,8 @@ using MermaidLoft.Alchemy.QuickWeb.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -28,6 +30,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         [Authorize(Roles = UserType.User)]
         public IActionResult Index()
         {
+            ViewData["userId"] = HttpContext.User.Claims.FirstOrDefault(item=> item.Type == ClaimTypes.PrimarySid).Value;
             return View();
         }
         
@@ -59,7 +62,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
         [HttpGet]
         [Authorize(Roles = UserType.User)]
-        public async Task<ResultMessage> GetPage(string productName, int pageIndex, int pageSize)
+        public async Task<ResultMessage> GetPage(string userId,string productName, int pageIndex, int pageSize)
         {
             try
             {
@@ -67,7 +70,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = await _queryService.FindProductsForPageAsync(productName, pageIndex, pageSize)
+                    Data = await _queryService.FindProductsForPageAsync(userId,productName, pageIndex, pageSize)
                 };
             }
             catch (Exception exception)

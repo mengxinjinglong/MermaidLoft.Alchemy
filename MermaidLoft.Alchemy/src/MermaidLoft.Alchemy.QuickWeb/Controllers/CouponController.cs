@@ -6,6 +6,8 @@ using Infrastructure.Spider;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,6 +32,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         [Authorize(Roles = UserType.User)]
         public IActionResult Index()
         {
+            ViewData["userId"] = HttpContext.User.Claims.FirstOrDefault(item=> item.Type == ClaimTypes.PrimarySid).Value;
             return View();
         }
         #endregion
@@ -61,7 +64,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         [HttpGet]
 
         //[Authorize(Roles = UserType.User)]
-        public async Task<ResultMessage> GetPage(string title, int pageIndex, int pageSize)
+        public async Task<ResultMessage> GetPage(string userId,string title, int pageIndex, int pageSize)
         {
             try
             {
@@ -69,7 +72,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    Data = await _queryService.FindCouponsForPageAsync(title, pageIndex, pageSize)
+                    Data = await _queryService.FindCouponsForPageAsync(userId,title, pageIndex, pageSize)
                 };
             }
             catch (Exception exception)
@@ -90,7 +93,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             try
             {
                 var spider = new SpiderClient();
-                var htmlContent = spider.LoadHtml(url);
+                var htmlContent = spider.LoadHtml(url, "GB2312");
                 var content = Regex.Match(htmlContent, "<section class=\"bd\">[\\s\\S]*?</section>").Value;
                 var coupon = new Coupon();
                 coupon.BaseUrl = url;

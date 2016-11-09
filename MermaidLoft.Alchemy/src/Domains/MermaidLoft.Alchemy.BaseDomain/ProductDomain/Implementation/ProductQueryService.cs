@@ -24,11 +24,20 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
             }
         }
 
-        public async Task<IEnumerable<Product>> FindProductsForPageAsync(string productName, int pageIndex, int pageSize)
+        public async Task<IEnumerable<Product>> FindProductsForPageAsync(string userId, string productName, int pageIndex, int pageSize)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                return await connection.QueryPagedAsync<Product>(null, ConfigSettings.ProductTable, "ProductName", pageIndex, pageSize);
+                object condition ;
+                if (string.IsNullOrEmpty(productName))
+                {
+                    condition = new { UserId = userId };
+                }
+                else
+                {
+                    condition = new { UserId = userId, ProductName = productName };
+                }
+                return await connection.QueryPagedAsync<Product>(condition, ConfigSettings.ProductTable, "ProductName", pageIndex, pageSize);
             }
         }
     }

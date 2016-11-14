@@ -1,4 +1,5 @@
-﻿using Infrastructure.Dapper;
+﻿using Dapper;
+using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
 {
-    public class ProductQueryService:IProductQueryService
+    public class ProductQueryService : IProductQueryService
     {
         public async Task<Product> FindProductAsync(string productId)
         {
@@ -28,7 +29,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
-                object condition ;
+                object condition;
                 if (string.IsNullOrEmpty(productName))
                 {
                     condition = new { UserId = userId };
@@ -38,6 +39,24 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
                     condition = new { UserId = userId, ProductName = productName };
                 }
                 return await connection.QueryPagedAsync<Product>(condition, ConfigSettings.ProductTable, "ProductName", pageIndex, pageSize);
+            }
+        }
+
+        public async Task<IEnumerable<Product>> SearchProductsForPageAsync(string productName, int pageIndex, int pageSize)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                string conditionSql = string.Empty;
+                object condition = null;
+                if (string.IsNullOrEmpty(productName))
+                {
+                    condition = new { ProductName = string.Format("%{0}%",productName) };
+                    conditionSql = " where ProductName like @ProductName ";
+                }
+                var sql = string.Format("SELECT * FROM {0} {1} limit {2},{3}",
+                        ConfigSettings.ProductTable,conditionSql,
+                        (pageIndex - 1) * pageSize, pageSize);
+                return await connection.QueryAsync<Product>(sql,condition);
             }
         }
     }

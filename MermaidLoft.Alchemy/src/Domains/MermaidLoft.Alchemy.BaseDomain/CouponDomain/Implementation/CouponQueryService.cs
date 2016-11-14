@@ -1,4 +1,5 @@
-﻿using Infrastructure.Dapper;
+﻿using Dapper;
+using Infrastructure.Dapper;
 using MermaidLoft.Alchemy.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,24 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
                     condition = new { UserId = userId, Title = title };
                 }
                 return await connection.QueryPagedAsync<Coupon>(condition, ConfigSettings.CouponTable, "AddTime", pageIndex, pageSize);
+            }
+        }
+
+        public async Task<IEnumerable<Coupon>> SearchCouponsForPageAsync(string shopName, int pageIndex, int pageSize)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                string conditionSql = string.Empty;
+                object condition = null;
+                if (string.IsNullOrEmpty(shopName))
+                {
+                    condition = new { ShopName = string.Format("%{0}%", shopName) };
+                    conditionSql = " where ShopName like @ShopName ";
+                }
+                var sql = string.Format("SELECT * FROM {0} {1} limit {2},{3}",
+                        ConfigSettings.CouponTable, conditionSql,
+                        (pageIndex - 1) * pageSize, pageSize);
+                return await connection.QueryAsync<Coupon>(sql, condition);
             }
         }
     }

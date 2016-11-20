@@ -4,6 +4,7 @@
 /// <reference path="js/datatables.bootstrap.js" />
 /// <reference path="js/datatables.min.js" />
 /// <reference path="js/jquery.custom.msgbox.js" />
+/// <reference path="js/jquery.infinitescroll.min.js" />
 /// <reference path="js/jquery.min.js" />
 /// <reference path="js/jquery.slimscroll.min.js" />
 /// <reference path="js/modal.js" />

@@ -17,10 +17,13 @@
         <link rel="stylesheet" href="~/css/layout.min.css">
         <link rel="stylesheet" href="~/css/default.min.css">
 
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/waterfall/reset.css">
+        <link rel="stylesheet" href="~/css/waterfall/waterfall.css">
+
+        @*<link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/neat.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/font_1467774138_8826983.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/font_1467774138_8826983.css" asp-append-version="true" />*@
         
         <script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
     </environment>
@@ -151,50 +154,20 @@ else
         <!-- BEGIN HEADER MENU -->
         <div class="page-header-menu">
             <div class="container">
-                <!-- BEGIN HEADER SEARCH BOX -->
-                <form class="search-form" action="page_general_search.html" method="GET">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="query">
-                        <span class="input-group-btn">
-                            <a href="javascript:;" class="btn submit">
-                                <i class="icon-magnifier"></i>
-                            </a>
-                        </span>
-                    </div>
-                </form>
-                <!-- END HEADER SEARCH BOX -->
                 <!-- BEGIN MEGA MENU -->
                 <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
                 <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
                 <div class="hor-menu  ">
                     <ul class="nav navbar-nav">
                         <li class="menu-dropdown classic-menu-dropdown active">
-                            <a href="javascript:;">
+                            <a href="/home/index">
                                 首页
                                 <span class="arrow"></span>
                             </a>
                         </li>
                         <li class="menu-dropdown mega-menu-dropdown">
-                            <a href="/coupon/index">
-                                优惠券
-                                <span class="arrow"></span>
-                            </a>
-                        </li>
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                Layouts
-                                <span class="arrow"></span>
-                            </a>
-                        </li>
-                        <li class="menu-dropdown mega-menu-dropdown  mega-menu-full">
-                            <a href="javascript:;">
-                                Components
-                                <span class="arrow"></span>
-                            </a>
-                        </li>
-                        <li class="menu-dropdown classic-menu-dropdown ">
-                            <a href="javascript:;">
-                                More
+                            <a href="/home/products">
+                                推荐宝贝
                                 <span class="arrow"></span>
                             </a>
                         </li>
@@ -221,11 +194,11 @@ else
             <a href="#">Purchase Metronic!</a>
         </div>
     </div>
-    <environment names="Development">
+    @*<environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        @*<script src="~/js/angular.min.js" asp-append-version="true"></script>*@
+        <script src="~/js/angular.min.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js"
@@ -235,8 +208,8 @@ else
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-        @*<script src="~/js/angular.min.js" asp-append-version="true"></script>*@
-    </environment>
+        <script src="~/js/angular.min.js" asp-append-version="true"></script>
+    </environment>*@
 
 
     @RenderSection("scripts", required: false)

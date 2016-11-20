@@ -93,7 +93,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             try
             {
                 var spider = new SpiderClient();
-                var htmlContent = spider.LoadHtml(url, "GB2312");
+                var htmlContent = spider.LoadHtml(url);
                 var content = Regex.Match(htmlContent, "<section class=\"bd\">[\\s\\S]*?</section>").Value;
                 var coupon = new Coupon();
                 coupon.BaseUrl = url;

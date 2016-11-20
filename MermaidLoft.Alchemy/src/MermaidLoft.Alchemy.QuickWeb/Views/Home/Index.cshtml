@@ -1,602 +1,118 @@
-﻿@{
+﻿@using MermaidLoft.Alchemy.QuickWeb.Models;
+@model CouponsListViewModel
+@{
     ViewData["Title"] = "首页";
 }
 
-<div ng-app="alchemyApp" ng-controller="imageShowController">
-    <div class="search-result-wrap search-result-wrap-block clearfix" id="pageList">
-        <div class="block-search-box tag-wrap"   ng-repeat="item in productItems">
-            <div class="pic-box" p-id="734">
-                <a class="search-box-img img-loaded" href="{{item.auctionUrl}}" target="_blank" goldclick="true"
-                   p-id="735"><span class="empty-icon-bg" p-id="736"></span><img src="{{item.pictUrl}}" p-id="737"></a>
-            </div>
-            <div class="box-content" _ie_fix_="" mx-mouseenter="showContent()" mx-mouseleave="hideContent()" p-id="738">
-                <div class="content-line" p-id="739">
-                    <a class="color-m content-title" href="{{item.auctionUrl}}" target="_blank" title="{{item.title}}"
-                       goldclick="true" data-spm-click="gostr=/alimama.11;locaid=d5d3d3cdd;itemid=526404708154&amp;pvid=10_61.153.225.150_441_1474180557628&amp;actionid=1000"
-                       p-id="740" data-spm-anchor-id="a219t.7900221/10.1998910419.116"><span p-id="742">{{item.title}}</span></a>
-                </div>
+<style type="text/css">
+    .box {
+        float: left;
+        width: 270px;
+        border: 2px solid hsla(0, 0%, 0%, 0.5);
+        font-family: 微软雅黑, 'Lucida Grande', 'Lucida Sans', Helvetica, Arial, Sans;
+        margin: 0 6px 10px;
+        background: #fff;
+        border-radius: 3px;
+        position: relative;
+        overflow: hidden;
+        border: solid 1px #BCBCBC;
+        box-shadow: 0 0 10px #BCBCBC;
+    }
 
+        .box .li-title {
+            padding: 5px 0;
+            max-height: 48px;
+            overflow: hidden;
+            line-height: 24px;
+            color: #898686;
+            background: #fff;
+            border-bottom: solid 1px #DBDBDB;
+        }
+        .box .bottom {
+            padding: 5px 0;
+            max-height: 48px;
+            overflow: hidden;
+            line-height: 24px;
+            color: #898686;
+            background: #fff;
+            border-bottom: solid 1px #DBDBDB;
+        }
+
+            .box .li-title:before {
+                border-color: rgba(0,0,0,0) rgba(0,0,0,0) #EEE;
+                border-style: solid;
+                border-width: 10px;
+                content: "";
+                display: block;
+                position: absolute;
+                margin: -24px 0 0 10px;
+                width: 0;
+            }
+
+        .box .description {
+            padding: 5px 0;
+            max-height: 200px;
+            overflow: hidden;
+            line-height: 22px;
+            color: #898686;
+            text-indent: 10px;
+            background: #fff;
+            border-bottom: solid 1px #DBDBDB;
+        }
+</style>
+
+    <div class="row container" style="border-bottom: solid 1px #DBDBDB;margin-bottom:18px;">
+        <div class="col-lg-3">
+            <div class="input-group">
+                <a class="navbar-brand" href="#"></a>
             </div>
-            <div class="box-shop-info dxjh-guide-show" p-id="797">
-                <span class="shop-title" _ie_fix_="" mx-mouseenter="showShopInfo(938198529,1)" mx-mouseleave="hideShopInfo(938198529)"
-                      p-id="798">
-                    <span class="shop-hd" p-id="799">
-                        <span class="pubfont icon-dianpu shop-icon" p-id="800"></span>
-                        <a vclick-ignore="true" title="点击进入店铺推广详情页" href="/myunion.htm?#!/promo/self/shop_detail?userNumberId=938198529" data-spm-click="gostr=/alimama.11;locaid=dab027959"
-                           target="_blank" p-id="801" data-spm-anchor-id="a219t.7900221/10.1998910419.117"><span p-id="803">{{item.shopTitle}}</span></a>
-                    </span>
-                    <div class="shop-bd" mx-vframe="true" p-id="804" id="mx_n_22"></div>
-                </span><span class="tags-container fr" p-id="805"><!--deleted-806--><span class="tag tag-tmall mr10" title="天猫店铺" p-id="807"></span></span>
-            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group navbar-brand">
+                <input type="text" class="form-control" placeholder="请输入您要搜索的店铺名称" />
+                <span class="input-group-btn">
+                    <button class="btn btn-warning" type="button"> 搜 索 </button>
+                </span>
+            </div><!-- /input-group -->
         </div>
     </div>
 
+@if (@Model.Coupons.Count() > 0)
+{
+    <div class="waterfallContainer">
 
-</div>
-
-<a id="next" href="http://localhost:4526/coupon/getpage?pageIndex=1&pageSize=10"></a>
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/angular.min.js" asp-append-version="true"></script>
-<script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
-<script src="~/js/jquery.infinitescroll.min.js"></script>
-<script>
-
-    $('#pageList').infinitescroll({
-        navSelector: "a#next:last", //导航的选择器，会被隐藏
-        nextSelector: "a#next:last", //包含下一页链接的选择器
-        itemSelector: "#pageList div", //你将要取回的选项(内容块)
-        debug: true, //启用调试信息
-        animate: true, //当有新数据加载进来的时候，页面是否有动画效果，默认没有
-        extraScrollPx: 150, //滚动条距离底部多少像素的时候开始加载，默认150
-        bufferPx: 40, //载入信息的显示时间，时间越大，载入信息显示时间越短
-        //errorCallback: function () {
-        //    alert('error');
-        //}, //当出错的时候，比如404页面的时候执行的函数
-        //localMode: true, //是否允许载入具有相同函数的页面，默认为false
-        dataType: 'json',//可以是json
-        //template: function (data) {
-        //    //data表示服务端返回的json格式数据，这里需要把data转换成瀑布流块的html格式，然后返回给回到函数
-        //    console.log(data);
-        //    return '';
-        //},
-        appendCallback: false, // USE FOR PREPENDING
-        loading: {
-            msgText: "加载中...",
-            finishedMsg: '没有新数据了...',
+        @foreach (var item in Model.Coupons)
+        {
+            <div class="box">
+                <a title="点击进入推荐宝贝" href="@item.ProductUrl" target="_blank" goldclick="true">
+                    <img width="260" src="@item.PictureUrl">
+                </a>
+                <div class="li-title">
+                    <a href="@item.BaseUrl" target="_blank" title="点击领取 @item.Title">
+                        <span>点击领取 @item.Title</span>
+                    </a>
+                </div>
+                <div class="description">商品描述：<span>@item.ProductDescription</span></div>
+                <div class="bottom">
+                    <a title="点击进入店铺推广详情页" href="@item.Url" target="_blank">
+                        店铺：<span>@item.ShopName</span>
+                    </a>
+                </div>
+            </div>
         }
-    }, function (response) {
-        //程序执行完的回调函数
-        console.log(response);
-        var jsonData = response.data;
-        $theCntr = $("#pageList");
-        for (var i = 0; i < jsonData.length; i++) {
-            var item = $(_renderItem(jsonData[i]));
-            //item.css({ opacity: 0 });
-            $theCntr.append(item);
-            //newItems.push(item.attr('id'));
-        }
+
+    </div>
+}
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/masonry.pkgd.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.waterfallContainer').masonry({
+            itemSelector: '.box',
+            columnWidth: 5 //每两列之间的间隙为5像素
+        });
+
     });
-
-    var _renderItem = function (data) {
-        console.log(data);
-        return "<p>Title :" + data.description + "</p>"
-    }
-
-    //});
-
-    //var app = angular.module('alchemyApp', []);
-    //app.controller('imageShowController', function ($scope, $http) {
-    //    $scope.content = "can you see me?";
-    //    $scope.productItems = [{
-    //        tkSpecialCampaignIdRateMap: null,
-    //        rootCatId: 0,
-    //        eventCreatorId: 0,
-    //        leafCatId: 50010850,
-    //        debugInfo: null,
-    //        rootCatScore: 0,
-    //        sellerId: 938198529,
-    //        userType: 1,
-    //        auctionId: 526404708154,
-    //        shopTitle: "埃伦旗舰店",
-    //        biz30day: 3157,
-    //        tkRate: 18.5,
-    //        nick: "埃伦旗舰店",
-    //        pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/TB1sBV_LXXXXXb0XVXXXXXXXXXX_!!0-item_pic.jpg",
-    //        title: "埃伦2016秋装新款印花蕾丝连衣裙欧美时尚圆领修身开叉系带连衣裙",
-    //        includeDxjh: 0,
-    //        reservePrice: 298,
-    //        tkCommFee: 55.13,
-    //        totalFee: 33405.9,
-    //        totalNum: 1182,
-    //        zkPrice: 298,
-    //        auctionUrl: "http://item.taobao.com/item.htm?id=526404708154",
-    //        dayLeft: -17062,
-    //        tk3rdRate: null,
-    //        rlRate: 0,
-    //        hasRecommended: 0,
-    //        hasSame: 0,
-    //        sameItemPid: "-836788765",
-    //        eventRate: null,
-    //        hasUmpBonus: null,
-    //        isBizActivity: null,
-    //        umpBonus: null
-    //    },
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 44960738,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 800308693,
-    //    userType: 1,
-    //    auctionId: 534764084703,
-    //    shopTitle: "fxmongyi旗舰店",
-    //    biz30day: 92,
-    //    tkRate: 12.5,
-    //    nick: "fxmongyi旗舰店",
-    //    pictUrl: "http://img03.taobaocdn.com/bao/uploaded/i3/TB16nbvKFXXXXcmaXXXXXXXXXXX_!!0-item_pic.jpg",
-    //    title: "菲梦伊2016夏季新款个性潮印花连衣裙修身中长款包臀气质<span class=H>女装</span>8096",
-    //    includeDxjh: 1,
-    //    reservePrice: 455,
-    //    tkCommFee: 39.75,
-    //    totalFee: 4522.72,
-    //    totalNum: 136,
-    //    zkPrice: 318,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534764084703",
-    //    dayLeft: 35,
-    //    tk3rdRate: null,
-    //    rlRate: 30.1,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1506654617",
-    //    eventRate: 16.5,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 204150836,
-    //    userType: 0,
-    //    auctionId: 534887494807,
-    //    shopTitle: "OPENLADY女侠店",
-    //    biz30day: 95,
-    //    tkRate: 15,
-    //    nick: "open_女侠",
-    //    pictUrl: "http://img01.taobaocdn.com/bao/uploaded/i1/204150836/TB2hIpEsFXXXXcaXpXXXXXXXXXX_!!204150836.jpg",
-    //    title: "openlady韩版高腰开叉V领系带收腰纯色短袖连衣裙短裙子夏季<span class=H>女装</span>",
-    //    includeDxjh: 1,
-    //    reservePrice: 188,
-    //    tkCommFee: 28.2,
-    //    totalFee: 1161.46,
-    //    totalNum: 35,
-    //    zkPrice: 188,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534887494807",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 0,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1506469858",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 34069475,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 2069568072,
-    //    userType: 1,
-    //    auctionId: 536700178794,
-    //    shopTitle: "衣舒阁旗舰店",
-    //    biz30day: 5741,
-    //    tkRate: 18.5,
-    //    nick: "衣舒阁旗舰店",
-    //    pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/TB1R_sRLXXXXXXeXpXXXXXXXXXX_!!0-item_pic.jpg",
-    //    title: "<span class=H>女装</span>秋装2016新款潮初秋季韩版名媛中袖a型针织连衣裙秋款 中长款",
-    //    includeDxjh: 1,
-    //    reservePrice: 258,
-    //    tkCommFee: 31.08,
-    //    totalFee: 14883.1,
-    //    totalNum: 356,
-    //    zkPrice: 168,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=536700178794",
-    //    dayLeft: 27,
-    //    tk3rdRate: null,
-    //    rlRate: 34.88,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1761500537",
-    //    eventRate: 25.5,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 123216004,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 898571545,
-    //    userType: 1,
-    //    auctionId: 537220773676,
-    //    shopTitle: "海青蓝旗舰店",
-    //    biz30day: 1773,
-    //    tkRate: 12.5,
-    //    nick: "海青蓝旗舰店",
-    //    pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/TB1vyWrMVXXXXbsXpXXXXXXXXXX_!!0-item_pic.jpg",
-    //    title: "海青蓝2016秋装新款纯色修身连衣裙两件套西装外套时尚套装女6201",
-    //    includeDxjh: 1,
-    //    reservePrice: 830,
-    //    tkCommFee: 62.25,
-    //    totalFee: 4989.28,
-    //    totalNum: 104,
-    //    zkPrice: 498,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=537220773676",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 40,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1391894668",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 204150836,
-    //    userType: 0,
-    //    auctionId: 534958216799,
-    //    shopTitle: "OPENLADY女侠店",
-    //    biz30day: 80,
-    //    tkRate: 15,
-    //    nick: "open_女侠",
-    //    pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/204150836/TB2aL1YtVXXXXX9XXXXXXXXXXXX_!!204150836.jpg",
-    //    title: "openlady宽松高腰显瘦交叉网格无袖背心连衣裙中裙子<span class=H>女装</span>夏季黑色",
-    //    includeDxjh: 1,
-    //    reservePrice: 199,
-    //    tkCommFee: 29.85,
-    //    totalFee: 1242.38,
-    //    totalNum: 45,
-    //    zkPrice: 199,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534958216799",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 0,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1424737097",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 2202422863,
-    //    userType: 0,
-    //    auctionId: 537240017388,
-    //    shopTitle: "猫猫原创女装",
-    //    biz30day: 8010,
-    //    tkRate: 25,
-    //    nick: "猫猫女装998",
-    //    pictUrl: "#",
-    //    title: "2016新款<span class=H>女装</span>秋装韩版中长款套装连衣裙女大码长袖裙名媛气质长裙",
-    //    includeDxjh: 1,
-    //    reservePrice: 588,
-    //    tkCommFee: 49.5,
-    //    totalFee: 0,
-    //    totalNum: 0,
-    //    zkPrice: 198,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=537240017388",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 66.32,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1307543021",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 471594703,
-    //    userType: 0,
-    //    auctionId: 534312114273,
-    //    shopTitle: "bob定制高端女装",
-    //    biz30day: 79,
-    //    tkRate: 15,
-    //    nick: "桐杭之恋",
-    //    pictUrl: "http://img01.taobaocdn.com/bao/uploaded/i1/471594703/TB2ks0JtXXXXXclXpXXXXXXXXXX_!!471594703.jpg",
-    //    title: "<span class=H>女装</span>夏装2016新款潮韩版短袖蕾丝连衣裙女夏季中长款修身雪纺裙子",
-    //    includeDxjh: 1,
-    //    reservePrice: 599,
-    //    tkCommFee: 25.2,
-    //    totalFee: 1663.98,
-    //    totalNum: 77,
-    //    zkPrice: 168,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534312114273",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 71.95,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-551932114",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 204150836,
-    //    userType: 0,
-    //    auctionId: 535283239698,
-    //    shopTitle: "OPENLADY女侠店",
-    //    biz30day: 74,
-    //    tkRate: 15,
-    //    nick: "open_女侠",
-    //    pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/204150836/TB2qaabsFXXXXb2XXXXXXXXXXXX_!!204150836.jpg",
-    //    title: "openlady韩版高腰宽松假两件露背露肩拼色吊带连衣裙中裙子<span class=H>女装</span>夏",
-    //    includeDxjh: 1,
-    //    reservePrice: 158,
-    //    tkCommFee: 23.7,
-    //    totalFee: 408.38,
-    //    totalNum: 22,
-    //    zkPrice: 158,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=535283239698",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 0,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1153482920",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    tkSpecialCampaignIdRateMap: null,
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 123216004,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 2844470210,
-    //    userType: 0,
-    //    auctionId: 534586713058,
-    //    shopTitle: "右炫官方企业店",
-    //    biz30day: 1295,
-    //    tkRate: 15,
-    //    nick: "youxuan右炫",
-    //    pictUrl: "http://img02.taobaocdn.com/bao/uploaded/i2/2844470210/TB2PZAlrVXXXXayXpXXXXXXXXXX_!!2844470210.jpg",
-    //    title: "2016夏新款职业装刘亦菲同款小西服套装女时尚气质<span class=H>女装</span>西装两件套",
-    //    includeDxjh: 0,
-    //    reservePrice: 609,
-    //    tkCommFee: 49.35,
-    //    totalFee: 598.86,
-    //    totalNum: 31,
-    //    zkPrice: 329,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534586713058",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 45.97,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-519247560",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 471594703,
-    //    userType: 0,
-    //    auctionId: 534312114273,
-    //    shopTitle: "bob定制高端女装",
-    //    biz30day: 79,
-    //    tkRate: 15,
-    //    nick: "桐杭之恋",
-    //    pictUrl: "http://img01.taobaocdn.com/bao/uploaded/i1/471594703/TB2ks0JtXXXXXclXpXXXXXXXXXX_!!471594703.jpg",
-    //    title: "<span class=H>女装</span>夏装2016新款潮韩版短袖蕾丝连衣裙女夏季中长款修身雪纺裙子",
-    //    includeDxjh: 1,
-    //    reservePrice: 599,
-    //    tkCommFee: 25.2,
-    //    totalFee: 1663.98,
-    //    totalNum: 77,
-    //    zkPrice: 168,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534312114273",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 71.95,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-551932114",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 204150836,
-    //    userType: 0,
-    //    auctionId: 535283239698,
-    //    shopTitle: "OPENLADY女侠店",
-    //    biz30day: 74,
-    //    tkRate: 15,
-    //    nick: "open_女侠",
-    //    pictUrl: "http://img04.taobaocdn.com/bao/uploaded/i4/204150836/TB2qaabsFXXXXb2XXXXXXXXXXXX_!!204150836.jpg",
-    //    title: "openlady韩版高腰宽松假两件露背露肩拼色吊带连衣裙中裙子<span class=H>女装</span>夏",
-    //    includeDxjh: 1,
-    //    reservePrice: 158,
-    //    tkCommFee: 23.7,
-    //    totalFee: 408.38,
-    //    totalNum: 22,
-    //    zkPrice: 158,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=535283239698",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 0,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1153482920",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    tkSpecialCampaignIdRateMap: null,
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 123216004,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 2844470210,
-    //    userType: 0,
-    //    auctionId: 534586713058,
-    //    shopTitle: "右炫官方企业店",
-    //    biz30day: 1295,
-    //    tkRate: 15,
-    //    nick: "youxuan右炫",
-    //    pictUrl: "http://img02.taobaocdn.com/bao/uploaded/i2/2844470210/TB2PZAlrVXXXXayXpXXXXXXXXXX_!!2844470210.jpg",
-    //    title: "2016夏新款职业装刘亦菲同款小西服套装女时尚气质<span class=H>女装</span>西装两件套",
-    //    includeDxjh: 0,
-    //    reservePrice: 609,
-    //    tkCommFee: 49.35,
-    //    totalFee: 598.86,
-    //    totalNum: 31,
-    //    zkPrice: 329,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534586713058",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 45.97,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-519247560",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 44960738,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 800308693,
-    //    userType: 1,
-    //    auctionId: 534764084703,
-    //    shopTitle: "fxmongyi旗舰店",
-    //    biz30day: 92,
-    //    tkRate: 12.5,
-    //    nick: "fxmongyi旗舰店",
-    //    pictUrl: "http://img03.taobaocdn.com/bao/uploaded/i3/TB16nbvKFXXXXcmaXXXXXXXXXXX_!!0-item_pic.jpg",
-    //    title: "菲梦伊2016夏季新款个性潮印花连衣裙修身中长款包臀气质<span class=H>女装</span>8096",
-    //    includeDxjh: 1,
-    //    reservePrice: 455,
-    //    tkCommFee: 39.75,
-    //    totalFee: 4522.72,
-    //    totalNum: 136,
-    //    zkPrice: 318,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534764084703",
-    //    dayLeft: 35,
-    //    tk3rdRate: null,
-    //    rlRate: 30.1,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1506654617",
-    //    eventRate: 16.5,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //},
-    //{
-    //    rootCatId: 0,
-    //    eventCreatorId: 0,
-    //    leafCatId: 50010850,
-    //    debugInfo: null,
-    //    rootCatScore: 0,
-    //    sellerId: 204150836,
-    //    userType: 0,
-    //    auctionId: 534887494807,
-    //    shopTitle: "OPENLADY女侠店",
-    //    biz30day: 95,
-    //    tkRate: 15,
-    //    nick: "open_女侠",
-    //    pictUrl: "http://img01.taobaocdn.com/bao/uploaded/i1/204150836/TB2hIpEsFXXXXcaXpXXXXXXXXXX_!!204150836.jpg",
-    //    title: "openlady韩版高腰开叉V领系带收腰纯色短袖连衣裙短裙子夏季<span class=H>女装</span>",
-    //    includeDxjh: 1,
-    //    reservePrice: 188,
-    //    tkCommFee: 28.2,
-    //    totalFee: 1161.46,
-    //    totalNum: 35,
-    //    zkPrice: 188,
-    //    auctionUrl: "http://item.taobao.com/item.htm?id=534887494807",
-    //    dayLeft: -17062,
-    //    tk3rdRate: null,
-    //    rlRate: 0,
-    //    hasRecommended: 0,
-    //    hasSame: 0,
-    //    sameItemPid: "-1506469858",
-    //    eventRate: null,
-    //    hasUmpBonus: null,
-    //    isBizActivity: null,
-    //    umpBonus: null
-    //}];
-
-    //    //$http.get("data.json")
-    //    //.success(function(response) {
-
-    //    //console.log(response);
-    //    //console.log(response.data.pageList);//[data/pageList]
-    //    //$scope.productItems = response.data.pageList;
-    //    //}).error(function(data,state){
-    //    //    console.log(data);
-    //    //    console.log(state);
-    //    //});
-    //});
-
 </script>

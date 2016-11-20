@@ -1,6 +1,7 @@
 ﻿using MermaidLoft.Alchemy.BaseDomain.CouponDomain;
 using MermaidLoft.Alchemy.BaseDomain.ProductDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
+using MermaidLoft.Alchemy.QuickWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -19,11 +20,29 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         }
 
         #region View
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string shopName, int pageIndex=1, int pageSize=40)
         {
-            return View();
-
+            return View(new CouponsListViewModel {
+                ShopName = shopName,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Coupons = await _couponqueryService.SearchCouponsForPageAsync(shopName, pageIndex, pageSize)
+            });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Products(string productName, int pageIndex = 1, int pageSize = 40)
+        {
+            return View(new ProductsListViewModel
+            {
+                ProductName = productName,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Products = await _productQueryService.SearchProductsForPageAsync(productName, pageIndex, pageSize)
+            });
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

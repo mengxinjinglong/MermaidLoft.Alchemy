@@ -1,0 +1,43 @@
+﻿@using MermaidLoft.Alchemy.QuickWeb.Models;
+@model ProductsListViewModel
+@{
+    ViewData["Title"] = "首页";
+}
+
+@if (@Model.Products.Count() > 0)
+{
+    <div>
+
+        <div class="search-result-wrap search-result-wrap-block clearfix" id="pageList">
+            @foreach (var item in Model.Products)
+            {
+                <div class="block-search-box tag-wrap">
+                    <div class="pic-box">
+                        <a class="search-box-img img-loaded" title="点击进入推荐宝贝" href="@item.Url" target="_blank" goldclick="true"><span class="empty-icon-bg"></span><img src="@item.PictureUrl" p-id="737"></a>
+                    </div>
+                    <div class="box-content" _ie_fix_="" mx-mouseenter="showContent()" mx-mouseleave="hideContent()" p-id="738">
+                        <div class="content-line">
+                            <a class="color-m content-title" href="@item.Url" target="_blank" title="@item.ProductName"
+                               goldclick="true" data-spm-click="gostr=/alimama.11;locaid=d5d3d3cdd;itemid=526404708154&amp;pvid=10_61.153.225.150_441_1474180557628&amp;actionid=1000"
+                               p-id="740" data-spm-anchor-id="a219t.7900221/10.1998910419.116"><span p-id="742">@item.ProductName</span></a>
+                        </div>
+                    </div>
+                    <div class="box-shop-info dxjh-guide-show">
+                        <span class="shop-title" _ie_fix_="" mx-mouseenter="showShopInfo(938198529,1)" mx-mouseleave="hideShopInfo(938198529)"
+                              p-id="798">
+                            <span class="shop-hd" p-id="799">
+                                <span class="pubfont icon-dianpu shop-icon" p-id="800"></span>
+                                <a vclick-ignore="true" title="点击进入店铺推广详情页" href="@item.Url" data-spm-click="gostr=/alimama.11;locaid=dab027959"
+                                   target="_blank" p-id="801" data-spm-anchor-id="a219t.7900221/10.1998910419.117"><span p-id="803">@item.ShopTitle</span></a>
+                            </span>
+                            <div class="shop-bd" mx-vframe="true" p-id="804" id="mx_n_22"></div>
+                        </span><span class="tags-container fr" p-id="805"><!--deleted-806--><span class="tag tag-tmall mr10" title="天猫店铺" p-id="807"></span></span>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+    </div>
+}
+

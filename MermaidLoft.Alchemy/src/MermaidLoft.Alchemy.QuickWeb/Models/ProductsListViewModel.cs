@@ -8,6 +8,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
         public string ProductName { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+        public int TotalCount { get; set; }
         public IEnumerable<Product> Products { get; set; }
     }
 }

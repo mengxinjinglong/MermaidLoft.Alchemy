@@ -48,7 +48,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
             {
                 string conditionSql = string.Empty;
                 object condition = null;
-                if (string.IsNullOrEmpty(productName))
+                if (!string.IsNullOrEmpty(productName))
                 {
                     condition = new { ProductName = string.Format("%{0}%",productName) };
                     conditionSql = " where ProductName like @ProductName ";
@@ -57,6 +57,23 @@ namespace MermaidLoft.Alchemy.BaseDomain.ProductDomain.Implementation
                         ConfigSettings.ProductTable,conditionSql,
                         (pageIndex - 1) * pageSize, pageSize);
                 return await connection.QueryAsync<Product>(sql,condition);
+            }
+        }
+
+        public async Task<int> SearchProductsForPageCountAsync(string productName)
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                string conditionSql = string.Empty;
+                object condition = null;
+                if (!string.IsNullOrEmpty(productName))
+                {
+                    condition = new { ProductName = string.Format("%{0}%", productName) };
+                    conditionSql = " where ProductName like @ProductName ";
+                }
+                var sql = string.Format("SELECT count(*) FROM {0} {1}",
+                        ConfigSettings.ProductTable, conditionSql);
+                return (await connection.QueryAsync<int>(sql, condition)).Single();
             }
         }
     }

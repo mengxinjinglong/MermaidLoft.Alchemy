@@ -24,10 +24,10 @@ create table Product
 (
   Id varchar(36) NOT NULL ,
   ProductName varchar(255) DEFAULT NULL,
-  Url  varchar(255) DEFAULT NULL,
+  Url  varchar(512) DEFAULT NULL,
   Price double DEFAULT 0,
   DiscountPrice double DEFAULT 0,
-  PictureUrl varchar(255) DEFAULT NULL,
+  PictureUrl varchar(512) DEFAULT NULL,
   UserId varchar(36) NOT NULL,
   AddTime datetime DEFAULT now(),
   Version int default 0,
@@ -46,12 +46,12 @@ create table Coupon
 (
   Id varchar(36) NOT NULL ,
   UserId varchar(36) NOT NULL ,
-  BaseUrl varchar(255) DEFAULT NULL,
+  BaseUrl varchar(512) DEFAULT NULL,
   Title varchar(255) DEFAULT NULL,
   ShopName varchar(255) DEFAULT NULL,
   Url  varchar(255) DEFAULT NULL,
-  ProductUrl  varchar(255) DEFAULT NULL,
-  PictureUrl varchar(255) DEFAULT NULL,
+  ProductUrl  varchar(512) DEFAULT NULL,
+  PictureUrl varchar(512) DEFAULT NULL,
   ProductDescription  varchar(255) DEFAULT NULL,
   RestCount int DEFAULT 0,
   Description text,
@@ -63,5 +63,8 @@ create table Coupon
   PRIMARY KEY (Id)
 );
 
-2016.10.20:
-alter table Coupon add column PictureUrl varchar(255);
+2016.11.22:
+alter table Coupon change PictureUrl PictureUrl varchar(512);
+alter table Coupon change ProductUrl ProductUrl varchar(512);
+alter table Coupon change Url Url varchar(512);
+alter table Coupon change BaseUrl BaseUrl varchar(512);

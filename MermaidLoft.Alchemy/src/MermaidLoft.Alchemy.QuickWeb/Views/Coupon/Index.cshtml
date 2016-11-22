@@ -7,14 +7,14 @@
 }
 <div ng-app="alchemyApp" ng-controller="couponController">
     @*<img src="//assets.alicdn.com/mw/app/msp/h5/images/coupon.png" alt=""><br/>
-    推广地址：{{coupon.baseUrl}}<br />
-    标题：{{coupon.title}}<br />
-    店铺名称：{{coupon.shopName}}<br />
-    地址：<a href="{{coupon.url}}">{{coupon.url}}</a><br />
-    开始时间：{{coupon.startDate}}<br />
-    结束时间：{{coupon.endDate}}<br />
-    剩余数：{{coupon.restCount}}<br />
-    描述：{{coupon.description}}<br />*@
+        推广地址：{{coupon.baseUrl}}<br />
+        标题：{{coupon.title}}<br />
+        店铺名称：{{coupon.shopName}}<br />
+        地址：<a href="{{coupon.url}}">{{coupon.url}}</a><br />
+        开始时间：{{coupon.startDate}}<br />
+        结束时间：{{coupon.endDate}}<br />
+        剩余数：{{coupon.restCount}}<br />
+        描述：{{coupon.description}}<br />*@
 
 
     <div class="page-content-inner">
@@ -28,6 +28,11 @@
                         </div>
                         <div class="actions">
                             <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm" data-toggle="modal"
+                                       data-target="#importExcelModal">
+                                    导入Excel数据
+                                </label>
+
                                 <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm" data-toggle="modal"
                                        data-target="#editModal">
                                     新增
@@ -51,7 +56,7 @@
                                 </thead>
                                 <tbody>
                                     <!--无数据-->
-                                    <tr ng-if="pageItems.length == 0" >
+                                    <tr ng-if="pageItems.length == 0">
                                         <td class="text-center" colspan="7">暂无数据</td>
                                     </tr>
                                     <!--有数据-->
@@ -109,108 +114,108 @@
                             <!-- BEGIN FORM-->
                             <form action="#" class="form-horizontal">
                                 <div class="form-body row">
-                                    
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">优惠券网址</label>
-                                                    <div class="col-md-7">
-                                                        <input ng-model="coupon.baseUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="优惠券网址" />
-                                                    </div>
-                                                    <button type="button" class="btn green" ng-click="spiderCoupon(coupon.baseUrl)">获取</button>
-                                                </div>
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">标题</label>
-                                                    <div class="col-md-9">
-                                                        <input ng-model="coupon.title" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="标题" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label">店铺名称</label>
-                                                    <div class="col-md-9">
-                                                        <input ng-model="coupon.shopName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">店铺地址</label>
-                                                    <div class="col-md-9">
-                                                        <input ng-model="coupon.url" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺地址" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">剩余数</label>
-                                                    <div class="col-md-9">
-                                                        <input ng-model="coupon.restCount" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="剩余数" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">开始时间</label>
-                                                    <div class="col-md-9">
-                                                        <input ng-model="coupon.startDate" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="开始时间" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group last">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">结束时间</label>
-                                                    <div class="col-md-9">
-                                                        <input ng-model="coupon.endDate" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="结束时间" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group last">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-3 control-label">描述</label>
-                                                    <div class="col-md-9">
-                                                        @*<input ng-model="coupon.description" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="描述" />*@
-                                                        <textarea ng-model="coupon.description" rows="5" class="form-control form-control-solid placeholder-no-fix" autocomplete="off" placeholder="描述" ></textarea>
-                                                    </div>
-                                                </div>
 
-                                               
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">优惠券网址</label>
+                                            <div class="col-md-7">
+                                                <input ng-model="coupon.baseUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="优惠券网址" />
                                             </div>
+                                            <button type="button" class="btn green" ng-click="spiderCoupon(coupon.baseUrl)">获取</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">标题</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="coupon.title" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="标题" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">店铺名称</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="coupon.shopName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺名称" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">店铺地址</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="coupon.url" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="店铺地址" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">剩余数</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="coupon.restCount" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="剩余数" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">开始时间</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="coupon.startDate" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="开始时间" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group last">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">结束时间</label>
+                                            <div class="col-md-9">
+                                                <input ng-model="coupon.endDate" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="结束时间" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group last">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-3 control-label">描述</label>
+                                            <div class="col-md-9">
+                                                @*<input ng-model="coupon.description" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="描述" />*@
+                                                <textarea ng-model="coupon.description" rows="5" class="form-control form-control-solid placeholder-no-fix" autocomplete="off" placeholder="描述"></textarea>
+                                            </div>
+                                        </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-4 control-label">推荐商品网址</label>
-                                                    <div class="col-md-8">
-                                                        <input ng-model="coupon.productUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品网址" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-4 control-label">商品图片地址</label>
-                                                    <div class="col-md-8">
-                                                        <input ng-model="coupon.pictureUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品网址" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-4 control-label">商品图片效果</label>
-                                                    <div class="col-md-8">
-                                                        <img height="220" width="220" src="{{coupon.pictureUrl}}" />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                                                    <label class="col-md-4 control-label">商品描述</label>
-                                                    <div class="col-md-8">
-                                                        <textarea rows="5" ng-model="coupon.productDescription" required class="form-control form-control-solid placeholder-no-fix" autocomplete="off" placeholder="商品描述"></textarea>
-                                                    </div>
-                                                </div>
-                                                
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-4 control-label">推荐商品网址</label>
+                                            <div class="col-md-8">
+                                                <input ng-model="coupon.productUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品网址" />
                                             </div>
-                                       
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-4 control-label">商品图片地址</label>
+                                            <div class="col-md-8">
+                                                <input ng-model="coupon.pictureUrl" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品网址" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">商品图片效果</label>
+                                            <div class="col-md-8">
+                                                <img height="220" width="220" src="{{coupon.pictureUrl}}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                                            <label class="col-md-4 control-label">商品描述</label>
+                                            <div class="col-md-8">
+                                                <textarea rows="5" ng-model="coupon.productDescription" required class="form-control form-control-solid placeholder-no-fix" autocomplete="off" placeholder="商品描述"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
-                                
+
                             </form>
                             <!-- END FORM-->
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
                     <button type="button" class="btn default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn green" ng-click="save()">保存</button>
                 </div>
@@ -221,112 +226,141 @@
     </div>
 
 
+    <!-- 模态框（Modal） -->
+    <div id="importExcelModal" class="modal fade bs-modal-lg" tabindex="-1" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">导入Excel数据</h4>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="UploadFiles"
+                          asp-controller="Coupon"
+                          method="post"
+                          enctype="multipart/form-data">
+                        <input type="file" name="files" multiple />
+                        <input name="userId" value='@ViewData["userId"]' hidden/>
+                        <input type="submit" value="Upload Selected Files" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+
 </div>
-<script src="/js/jquery.min.js" asp-append-version="true"></script>
-<script src="/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
-<script src="/js/modal.js" asp-append-version="true"></script>
-<script src="/js/angular.min.js" asp-append-version="true"></script>
-<script src="/js/ui-bootstrap-tpls-2.1.4.min.js" asp-append-version="true"></script>
-<script type="text/javascript">
-    var app = angular.module('alchemyApp', ['ui.bootstrap']);
+                <script src="/js/jquery.min.js" asp-append-version="true"></script>
+                <script src="/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+                <script src="/js/modal.js" asp-append-version="true"></script>
+                <script src="/js/angular.min.js" asp-append-version="true"></script>
+                <script src="/js/ui-bootstrap-tpls-2.1.4.min.js" asp-append-version="true"></script>
+                <script type="text/javascript">
+                    var app = angular.module('alchemyApp', ['ui.bootstrap']);
 
-    app.controller('couponController', function ($scope, $http) {
+                    app.controller('couponController', function ($scope, $http) {
 
-        $scope.totalItems = 64;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
-        $scope.pageSize = 10;
-        $scope.pageItems = null;
+                        $scope.totalItems = 64;
+                        $scope.currentPage = 1;
+                        $scope.maxSize = 5;
+                        $scope.pageSize = 10;
+                        $scope.pageItems = null;
 
-        $scope.refreshPage = function () {
-            $http.get("/coupon/getpage?title=&pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize+"&userId="+'@ViewData["userId"]').success(function (response) {
-                console.log(response.data);
-                $scope.pageItems = response.data;
-            }).error(function (response) {
-                console.log('ERROR:' + response);
-            });
-        };
-        //获取分页数据
-        $scope.refreshPage();
-
-        //获取优惠券信息
-        $scope.spiderCoupon = function (url) {
-            if (url == null || url.length == 0)
-            {
-                alert("优惠券网址不能为空！");
-                return;
-            }
-            $http.post('/coupon/SpiderCoupon', '"'+url+'"').success(function (response) {
-                console.log(response);
-                if (response.status == 0) {
-                    $scope.coupon = response.data;
-                } else {
-                    console.log(response.message);
-                    alert("优惠券不存在或已过期，请确认。");
-                }
-                //console.log(response);
-            }).error(function (response) {
-                alert("ERROR:" + response);
-                //console.log('ERROR:' + response);
-            });
-        };
-        $scope.edit = function (id) {
-            $http.get('/coupon/get/' + id).success(function (response) {
-                console.log(response.data);
-                $scope.coupon = response.data;
-            }).error(function (response) {
-                console.log('ERROR:' + response);
-            });
-        };
-
-        $scope.delete = function (id) {
-            alert(id);
-            $http.delete('/coupon/delete?id='+id).success(function (response) {
-                console.log(response.data);
-                if (response.status == 0) {
-                    alert("删除成功！");
-                    $scope.refreshPage();
-                } else {
-                    alert(response.message);
-                }
-                console.log(response);
-            }).error(function (response) {
-                console.log('ERROR:' + response);
-            });
-        };
-
-
-        $scope.save = function () {
-            console.log($scope.coupon);
-            if ($scope.coupon.id == null || $scope.coupon.id.length == 0) {
-                $scope.coupon.userId = '@ViewData["userId"]';
-                $http.post('/coupon/post', $scope.coupon).success(function (response) {
-                    if (response.status == 0) {
-                        alert("新增成功！");
+                        $scope.refreshPage = function () {
+                            $http.get("/coupon/getpage?title=&pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize + "&userId=" + '@ViewData["userId"]').success(function (response) {
+                                console.log(response.data);
+                                $scope.pageItems = response.data;
+                            }).error(function (response) {
+                                console.log('ERROR:' + response);
+                            });
+                        };
+                        //获取分页数据
                         $scope.refreshPage();
-                    } else {
-                        alert(response.message);
-                    }
-                    console.log(response);
-                }).error(function (response) {
-                    console.log('ERROR:' + response);
-                    alert(response.message);
-                });
-                return;
-            }
-            $http.put('/coupon/put', $scope.coupon).success(function (response) {
-                if (response.status == 0) {
-                    alert("修改成功！");
-                    $scope.refreshPage();
-                } else {
-                    alert(response.message);
-                }
-                console.log(response);
-            }).error(function (response) {
-                console.log('ERROR:' + response);
-                alert(response.message);
-            });
-        };
 
-    });
-</script>
+                        //获取优惠券信息
+                        $scope.spiderCoupon = function (url) {
+                            if (url == null || url.length == 0) {
+                                alert("优惠券网址不能为空！");
+                                return;
+                            }
+                            $http.post('/coupon/SpiderCoupon', '"' + url + '"').success(function (response) {
+                                console.log(response);
+                                if (response.status == 0) {
+                                    $scope.coupon = response.data;
+                                } else {
+                                    console.log(response.message);
+                                    alert("优惠券不存在或已过期，请确认。");
+                                }
+                                //console.log(response);
+                            }).error(function (response) {
+                                alert("ERROR:" + response);
+                                //console.log('ERROR:' + response);
+                            });
+                        };
+                        $scope.edit = function (id) {
+                            $http.get('/coupon/get/' + id).success(function (response) {
+                                console.log(response.data);
+                                $scope.coupon = response.data;
+                            }).error(function (response) {
+                                console.log('ERROR:' + response);
+                            });
+                        };
+
+                        $scope.delete = function (id) {
+                            alert(id);
+                            $http.delete('/coupon/delete?id=' + id).success(function (response) {
+                                console.log(response.data);
+                                if (response.status == 0) {
+                                    alert("删除成功！");
+                                    $scope.refreshPage();
+                                } else {
+                                    alert(response.message);
+                                }
+                                console.log(response);
+                            }).error(function (response) {
+                                console.log('ERROR:' + response);
+                            });
+                        };
+
+
+                        $scope.save = function () {
+                            console.log($scope.coupon);
+                            if ($scope.coupon.id == null || $scope.coupon.id.length == 0) {
+                                $scope.coupon.userId = '@ViewData["userId"]';
+                                $http.post('/coupon/post', $scope.coupon).success(function (response) {
+                                    if (response.status == 0) {
+                                        alert("新增成功！");
+                                        $scope.refreshPage();
+                                    } else {
+                                        alert(response.message);
+                                    }
+                                    console.log(response);
+                                }).error(function (response) {
+                                    console.log('ERROR:' + response);
+                                    alert(response.message);
+                                });
+                                return;
+                            }
+                            $http.put('/coupon/put', $scope.coupon).success(function (response) {
+                                if (response.status == 0) {
+                                    alert("修改成功！");
+                                    $scope.refreshPage();
+                                } else {
+                                    alert(response.message);
+                                }
+                                console.log(response);
+                            }).error(function (response) {
+                                console.log('ERROR:' + response);
+                                alert(response.message);
+                            });
+                        };
+
+                    });
+                </script>

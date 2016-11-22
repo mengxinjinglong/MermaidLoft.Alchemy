@@ -33,7 +33,8 @@
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Identity": "1.0.0",
     "Autofac.Extensions.DependencyInjection": "4.0.0",
-    "System.Text.Encoding.CodePages": "4.0.1" },
+    "System.Text.Encoding.CodePages": "4.0.1",
+    "Pomelo.Data.Excel": "1.1.0-rtm-10026" },
 
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

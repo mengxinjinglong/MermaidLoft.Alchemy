@@ -70,7 +70,7 @@
         <div class="col-lg-6">
             <form class="input-group navbar-brand" method="get">
                 <input name="pageIndex" value="@Model.PageIndex" hidden />
-                <input name="pageIndex" value="@Model.PageSize" hidden/>
+                <input name="pageSize" value="@Model.PageSize" hidden/>
                 <input type="text" name="shopName" value="@Model.ShopName" class="form-control" placeholder="请输入您要搜索的店铺名称" />
                 <span class="input-group-btn">
                     <button class="btn btn-warning" type="submit"> 搜 索 </button>
@@ -104,17 +104,19 @@
         }
 
     </div>
+
+    <nav>
+        <ul class="pagination pagination-lg">
+            @(Html.Raw(Model.Pagination))
+            @*<li><a href="?pageIndex=@Model.PageIndex&pageSize=@Model.PageSize&shopName=@Model.ShopName">上一页</a></li>
+            <li><a href="?pageIndex=1&pageSize=@Model.PageSize&shopName=@Model.ShopName">1<span class="sr-only">(current)</span></a></li>
+            <li><span>... </span></li>
+            <li><a href="#">@((Model.TotalCount + 1) / Model.PageSize)</a></li>
+            <li><a href="?pageIndex=@(Model.PageIndex+1)&pageSize=@Model.PageSize&shopName=@Model.ShopName">下一页</a></li>*@
+        </ul>
+    </nav>
 }
 
-<nav>
-    <ul class="pagination pagination-lg">
-        <li><a href="?pageIndex=@Model.PageIndex&pageSize=@Model.PageSize&shopName=@Model.ShopName">上一页</a></li>
-        <li><a href="?pageIndex=1&pageSize=@Model.PageSize&shopName=@Model.ShopName">1<span class="sr-only">(current)</span></a></li>
-        <li><span>... </span></li>
-        <li><a href="#">@((Model.TotalCount+1)/Model.PageSize)</a></li>
-        <li><a href="?pageIndex=@(Model.PageIndex+1)&pageSize=@Model.PageSize&shopName=@Model.ShopName">下一页</a></li>
-    </ul>
-</nav>
 <script src="~/js/jquery.min.js"></script>
 <script src="~/js/masonry.pkgd4.1.1.min.js"></script>
 

@@ -48,24 +48,30 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UploadFiles(IList<IFormFile> files,string userId)
+        public async Task<IActionResult> ImportExcel(IList<IFormFile> files,string userId)
         {
-            long size = 0;
-            foreach (var file in files)
+            try
             {
-                var stream = file.OpenReadStream();
-                
-                var fileName = _hostingEnv.WebRootPath + @"\" 
-                    + Guid.NewGuid().ToString()
-                    +"."+Path.GetExtension(file.FileName);
-                using (FileStream fs = System.IO.File.Create(fileName))
+                long size = 0;
+                foreach (var file in files)
                 {
-                    file.CopyTo(fs);
-                    fs.Flush();
-                }
-                await SaveCoupons(fileName,userId);
-            }
+                    var stream = file.OpenReadStream();
 
+                    var fileName = _hostingEnv.WebRootPath + @"\"
+                        + Guid.NewGuid().ToString()
+                        + "." + Path.GetExtension(file.FileName);
+                    using (FileStream fs = System.IO.File.Create(fileName))
+                    {
+                        file.CopyTo(fs);
+                        fs.Flush();
+                    }
+                    await SaveCoupons(fileName, userId);
+                }
+            }
+            catch
+            {
+
+            }
             return RedirectToAction("Index", "Coupon");
         }
 

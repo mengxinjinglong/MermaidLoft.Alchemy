@@ -4,10 +4,18 @@ use Alchemy;
 create table User
 (
   Id varchar(36) NOT NULL ,
-  UserName varchar(255) DEFAULT NULL,
-  Account varchar(255) DEFAULT NULL,
-  PasswordContent varchar(255) DEFAULT NULL,
+  UserName varchar(512) NOT NULL,
+  Account varchar(512) DEFAULT NULL,
+  SecureCode varchar(512) DEFAULT NULL,
+  Email varchar(255),
+  PhoneNumber varchar(512),
+  ShopUserNameId varchar(512),
+  ShopTitle varchar(512),
+  UserType int default 1,
+  Status int default 0,
   Version int default 0,
+  AddTime datetime default null,
+  LastLoginTime datetime default null,
   PRIMARY KEY (Id)
 );
 
@@ -23,13 +31,14 @@ alter table User add column LastLoginTime datetime default now();
 create table Product
 (
   Id varchar(36) NOT NULL ,
-  ProductName varchar(255) DEFAULT NULL,
+  ProductName varchar(512) DEFAULT NULL,
+  ShopTitle varchar(512),
   Url  varchar(512) DEFAULT NULL,
   Price double DEFAULT 0,
   DiscountPrice double DEFAULT 0,
   PictureUrl varchar(512) DEFAULT NULL,
   UserId varchar(36) NOT NULL,
-  AddTime datetime DEFAULT now(),
+  AddTime datetime DEFAULT null,
   Version int default 0,
   PRIMARY KEY (Id)
 );
@@ -47,17 +56,17 @@ create table Coupon
   Id varchar(36) NOT NULL ,
   UserId varchar(36) NOT NULL ,
   BaseUrl varchar(512) DEFAULT NULL,
-  Title varchar(255) DEFAULT NULL,
-  ShopName varchar(255) DEFAULT NULL,
-  Url  varchar(255) DEFAULT NULL,
+  Title varchar(512) DEFAULT NULL,
+  ShopName varchar(512) DEFAULT NULL,
+  Url  varchar(512) DEFAULT NULL,
   ProductUrl  varchar(512) DEFAULT NULL,
   PictureUrl varchar(512) DEFAULT NULL,
-  ProductDescription  varchar(255) DEFAULT NULL,
+  ProductDescription  varchar(512) DEFAULT NULL,
   RestCount int DEFAULT 0,
   Description text,
-  StartDate datetime DEFAULT now(),
-  EndDate datetime DEFAULT now(),
-  AddTime datetime DEFAULT now(),
+  StartDate datetime DEFAULT null,
+  EndDate datetime DEFAULT null,
+  AddTime datetime DEFAULT null,
   Version int default 0,
   IsExpired bit default 0,
   PRIMARY KEY (Id)

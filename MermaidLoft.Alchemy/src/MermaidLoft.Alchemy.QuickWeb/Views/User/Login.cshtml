@@ -113,7 +113,7 @@
                     .success(function (response) {
                         console.log(response);
                         if (response.status == 0) {
-                            window.location.href = '/management/index';
+                            window.location.href = '/coupon/index';
                         } else {
                             $.MsgBox.Alert("温馨提示", response.message);
                         }

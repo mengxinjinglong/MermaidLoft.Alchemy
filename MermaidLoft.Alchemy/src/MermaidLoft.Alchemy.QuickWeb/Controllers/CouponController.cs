@@ -48,6 +48,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = UserType.User)]
         public async Task<IActionResult> ImportExcel(IList<IFormFile> files,string userId)
         {
             try
@@ -56,10 +57,16 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 foreach (var file in files)
                 {
                     var stream = file.OpenReadStream();
-
-                    var fileName = _hostingEnv.WebRootPath + @"\"
-                        + Guid.NewGuid().ToString()
-                        + "." + Path.GetExtension(file.FileName);
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    if (fileExtension.ToLower()!=".xlsx"
+                        && fileExtension.ToLower() != ".xls")
+                    {
+                        throw new NotSupportedException("this file is not support.");
+                    }
+                    var fileName = _hostingEnv.WebRootPath + @"/"
+                    + Guid.NewGuid().ToString()
+                    //+ "." 
+                    + fileExtension;
                     using (FileStream fs = System.IO.File.Create(fileName))
                     {
                         file.CopyTo(fs);
@@ -68,9 +75,9 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                     await SaveCoupons(fileName, userId);
                 }
             }
-            catch
+            catch(Exception e)
             {
-
+                //return View(_hostingEnv.WebRootPath+e.Message);
             }
             return RedirectToAction("Index", "Coupon");
         }
@@ -82,17 +89,51 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 using (var sheet = x.LoadSheet(1))
                 {
                     // Reading the data from sheet
+                    var index = 1;
+                    int baseUrlIndex=0, urlIndex=0,
+                        titleIndex = 0, shopNameIndex = 0,
+                        pictureUrlIndex = 0, productDescriptionIndex = 0;
                     foreach (var item in sheet)
                     {
+                        if(index==1)
+                        {
+                            for (var childIndex = 0; childIndex < item.Count; childIndex++)
+                            {
+                                switch (item[childIndex].Trim())
+                                {
+                                    case "商品名称":
+                                        productDescriptionIndex = childIndex;
+                                        break;
+                                    case "商品主图":
+                                        pictureUrlIndex = childIndex;
+                                        break;
+                                    case "店铺名称":
+                                        shopNameIndex = childIndex;
+                                        break;
+                                    case "优惠券面额":
+                                        titleIndex = childIndex;
+                                        break;
+                                    case "商品优惠券链接":
+                                        baseUrlIndex = childIndex;
+                                        break;
+                                    case "直达链接":
+                                        urlIndex = childIndex;
+                                        break;
+                                }
+                            }
+
+                            index++;
+                            continue;
+                        }
                         var coupon = new Coupon();
                         //Spider(item[10]);
-                        coupon.BaseUrl = item[10];
-                        coupon.Url = item[3];
-                        coupon.Title = item[8];
-                        coupon.ShopName = item[6];
-                        coupon.ProductUrl = item[3];
-                        coupon.PictureUrl = item[1];
-                        coupon.ProductDescription = item[0];
+                        coupon.BaseUrl = item[baseUrlIndex];
+                        coupon.Url = item[urlIndex];
+                        coupon.Title = item[titleIndex];
+                        coupon.ShopName = item[shopNameIndex];
+                        coupon.ProductUrl = item[urlIndex];
+                        coupon.PictureUrl = item[pictureUrlIndex];
+                        coupon.ProductDescription = item[productDescriptionIndex];
                         coupon.UserId = userId;
                         coupon.Id = Guid.NewGuid().ToString();
                         coupon.AddTime = DateTime.Now;

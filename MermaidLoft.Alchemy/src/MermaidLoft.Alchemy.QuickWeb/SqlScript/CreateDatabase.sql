@@ -1,4 +1,4 @@
-﻿create database Alchemy;
+﻿create database Alchemy CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
 use Alchemy;
 
 create table User
@@ -17,7 +17,7 @@ create table User
   AddTime datetime default null,
   LastLoginTime datetime default null,
   PRIMARY KEY (Id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 2016-09-13:
 alter table User add column Email varchar(255);
@@ -41,7 +41,7 @@ create table Product
   AddTime datetime DEFAULT null,
   Version int default 0,
   PRIMARY KEY (Id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 2016-09-18:
 alter table User add column ShopTitle varchar(255);
@@ -70,10 +70,15 @@ create table Coupon
   Version int default 0,
   IsExpired bit default 0,
   PRIMARY KEY (Id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 2016.11.22:
 alter table Coupon change PictureUrl PictureUrl varchar(512);
 alter table Coupon change ProductUrl ProductUrl varchar(512);
 alter table Coupon change Url Url varchar(512);
 alter table Coupon change BaseUrl BaseUrl varchar(512);
+
+2016.12.03:
+alter table Coupon add column ProductName varchar(512);
+alter table Coupon add column PictureType varchar(512);
+alter table Coupon add column Price double;

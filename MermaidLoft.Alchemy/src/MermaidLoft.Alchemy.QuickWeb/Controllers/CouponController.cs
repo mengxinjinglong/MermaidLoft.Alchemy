@@ -90,9 +90,10 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     // Reading the data from sheet
                     var index = 1;
-                    int baseUrlIndex=0, urlIndex=0,
-                        titleIndex = 0, shopNameIndex = 0,
-                        pictureUrlIndex = 0, productDescriptionIndex = 0;
+                    int baseUrlIndex = 0, priceIndex = 0,
+                        titleIndex = 0, shopNameIndex = 0, productNameIndex = 0,
+                        startIndex=0,endIndex=0, productTypeIndex=0,
+                        pictureUrlIndex = 0, productUrlIndex = 0;
                     foreach (var item in sheet)
                     {
                         if(index==1)
@@ -102,10 +103,19 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                                 switch (item[childIndex].Trim())
                                 {
                                     case "商品名称":
-                                        productDescriptionIndex = childIndex;
+                                        productNameIndex = childIndex;
                                         break;
                                     case "商品主图":
                                         pictureUrlIndex = childIndex;
+                                        break;
+                                    case "商品一级类目":
+                                        productTypeIndex = childIndex;
+                                        break;
+                                    case "淘宝客链接":
+                                        productUrlIndex = childIndex;
+                                        break;
+                                    case "商品价格":
+                                        priceIndex = childIndex;
                                         break;
                                     case "店铺名称":
                                         shopNameIndex = childIndex;
@@ -113,11 +123,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                                     case "优惠券面额":
                                         titleIndex = childIndex;
                                         break;
-                                    case "商品优惠券链接":
-                                        baseUrlIndex = childIndex;
+                                    case "优惠券开始时间":
+                                        startIndex = childIndex;
                                         break;
-                                    case "直达链接":
-                                        urlIndex = childIndex;
+                                    case "优惠券结束时间":
+                                        endIndex = childIndex;
+                                        break;
+                                    case "商品优惠券推广链接":
+                                        baseUrlIndex = childIndex;
                                         break;
                                 }
                             }
@@ -128,12 +141,21 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                         var coupon = new Coupon();
                         //Spider(item[10]);
                         coupon.BaseUrl = item[baseUrlIndex];
-                        coupon.Url = item[urlIndex];
                         coupon.Title = item[titleIndex];
                         coupon.ShopName = item[shopNameIndex];
-                        coupon.ProductUrl = item[urlIndex];
+                        coupon.ProductUrl = item[productUrlIndex];
                         coupon.PictureUrl = item[pictureUrlIndex];
-                        coupon.ProductDescription = item[productDescriptionIndex];
+                        coupon.ProductName = item[productNameIndex];
+                        coupon.ProductType = item[productTypeIndex];
+                        double price = 0;
+                        double.TryParse(item[priceIndex], out price);
+                        coupon.Price = price;
+                        DateTime startDate;
+                        DateTime.TryParse(item[startIndex],out startDate);
+                        coupon.StartDate = startDate;
+                        DateTime endDate;
+                        DateTime.TryParse(item[endIndex], out endDate);
+                        coupon.EndDate = endDate;
                         coupon.UserId = userId;
                         coupon.Id = Guid.NewGuid().ToString();
                         coupon.AddTime = DateTime.Now;

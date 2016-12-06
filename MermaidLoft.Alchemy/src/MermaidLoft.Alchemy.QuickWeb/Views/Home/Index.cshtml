@@ -94,9 +94,11 @@
                         <span>点击领取 @item.Title</span>
                     </a>
                 </div>
-                <div class="description">商品描述：<span>@item.ProductDescription</span></div>
+                <div class="description">原价：<span>@item.Price</span>元</div>
+                <div class="description">描述：<span>开始时间：@item.StartDate.ToString("yyyy-MM-dd")</span>
+                    至<span>结束时间：@item.EndDate.ToString("yyyy-MM-dd")</span></div>
                 <div class="bottom">
-                    <a title="点击进入店铺推广详情页" href="@item.Url" target="_blank">
+                    <a title="点击进入店铺" href="@item.BaseUrl" target="_blank">
                         店铺：<span>@item.ShopName</span>
                     </a>
                 </div>

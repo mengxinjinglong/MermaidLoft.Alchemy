@@ -80,5 +80,7 @@ alter table Coupon change BaseUrl BaseUrl varchar(512);
 
 2016.12.03:
 alter table Coupon add column ProductName varchar(512);
-alter table Coupon add column PictureType varchar(512);
+alter table Coupon add column ProductType varchar(512);
 alter table Coupon add column Price double;
+
+2016.12.06:

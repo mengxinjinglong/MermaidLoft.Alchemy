@@ -289,6 +289,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
+                    TotalCount = await _queryService.SearchCouponsForPageCountAsync(title),
                     Data = await _queryService.FindCouponsForPageAsync(userId,title, pageIndex, pageSize)
                 };
             }

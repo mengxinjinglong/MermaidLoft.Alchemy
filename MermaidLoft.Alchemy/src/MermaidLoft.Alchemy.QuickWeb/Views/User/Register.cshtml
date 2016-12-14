@@ -117,11 +117,11 @@
         var app = angular.module('registerApp', []);
         app.controller('userRegisterCtrl', function ($scope, $http) {
             $scope.register = function () {
-                console.log($scope.user);
+                
                 $http.post('/user/post', $scope.user).success(function (response) {
                     if (response.status == 0) {
-                        alter(response);
-                        window.location.href = 'index';
+                        alert("注册成功，即将跳转到管理首页...");
+                        window.location.href = 'login';
                     } else {
                         alert(response.message);
                     }

@@ -42,7 +42,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("index","user");
+                return RedirectToAction("index","coupon");
             }
             return View();
         }
@@ -52,7 +52,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("index", "user");
+                return RedirectToAction("index", "coupon");
             }
             return View();
         }

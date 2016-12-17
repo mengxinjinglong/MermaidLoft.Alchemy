@@ -38,7 +38,7 @@
                                 </label>
                                 }
                                 <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm" data-toggle="modal"
-                                       data-target="#editModal">
+                                       data-target="#editModal" ng-click="add()">
                                     新增
                                 </label>
                             </div>
@@ -200,7 +200,13 @@
                                             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                                             <label class="col-md-4 control-label">商品分类</label>
                                             <div class="col-md-8">
-                                                <input ng-model="coupon.productType" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品分类" />
+                                                <select class="form-control form-control-solid placeholder-no-fix" ng-model="coupon.productType">
+                                                    @foreach (var item in BaseResources.Instance.ProduceTypes)
+                                                    { 
+                                                        <option value="@item">@item</option>
+                                                    }
+                                                </select>
+                                                @*<input  required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="推荐商品分类" />*@
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -300,6 +306,7 @@
                         $scope.pageItems = null;
                         
                         $scope.refreshPage = function () {
+                            $("#editModal").modal('hide')
                             $http.get("/coupon/getpage?title=&pageIndex=" + $scope.currentPage + "&pageSize=" + $scope.pageSize + "&userId=" + '@ViewData["userId"]').success(function (response) {
                                 $scope.pageItems = response.data;
                                 $scope.totalItems = response.totalCount;
@@ -313,8 +320,7 @@
                         //获取优惠券信息
                         $scope.spiderCoupon = function (url) {
                             if (url == null || url.length == 0) {
-                                $.MsgBox.Alert("温馨提示", "用户账号不能为空！");
-                                alert("优惠券网址不能为空！");
+                                $.MsgBox.Alert("温馨提示", "优惠券网址不能为空！");
                                 return;
                             }
                             $http.post('/coupon/SpiderCoupon', '"' + url + '"').success(function (response) {
@@ -329,6 +335,9 @@
                                 $.MsgBox.Alert("温馨提示", response.message);
                             });
                         };
+                        $scope.add = function () {
+                            $scope.coupon = null;
+                        };
                         $scope.edit = function (id) {
                             $http.get('/coupon/get/' + id).success(function (response) {
                                 console.log(response.data);
@@ -339,7 +348,7 @@
                         };
 
                         $scope.delete = function (id) {
-                            alert(id);
+                            
                             $http.delete('/coupon/delete?id=' + id).success(function (response) {
                                 console.log(response.data);
                                 if (response.status == 0) {
@@ -357,7 +366,27 @@
 
 
                         $scope.save = function () {
-                            console.log($scope.coupon);
+                            if ($scope.coupon == null)
+                            {
+                                $.MsgBox.Alert("温馨提示", "请填写信息！");
+                                return;
+                            }
+                            if ($scope.coupon.baseUrl == null ) {
+                                $.MsgBox.Alert("温馨提示", "请填写优惠券网址！");
+                                return;
+                            }
+                            if ($scope.coupon.productUrl == null) {
+                                $.MsgBox.Alert("温馨提示", "请填写推荐商品网址！");
+                                return;
+                            }
+                            if ($scope.coupon.productName == null) {
+                                $.MsgBox.Alert("温馨提示", "请填写推荐商品名称！");
+                                return;
+                            }
+                            if ($scope.coupon.productType == null) {
+                                $.MsgBox.Alert("温馨提示", "请填写商品分类！");
+                                return;
+                            }
                             if ($scope.coupon.id == null || $scope.coupon.id.length == 0) {
                                 $scope.coupon.userId = '@ViewData["userId"]';
                                 $http.post('/coupon/post', $scope.coupon).success(function (response) {

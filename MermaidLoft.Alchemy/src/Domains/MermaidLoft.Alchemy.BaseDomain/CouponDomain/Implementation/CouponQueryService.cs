@@ -71,7 +71,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
                     condition = new { ShopName = string.Format("%{0}%", shopName) };
                     conditionSql = " where ShopName like @ShopName ";
                 }
-                var sql = string.Format("SELECT count(*) FROM {0} {1}",
+                var sql = string.Format("SELECT count(*) FROM {0} {1} order by AddTime desc",
                         ConfigSettings.CouponTable, conditionSql);
                 return (await connection.QueryAsync<int>(sql, condition)).Single();
             }

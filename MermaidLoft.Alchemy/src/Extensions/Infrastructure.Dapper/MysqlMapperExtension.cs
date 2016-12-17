@@ -339,7 +339,7 @@ namespace Infrastructure.Dapper
             //    columns = string.Format("{0}.{1}", table, columns);
             //}
             //var sql = string.Format("SELECT * FROM (SELECT @rowNum:=@rowNum+1 AS rowNum,{0} FROM (SELECT @rowNum:=0) r,{2}{3} ORDER BY {1}) AS a WHERE rowNum>={4}  AND rowNum<={5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize + 1, pageIndex * pageSize);
-            var sql = string.Format("SELECT {0} FROM {2}{3} ORDER BY {1} limit {4},{5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize, pageSize);
+            var sql = string.Format("SELECT {0} FROM {2}{3} ORDER BY {1} desc limit {4},{5}", columns, orderBy, table, whereFields, (pageIndex - 1) * pageSize, pageSize);
             return connection.QueryAsync<T>(sql, conditionObj, transaction, commandTimeout);
         }
 

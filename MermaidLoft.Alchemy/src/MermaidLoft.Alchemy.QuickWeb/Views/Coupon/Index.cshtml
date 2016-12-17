@@ -28,11 +28,15 @@
                         </div>
                         <div class="actions">
                             <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                @using System.Security.Claims;
+                                @using MermaidLoft.Alchemy.QuickWeb.Core;
+                                @if(User.Identities.First(u => u.IsAuthenticated)
+                                    .FindFirst(ClaimTypes.Role).Value==UserType.Admin){
                                 <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm" data-toggle="modal"
                                        data-target="#importExcelModal">
                                     导入Excel数据
                                 </label>
-
+                                }
                                 <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm" data-toggle="modal"
                                        data-target="#editModal">
                                     新增
@@ -283,6 +287,7 @@
                 <script src="/js/modal.js" asp-append-version="true"></script>
                 <script src="/js/angular.min.js" asp-append-version="true"></script>
                 <script src="/js/ui-bootstrap-tpls-2.1.4.min.js" asp-append-version="true"></script>
+                <script src="/js/jquery.custom.msgbox.js" asp-append-version="true"></script>
                 <script type="text/javascript">
                     var app = angular.module('alchemyApp', ['ui.bootstrap']);
 
@@ -308,6 +313,7 @@
                         //获取优惠券信息
                         $scope.spiderCoupon = function (url) {
                             if (url == null || url.length == 0) {
+                                $.MsgBox.Alert("温馨提示", "用户账号不能为空！");
                                 alert("优惠券网址不能为空！");
                                 return;
                             }
@@ -317,12 +323,10 @@
                                     $scope.coupon = response.data;
                                 } else {
                                     console.log(response.message);
-                                    alert("优惠券不存在或已过期，请确认。");
+                                    $.MsgBox.Alert("温馨提示", "优惠券已过期或暂时无法获取，请确认或手动输入。");
                                 }
-                                //console.log(response);
                             }).error(function (response) {
-                                alert("ERROR:" + response);
-                                //console.log('ERROR:' + response);
+                                $.MsgBox.Alert("温馨提示", response.message);
                             });
                         };
                         $scope.edit = function (id) {
@@ -330,7 +334,7 @@
                                 console.log(response.data);
                                 $scope.coupon = response.data;
                             }).error(function (response) {
-                                console.log('ERROR:' + response);
+                                $.MsgBox.Alert("温馨提示", response.message);
                             });
                         };
 
@@ -339,14 +343,15 @@
                             $http.delete('/coupon/delete?id=' + id).success(function (response) {
                                 console.log(response.data);
                                 if (response.status == 0) {
-                                    alert("删除成功！");
+                                    $.MsgBox.Alert("温馨提示", "删除成功！");
                                     $scope.refreshPage();
                                 } else {
-                                    alert(response.message);
+                                    $.MsgBox.Alert("温馨提示", response.message);
                                 }
                                 console.log(response);
                             }).error(function (response) {
-                                console.log('ERROR:' + response);
+                                console.log(response);
+                                $.MsgBox.Alert("温馨提示", response.message);
                             });
                         };
 
@@ -357,29 +362,29 @@
                                 $scope.coupon.userId = '@ViewData["userId"]';
                                 $http.post('/coupon/post', $scope.coupon).success(function (response) {
                                     if (response.status == 0) {
-                                        alert("新增成功！");
+                                        $.MsgBox.Alert("温馨提示", "新增成功！");
                                         $scope.refreshPage();
                                     } else {
-                                        alert(response.message);
+                                        $.MsgBox.Alert("温馨提示", response.message);
                                     }
                                     console.log(response);
                                 }).error(function (response) {
-                                    console.log('ERROR:' + response);
-                                    alert(response.message);
+                                    console.log(response);
+                                    $.MsgBox.Alert("温馨提示", response.message);
                                 });
                                 return;
                             }
                             $http.put('/coupon/put', $scope.coupon).success(function (response) {
                                 if (response.status == 0) {
-                                    alert("修改成功！");
+                                    $.MsgBox.Alert("温馨提示", "修改成功！");
                                     $scope.refreshPage();
                                 } else {
-                                    alert(response.message);
+                                    $.MsgBox.Alert("温馨提示", response.message);
                                 }
                                 console.log(response);
                             }).error(function (response) {
-                                console.log('ERROR:' + response);
-                                alert(response.message);
+                                console.log(response);
+                                $.MsgBox.Alert("温馨提示", response.message);
                             });
                         };
 

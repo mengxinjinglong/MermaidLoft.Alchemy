@@ -51,7 +51,7 @@
     <!-- BEGIN LOGO -->
     <div class="logo">
         <a href="index.html">
-            <img src="../assets/pages/img/logo-big.png" alt="" />
+            <img  alt="" />
         </a>
     </div>
 
@@ -80,10 +80,11 @@
             <div class="form-actions">
                 <button type="submit" class="btn red btn-block uppercase">登陆</button>
             </div>
-            消息提示：{{loginForm.$valid}}-
-            {{loginForm.$invalid}}-
-            {{loginForm.account.$dirty && loginForm.account.$valid}}-
-            {{loginForm.account.$dirty && loginForm.account.$invalid}}
+            <div class="form-group">
+                <a href="/user/register" >
+                    <span style="text-decoration:underline">没有帐号，立即注册</span>
+                </a>
+            </div>
         </form>
         <!-- END LOGIN FORM -->
     </div>
@@ -106,11 +107,9 @@
                 if (!isValid) return;
                 $http({
                     method: "post",
-                    data: $scope.user,//Form Data = {"id":1,"value":"hello"}
+                    data: $scope.user,
                     url: "/user/LoginOn"
-                })
-		        //$http.post('/user/LoginOn', $scope.user)
-                    .success(function (response) {
+                }).success(function (response) {
                         console.log(response);
                         if (response.status == 0) {
                             window.location.href = '/coupon/index';
@@ -118,8 +117,8 @@
                             $.MsgBox.Alert("温馨提示", response.message);
                         }
                     }).error(function (response) {
-                        console.log('ERROR:' + response);
-                        alert(response);
+                        console.log(response);
+                        $.MsgBox.Alert("温馨提示", response.message);
                     });
             }
         });

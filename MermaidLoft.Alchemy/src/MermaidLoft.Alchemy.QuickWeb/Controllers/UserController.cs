@@ -73,6 +73,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             var message = "";
             try
             {
+                Ensure.NotNull(u, "登陆用户信息");
                 Ensure.NotNullOrEmpty(u.Account,"用户账号");
                 Ensure.NotNullOrEmpty(u.SecureCode,"密码");
                 var user = await _queryService.FindUserAsync(new { Account = u.Account });
@@ -210,6 +211,11 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             //没有添加[FromBody]，无法获取到user内容，user值为默认值 as user = new User();
             try
             {
+                Ensure.NotNull(user, "登陆用户信息");
+                Ensure.NotNullOrEmpty(user.Account, "用户账号");
+                Ensure.NotNullOrEmpty(user.UserName, "用户名");
+                Ensure.NotNullOrEmpty(user.SecureCode, "登陆密码");
+                
                 user.Id = Guid.NewGuid().ToString();
                 user.SecureCode = SecurityCodeUtil.Md5(user.SecureCode);
                 user.AddTime = DateTime.Now;

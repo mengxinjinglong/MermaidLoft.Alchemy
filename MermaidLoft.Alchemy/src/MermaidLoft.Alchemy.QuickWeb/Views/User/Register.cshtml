@@ -52,7 +52,7 @@
     <!-- BEGIN LOGO -->
     <div class="logo">
         <a href="index.html">
-            <img src="../assets/pages/img/logo-big.png" alt="" />
+            <img  alt="" />
         </a>
     </div>
 
@@ -60,8 +60,8 @@
 
         <!-- BEGIN Register FORM -->
         <form class="login-form" ng-app="registerApp" ng-controller="userRegisterCtrl">
-            <div class="form-title">
-                <span class="form-title">注册用户</span>
+            <div class="form-title" align="center">
+                <h1>注册用户</h1>
             </div>
             @*ng-show="loginForm.Username.$dirty && loginForm.Username.$invalid"*@
             <div class="alert alert-danger display-hide">
@@ -71,35 +71,35 @@
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9">用户账号</label>
-                <input ng-model="user.Account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号" />
+                <input ng-model="user.Account" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号(必填项)" />
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9">用户名</label>
-                <input ng-model="user.UserName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" />
+                <input ng-model="user.UserName" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名(必填项)" />
             </div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9">登录密码</label>
-                <input ng-model="user.SecureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码" />
+                <input ng-model="user.SecureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="登录密码(必填项)" />
             </div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9">确认密码</label>
-                <input ng-model="user.ConfirmSecureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="确认密码" />
+                <input ng-model="user.ConfirmSecureCode" required class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="确认密码(必填项)" />
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9">邮箱</label>
-                <input ng-model="user.Email" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="邮箱" />
+                <input ng-model="user.Email" class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="邮箱" />
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9">联系方式</label>
-                <input ng-model="user.PhoneNumber" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="联系方式" />
+                <input ng-model="user.PhoneNumber"  class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="联系方式" />
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9">用户账号ID</label>
-                <input ng-model="user.ShopUserNameId" required class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号ID" />
+                <input ng-model="user.ShopUserNameId"  class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户账号ID" />
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
@@ -113,22 +113,47 @@
         <!-- END Register FORM -->
     </div>
     <script src="~/js/angular.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/jquery.custom.msgbox.js" asp-append-version="true"></script>
     <script>
         var app = angular.module('registerApp', []);
         app.controller('userRegisterCtrl', function ($scope, $http) {
             $scope.register = function () {
-                
+                console.log($scope.user);
+                if ($scope.user==null) {
+                    $.MsgBox.Alert("温馨提示", "请填写注册信息.");
+                    return;
+                }
+                if ($scope.user.Account==null)
+                {
+                    $.MsgBox.Alert("温馨提示", "用户帐号不能为空.");
+                    return;
+                }
+                if ($scope.user.UserName==null) {
+                    $.MsgBox.Alert("温馨提示", "用户名不能为空.");
+                    return;
+                }
+                if ($scope.user.SecureCode == null)
+                {
+                    $.MsgBox.Alert("温馨提示", "登陆密码不能为空.");
+                    return;
+                }
+                if ($scope.user.SecureCode != $scope.user.ConfirmSecureCode)
+                {
+                    $.MsgBox.Alert("温馨提示", "两次输入的密码不一致，请重新输入.");
+                    return;
+                }
                 $http.post('/user/post', $scope.user).success(function (response) {
                     if (response.status == 0) {
-                        alert("注册成功，即将跳转到管理首页...");
+                        $.MsgBox.Alert("温馨提示", "注册成功，即将跳转到管理首页...");
                         window.location.href = 'login';
                     } else {
-                        alert(response.message);
+                        $.MsgBox.Alert("温馨提示", response.message);
                     }
                     console.log(response);
                 }).error(function (response) {
                     console.log('ERROR:' + response);
-                    alert(response.message);
+                    $.MsgBox.Alert("温馨提示", response.message);
                 });
             }
         });

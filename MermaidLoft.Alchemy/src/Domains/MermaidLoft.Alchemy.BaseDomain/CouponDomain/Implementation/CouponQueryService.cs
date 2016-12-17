@@ -53,7 +53,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
                     condition = new { ShopName = string.Format("%{0}%", shopName) };
                     conditionSql = " where ShopName like @ShopName ";
                 }
-                var sql = string.Format("SELECT * FROM {0} {1} limit {2},{3}",
+                var sql = string.Format("SELECT * FROM {0} {1} order by AddTime desc limit {2},{3}",
                         ConfigSettings.CouponTable, conditionSql,
                         (pageIndex - 1) * pageSize, pageSize);
                 return await connection.QueryAsync<Coupon>(sql, condition);
@@ -71,7 +71,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
                     condition = new { ShopName = string.Format("%{0}%", shopName) };
                     conditionSql = " where ShopName like @ShopName ";
                 }
-                var sql = string.Format("SELECT count(*) FROM {0} {1} order by AddTime desc",
+                var sql = string.Format("SELECT count(*) FROM {0} {1}",
                         ConfigSettings.CouponTable, conditionSql);
                 return (await connection.QueryAsync<int>(sql, condition)).Single();
             }

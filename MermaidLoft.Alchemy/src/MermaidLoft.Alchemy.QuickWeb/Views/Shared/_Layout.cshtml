@@ -55,88 +55,93 @@
         <div class="page-header-top">
             <div class="container">
                 <!-- BEGIN LOGO -->
-                <div class="page-logo">
-                    <a href="/home/index">
-                        <h1>美人鱼优惠券</h1>
-                    </a>
-                </div>
-                <!-- END LOGO -->
-                <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-                <a href="javascript:;" class="menu-toggler"></a>
-                <!-- END RESPONSIVE MENU TOGGLER -->
-                <!-- BEGIN TOP NAVIGATION MENU -->
-                
+                    <div class="page-logo" style="width:120px;">
+                        <a href="http://www.mylofter.com">
+                            <img src="logo.ico" height="66" width="120" />
+                        </a>
+                    </div>
+                    <div class="page-logo">
+                        <a href="/home/index">
+                            <h1>美人鱼优惠券</h1>
+                        </a>
+                    </div>
+                    <!-- END LOGO -->
+                    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                    <a href="javascript:;" class="menu-toggler"></a>
+                    <!-- END RESPONSIVE MENU TOGGLER -->
+                    <!-- BEGIN TOP NAVIGATION MENU -->
+
                     <div class="top-menu">
                         <ul class="nav navbar-nav pull-right">
-@using System.Security.Claims;
-@if (User.Identities.Any(u => u.IsAuthenticated))
-{
+                            @using System.Security.Claims;
+                            @if (User.Identities.Any(u => u.IsAuthenticated))
+                            {
                             <!-- BEGIN TODO DROPDOWN -->
-                            <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <i class="icon-screen-desktop"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown dropdown-user dropdown-dark" id="header_task_bar">
-                                <a href="/user/index" class="dropdown-toggle" target="_blank">
-                                    <span class="username username-hide-mobile">后台管理</span>
-                                </a>
-                            </li>
+                                <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                        <i class="icon-screen-desktop"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown dropdown-user dropdown-dark" id="header_task_bar">
+                                    <a href="/user/index" class="dropdown-toggle" target="_blank">
+                                        <span class="username username-hide-mobile">后台管理</span>
+                                    </a>
+                                </li>
                             <!-- END TODO DROPDOWN -->
-                            <li class="droddown dropdown-separator">
-                                <span class="separator"></span>
-                            </li>
+                                <li class="droddown dropdown-separator">
+                                    <span class="separator"></span>
+                                </li>
                             <!-- BEGIN INBOX DROPDOWN -->
-                            <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <i class="icon-user"></i>
-                                </a>
-                            </li>
+                                <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                        <i class="icon-user"></i>
+                                    </a>
+                                </li>
                             <!-- END INBOX DROPDOWN -->
                             <!-- BEGIN USER LOGIN DROPDOWN -->
-                            <li class="dropdown dropdown-user dropdown-dark">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="username username-hide-mobile">
-                                        欢迎登陆：
-                                        @User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Name).Value
-                                    </span>
-                                </a>
-                            </li>
+                                <li class="dropdown dropdown-user dropdown-dark">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                        <span class="username username-hide-mobile">
+                                            欢迎登陆：
+                                            @User.Identities.First(u => u.IsAuthenticated).FindFirst(ClaimTypes.Name).Value
+                                        </span>
+                                    </a>
+                                </li>
                             <!-- END USER LOGIN DROPDOWN -->
                             <!-- BEGIN QUICK SIDEBAR TOGGLER -->
-                            <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                                <form asp-area="" asp-controller="User" asp-action="LoginOff" method="post" id="logoutForm" class="navbar-right">
-                                    <button type="submit" style="list-style:none;">
-                                        <span class="sr-only">Toggle Quick Sidebar</span>
-                                        <i class="icon-logout"></i>
-                                    </button>
-                                </form>
-                            </li>
+                                <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                                    <form asp-area="" asp-controller="User" asp-action="LoginOff" method="post" id="logoutForm" class="navbar-right">
+                                        <button type="submit" style="list-style:none;">
+                                            <span class="sr-only">Toggle Quick Sidebar</span>
+                                            <i class="icon-logout"></i>
+                                        </button>
+                                    </form>
+                                </li>
                             <!-- END QUICK SIDEBAR TOGGLER -->
-}
-else
-{
+                            }
+                            else
+                            {
                             <!--BEGIN LOGIN & REGISTER-->
-                            @*<li class="dropdown dropdown-user dropdown-dark">
-                                <a href="/user/login" class="dropdown-toggle">
-                                    <span class="username username-hide-mobile">
-                                        请登陆
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="dropdown dropdown-user dropdown-dark">
-                                <a href="/user/register" class="dropdown-toggle">
-                                    <span class="username username-hide-mobile">
-                                        免费注册
-                                    </span>
-                                </a>
-                            </li>*@
+                                @*<li class="dropdown dropdown-user dropdown-dark">
+                            <a href="/user/login" class="dropdown-toggle">
+                                <span class="username username-hide-mobile">
+                                    请登陆
+                                </span>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-user dropdown-dark">
+                            <a href="/user/register" class="dropdown-toggle">
+                                <span class="username username-hide-mobile">
+                                    免费注册
+                                </span>
+                            </a>
+                        </li>*@
                             <!-- END LOGIN & REGISTER-->
-}
+                            }
                         </ul>
                     </div>
-                <!-- END TOP NAVIGATION MENU -->
-            </div>
+                    <!-- END TOP NAVIGATION MENU -->
+                </div>
         </div>
         <!-- END HEADER TOP -->
         <!-- BEGIN HEADER MENU -->

@@ -6,7 +6,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
 {
     public class CouponsListViewModel
     {
-        public string ShopName { get; set; }
+        public string Title { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
@@ -18,7 +18,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
                     .Create(PageIndex,PageSize, 
                     (TotalCount + 1) / PageSize,
                     3,
-                    "&shopName="+ShopName);
+                    "&title="+Title);
             }
         }
     }

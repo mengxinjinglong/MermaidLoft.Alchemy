@@ -46,7 +46,6 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             return View();
         }
 
-
         [HttpPost]
         [Authorize(Roles = UserType.User)]
         public async Task<IActionResult> ImportExcel(IList<IFormFile> files,string userId)
@@ -84,7 +83,6 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
             catch(Exception e)
             {
-                //return View(_hostingEnv.WebRootPath+e.Message);
             }
             return RedirectToAction("Index", "Coupon");
         }
@@ -101,6 +99,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                         titleIndex = 0, shopNameIndex = 0, productNameIndex = 0,
                         startIndex=0,endIndex=0, productTypeIndex=0,
                         pictureUrlIndex = 0, productUrlIndex = 0;
+                    IList<Coupon> coupons = new List<Coupon>();
                     foreach (var item in sheet)
                     {
                         if(index==1)
@@ -167,8 +166,9 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                         coupon.Id = Guid.NewGuid().ToString();
                         coupon.AddTime = DateTime.Now;
                         coupon.Version = 0;
-                        await _service.AddAsync(coupon);
+                        coupons.Add(coupon);
                     }
+                    await _service.AddAsync(coupons);
                 }
             }
         }
@@ -181,6 +181,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 titleIndex = 0, shopNameIndex = 0, productNameIndex = 0,
                 startIndex = 0, endIndex = 0, productTypeIndex = 0,
                 pictureUrlIndex = 0, productUrlIndex = 0;
+            IList<Coupon> coupons = new List<Coupon>();
             foreach (var line in lines)
             {
                 var item = line.Split(',');
@@ -226,6 +227,10 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                     index++;
                     continue;
                 }
+                if (string.IsNullOrEmpty(item[baseUrlIndex]))
+                {
+                    continue;
+                }
                 var coupon = new Coupon();
                 //Spider(item[10]);
                 coupon.BaseUrl = item[baseUrlIndex];
@@ -248,8 +253,9 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 coupon.Id = Guid.NewGuid().ToString();
                 coupon.AddTime = DateTime.Now;
                 coupon.Version = 0;
-                await _service.AddAsync(coupon);
+                coupons.Add(coupon);
             }
+            await _service.AddAsync(coupons);
 
         }
         #endregion

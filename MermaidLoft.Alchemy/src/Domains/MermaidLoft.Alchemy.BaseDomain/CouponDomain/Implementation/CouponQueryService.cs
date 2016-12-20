@@ -42,16 +42,16 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
             }
         }
 
-        public async Task<IEnumerable<Coupon>> SearchCouponsForPageAsync(string shopName, int pageIndex, int pageSize)
+        public async Task<IEnumerable<Coupon>> SearchCouponsForPageAsync(string title, int pageIndex, int pageSize)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
                 string conditionSql = string.Empty;
                 object condition = null;
-                if (!string.IsNullOrEmpty(shopName))
+                if (!string.IsNullOrEmpty(title))
                 {
-                    condition = new { ShopName = string.Format("%{0}%", shopName) };
-                    conditionSql = " where ShopName like @ShopName ";
+                    condition = new { ProductName = string.Format("%{0}%", title) };
+                    conditionSql = " where ProductName like @ProductName ";
                 }
                 var sql = string.Format("SELECT * FROM {0} {1} order by AddTime desc limit {2},{3}",
                         ConfigSettings.CouponTable, conditionSql,
@@ -60,16 +60,16 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
             }
         }
 
-        public async Task<int> SearchCouponsForPageCountAsync(string shopName)
+        public async Task<int> SearchCouponsForPageCountAsync(string title)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
                 string conditionSql = string.Empty;
                 object condition = null;
-                if (!string.IsNullOrEmpty(shopName))
+                if (!string.IsNullOrEmpty(title))
                 {
-                    condition = new { ShopName = string.Format("%{0}%", shopName) };
-                    conditionSql = " where ShopName like @ShopName ";
+                    condition = new { ProductName = string.Format("%{0}%", title) };
+                    conditionSql = " where ProductName like @ProductName ";
                 }
                 var sql = string.Format("SELECT count(*) FROM {0} {1}",
                         ConfigSettings.CouponTable, conditionSql);

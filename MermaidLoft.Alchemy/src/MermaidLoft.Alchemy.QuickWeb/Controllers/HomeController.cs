@@ -21,14 +21,14 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         #region View
         [HttpGet]
-        public async Task<IActionResult> Index(string shopName, int pageIndex=1, int pageSize=20)
+        public async Task<IActionResult> Index(string title, int pageIndex=1, int pageSize=20)
         {
             return View(new CouponsListViewModel {
-                ShopName = shopName,
+                Title = title,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                TotalCount = await _couponqueryService.SearchCouponsForPageCountAsync(shopName),
-                Coupons = await _couponqueryService.SearchCouponsForPageAsync(shopName, pageIndex, pageSize)
+                TotalCount = await _couponqueryService.SearchCouponsForPageCountAsync(title),
+                Coupons = await _couponqueryService.SearchCouponsForPageAsync(title, pageIndex, pageSize)
             });
         }
 

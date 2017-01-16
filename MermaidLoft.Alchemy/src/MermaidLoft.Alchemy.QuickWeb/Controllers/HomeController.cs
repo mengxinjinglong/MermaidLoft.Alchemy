@@ -67,6 +67,12 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [Route("root.txt")]
+        public IActionResult Robots()
+        {
+            return View();
+        }
         #endregion
 
         #region WEB API

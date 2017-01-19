@@ -77,6 +77,24 @@
                 </span>
             </form><!-- /input-group -->
         </div>
+        <div class="col-lg-12">
+            <ul class="list-inline">
+                @if (@Model.ProductTypeNames.Count() > 0)
+                {
+                    @foreach (var item in Model.ProductTypeNames)
+                    {
+                        if (item == Model.ProductTypeName)
+                        {
+                            <li class='label label-success'><a href="?pageIndex=1&pageSize=@Model.PageSize&title=@Model.Title&productTypeName=@item">@item</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="?pageIndex=1&pageSize=@Model.PageSize&title=@Model.Title&productTypeName=@item">@item</a></li>
+                        }
+                    }
+                }
+                </ul>
+        </div>
     </div>
 
 @if (@Model.Coupons.Count() > 0)

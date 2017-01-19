@@ -42,38 +42,95 @@ namespace MermaidLoft.Alchemy.BaseDomain.CouponDomain.Implementation
             }
         }
 
-        public async Task<IEnumerable<Coupon>> SearchCouponsForPageAsync(string title, int pageIndex, int pageSize)
+        public async Task<IEnumerable<Coupon>> SearchCouponsForPageAsync(string title, string productTypeName, int pageIndex, int pageSize)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
                 string conditionSql = string.Empty;
                 object condition = null;
+
+                var i = 0;
                 if (!string.IsNullOrEmpty(title))
                 {
-                    condition = new { ProductName = string.Format("%{0}%", title) };
-                    conditionSql = " where ProductName like @ProductName ";
+                    i++;//1
+                    conditionSql = " and ProductName like @ProductName ";
                 }
-                var sql = string.Format("SELECT * FROM {0} {1} order by AddTime desc limit {2},{3}",
+                if (!string.IsNullOrEmpty(productTypeName))
+                {
+                    i += 2;//2,一个，3两个
+                    conditionSql += " and ProductType=@ProductType ";
+                }
+                switch (i)
+                {
+                    case 1:
+                        condition = new { ProductName = string.Format("%{0}%", title) };
+                        break;
+                    case 2:
+                        condition = new { ProductType = productTypeName };
+                        break;
+                    case 3:
+                        condition = new
+                        {
+                            ProductName = string.Format("%{0}%", title),
+                            ProductType = productTypeName
+                        };
+                        break;
+                }
+
+                var sql = string.Format("SELECT * FROM {0} where 1=1 {1} order by AddTime desc limit {2},{3}",
                         ConfigSettings.CouponTable, conditionSql,
                         (pageIndex - 1) * pageSize, pageSize);
                 return await connection.QueryAsync<Coupon>(sql, condition);
             }
         }
 
-        public async Task<int> SearchCouponsForPageCountAsync(string title)
+        public async Task<int> SearchCouponsForPageCountAsync(string title, string productTypeName)
         {
             using (var connection = ConnectionConfig.Instance.GetConnection())
             {
                 string conditionSql = string.Empty;
                 object condition = null;
+
+                var i = 0;
                 if (!string.IsNullOrEmpty(title))
                 {
-                    condition = new { ProductName = string.Format("%{0}%", title) };
-                    conditionSql = " where ProductName like @ProductName ";
+                    i++;//1
+                    conditionSql = " and ProductName like @ProductName ";
                 }
-                var sql = string.Format("SELECT count(*) FROM {0} {1}",
+                if (!string.IsNullOrEmpty(productTypeName))
+                {
+                    i += 2;//2,一个，3两个
+                    conditionSql += " and ProductType = @ProductType ";
+                }
+                switch (i)
+                {
+                    case 1:
+                        condition = new { ProductName = string.Format("%{0}%", title) };
+                        break;
+                    case 2:
+                        condition = new { ProductType = productTypeName };
+                        break;
+                    case 3:
+                        condition = new
+                        {
+                            ProductName = string.Format("%{0}%", title),
+                            ProductType = productTypeName
+                        };
+                        break;
+                }
+
+                var sql = string.Format("SELECT count(*) FROM {0} where 1=1 {1}",
                         ConfigSettings.CouponTable, conditionSql);
                 return (await connection.QueryAsync<int>(sql, condition)).Single();
+            }
+        }
+        public IEnumerable<string> FindAllProduceType()
+        {
+            using (var connection = ConnectionConfig.Instance.GetConnection())
+            {
+                var sql = string.Format("SELECT distinct ProductType FROM {0}",
+                        ConfigSettings.CouponTable);
+                return connection.Query<string>(sql);
             }
         }
     }

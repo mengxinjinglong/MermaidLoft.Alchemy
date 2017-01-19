@@ -10,6 +10,8 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
+        public string ProductTypeName{ get; set; }
+        public IEnumerable<string> ProductTypeNames { get; set; }
         public IEnumerable<Coupon> Coupons { get; set; }
 
         public string Pagination {
@@ -18,7 +20,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
                     .Create(PageIndex,PageSize, 
                     (TotalCount + 1) / PageSize,
                     3,
-                    "&title="+Title);
+                    string.Format("&title={0}&productTypeName={1}", Title,ProductTypeName));
             }
         }
     }

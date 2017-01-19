@@ -3,7 +3,9 @@ using MermaidLoft.Alchemy.BaseDomain.ProductDomain;
 using MermaidLoft.Alchemy.QuickWeb.Core;
 using MermaidLoft.Alchemy.QuickWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 {
@@ -11,24 +13,43 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
     {
         private readonly ICouponQueryService _couponqueryService;
         private readonly IProductQueryService _productQueryService;
-
+        private static IEnumerable<string> ProductTypeNames;
+        private readonly static object _lockObject = new object();
         public HomeController(ICouponQueryService couponqueryService,
             IProductQueryService productQueryService)
         {
-            _couponqueryService = couponqueryService;
-            _productQueryService = productQueryService;
-        }
+            try
+            {
+                _couponqueryService = couponqueryService;
+                _productQueryService = productQueryService;
+                if (ProductTypeNames == null|| !ProductTypeNames.Any())
+                {
+                    lock (_lockObject)
+                    {
+                        if (ProductTypeNames == null)
+                        {
+                            ProductTypeNames = _couponqueryService.FindAllProduceType();
+                        }
+                    }
+                }
+            }
+            catch
+            {
 
+            }
+        }
         #region View
         [HttpGet]
-        public async Task<IActionResult> Index(string title, int pageIndex=1, int pageSize=20)
+        public async Task<IActionResult> Index(string title,string productTypeName, int pageIndex=1, int pageSize=20)
         {
             return View(new CouponsListViewModel {
                 Title = title,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                TotalCount = await _couponqueryService.SearchCouponsForPageCountAsync(title),
-                Coupons = await _couponqueryService.SearchCouponsForPageAsync(title, pageIndex, pageSize)
+                ProductTypeName = productTypeName,
+                ProductTypeNames = ProductTypeNames,
+                TotalCount = await _couponqueryService.SearchCouponsForPageCountAsync(title,productTypeName),
+                Coupons = await _couponqueryService.SearchCouponsForPageAsync(title, productTypeName, pageIndex, pageSize)
             });
         }
 
@@ -76,6 +97,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
         #endregion
 
         #region WEB API
+        /*
         [HttpGet]
         public async Task<ResultMessage> SearchCoupons(string shopName, int pageIndex, int pageSize)
         {
@@ -95,7 +117,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 Status = EnumStatus.Success,
                 Data = _couponqueryService.SearchCouponsForPageAsync(productName, pageIndex, pageSize)
             };
-        }
+        }*/
         #endregion
 
     }

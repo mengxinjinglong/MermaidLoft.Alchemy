@@ -284,6 +284,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 };
             }
         }
+        /*
         [HttpGet]
 
         //[Authorize(Roles = UserType.User)]
@@ -309,7 +310,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 };
             }
         }
-
+        */
         [HttpPost]
         [Authorize(Roles = UserType.User)]
         public async Task<ResultMessage> SpiderCoupon([FromBody]string url)

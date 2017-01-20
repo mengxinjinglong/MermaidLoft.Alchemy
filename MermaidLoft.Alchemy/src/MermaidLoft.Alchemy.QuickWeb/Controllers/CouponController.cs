@@ -284,9 +284,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 };
             }
         }
-        /*
         [HttpGet]
-
         //[Authorize(Roles = UserType.User)]
         public async Task<ResultMessage> GetPage(string userId,string title, int pageIndex, int pageSize)
         {
@@ -296,7 +294,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 {
                     Success = true,
                     Status = EnumStatus.Success,
-                    TotalCount = await _queryService.SearchCouponsForPageCountAsync(title),
+                    TotalCount = await _queryService.SearchCouponsForPageCountAsync(title,""),
                     Data = await _queryService.FindCouponsForPageAsync(userId,title, pageIndex, pageSize)
                 };
             }
@@ -310,7 +308,6 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                 };
             }
         }
-        */
         [HttpPost]
         [Authorize(Roles = UserType.User)]
         public async Task<ResultMessage> SpiderCoupon([FromBody]string url)

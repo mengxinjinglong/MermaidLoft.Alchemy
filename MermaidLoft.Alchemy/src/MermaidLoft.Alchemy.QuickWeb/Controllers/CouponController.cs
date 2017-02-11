@@ -83,6 +83,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             }
             catch(Exception e)
             {
+                var a = e.Message;
             }
             return RedirectToAction("Index", "Coupon");
         }
@@ -102,7 +103,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
                     IList<Coupon> coupons = new List<Coupon>();
                     foreach (var item in sheet)
                     {
-                        if(index==1)
+                        if(index == 1)
                         {
                             for (var childIndex = 0; childIndex < item.Count; childIndex++)
                             {
@@ -175,88 +176,99 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
 
         private async Task SaveCouponsByCsv(string fileName, string userId)
         {
-            var lines = System.IO.File.ReadAllLines(fileName);
-            var index = 1;
-            int baseUrlIndex = 0, priceIndex = 0,
-                titleIndex = 0, shopNameIndex = 0, productNameIndex = 0,
-                startIndex = 0, endIndex = 0, productTypeIndex = 0,
-                pictureUrlIndex = 0, productUrlIndex = 0;
-            IList<Coupon> coupons = new List<Coupon>();
-            foreach (var line in lines)
+            try
             {
-                var item = line.Split(',');
-                if (index == 1)
+                var lines = System.IO.File.ReadAllLines(fileName);
+                var index = 1;
+                int baseUrlIndex = 0, priceIndex = 0,
+                    titleIndex = 0, shopNameIndex = 0, productNameIndex = 0,
+                    startIndex = 0, endIndex = 0, productTypeIndex = 0,
+                    pictureUrlIndex = 0, productUrlIndex = 0;
+                IList<Coupon> coupons = new List<Coupon>();
+                int itemLength = 0;
+                foreach (var line in lines)
                 {
-                    for (var childIndex = 0; childIndex < item.Length; childIndex++)
+                    var item = line.Split(',');
+                    if (index == 1)
                     {
-                        switch (item[childIndex].Trim())
+                        itemLength = item.Length;
+                        for (var childIndex = 0; childIndex < item.Length; childIndex++)
                         {
-                            case "商品名称":
-                                productNameIndex = childIndex;
-                                break;
-                            case "商品主图":
-                                pictureUrlIndex = childIndex;
-                                break;
-                            case "商品一级类目":
-                                productTypeIndex = childIndex;
-                                break;
-                            case "淘宝客链接":
-                                productUrlIndex = childIndex;
-                                break;
-                            case "商品价格":
-                                priceIndex = childIndex;
-                                break;
-                            case "店铺名称":
-                                shopNameIndex = childIndex;
-                                break;
-                            case "优惠券面额":
-                                titleIndex = childIndex;
-                                break;
-                            case "优惠券开始时间":
-                                startIndex = childIndex;
-                                break;
-                            case "优惠券结束时间":
-                                endIndex = childIndex;
-                                break;
-                            case "商品优惠券推广链接":
-                                baseUrlIndex = childIndex;
-                                break;
+                            switch (item[childIndex].Trim())
+                            {
+                                case "商品名称":
+                                    productNameIndex = childIndex;
+                                    break;
+                                case "商品主图":
+                                    pictureUrlIndex = childIndex;
+                                    break;
+                                case "商品一级类目":
+                                    productTypeIndex = childIndex;
+                                    break;
+                                case "淘宝客链接":
+                                    productUrlIndex = childIndex;
+                                    break;
+                                case "商品价格":
+                                    priceIndex = childIndex;
+                                    break;
+                                case "店铺名称":
+                                    shopNameIndex = childIndex;
+                                    break;
+                                case "优惠券面额":
+                                    titleIndex = childIndex;
+                                    break;
+                                case "优惠券开始时间":
+                                    startIndex = childIndex;
+                                    break;
+                                case "优惠券结束时间":
+                                    endIndex = childIndex;
+                                    break;
+                                case "商品优惠券推广链接":
+                                    baseUrlIndex = childIndex;
+                                    break;
+                            }
                         }
+
+                        index++;
+                        continue;
                     }
-
-                    index++;
-                    continue;
+                    //item.Length!=itemLength，
+                    //若解析的item长度和标题item的长度不一致则抛弃该行
+                    if (item.Length!=itemLength||string.IsNullOrEmpty(item[baseUrlIndex]))
+                    {
+                        continue;
+                    }
+                    
+                    var coupon = new Coupon();
+                    //Spider(item[10]);
+                    coupon.BaseUrl = item[baseUrlIndex];
+                    coupon.Title = item[titleIndex];
+                    coupon.ShopName = item[shopNameIndex];
+                    coupon.ProductUrl = item[productUrlIndex];
+                    coupon.PictureUrl = item[pictureUrlIndex];
+                    coupon.ProductName = item[productNameIndex];
+                    coupon.ProductType = item[productTypeIndex];
+                    double price = 0;
+                    double.TryParse(item[priceIndex], out price);
+                    coupon.Price = price;
+                    DateTime startDate;
+                    DateTime.TryParse(item[startIndex], out startDate);
+                    coupon.StartDate = startDate;
+                    DateTime endDate;
+                    DateTime.TryParse(item[endIndex], out endDate);
+                    coupon.EndDate = endDate;
+                    coupon.UserId = userId;
+                    coupon.Id = Guid.NewGuid().ToString();
+                    coupon.AddTime = DateTime.Now;
+                    coupon.Version = 0;
+                    coupons.Add(coupon);
                 }
-                if (string.IsNullOrEmpty(item[baseUrlIndex]))
-                {
-                    continue;
-                }
-                var coupon = new Coupon();
-                //Spider(item[10]);
-                coupon.BaseUrl = item[baseUrlIndex];
-                coupon.Title = item[titleIndex];
-                coupon.ShopName = item[shopNameIndex];
-                coupon.ProductUrl = item[productUrlIndex];
-                coupon.PictureUrl = item[pictureUrlIndex];
-                coupon.ProductName = item[productNameIndex];
-                coupon.ProductType = item[productTypeIndex];
-                double price = 0;
-                double.TryParse(item[priceIndex], out price);
-                coupon.Price = price;
-                DateTime startDate;
-                DateTime.TryParse(item[startIndex], out startDate);
-                coupon.StartDate = startDate;
-                DateTime endDate;
-                DateTime.TryParse(item[endIndex], out endDate);
-                coupon.EndDate = endDate;
-                coupon.UserId = userId;
-                coupon.Id = Guid.NewGuid().ToString();
-                coupon.AddTime = DateTime.Now;
-                coupon.Version = 0;
-                coupons.Add(coupon);
+                await _service.AddAsync(coupons);
             }
-            await _service.AddAsync(coupons);
-
+            catch (Exception e)
+            {
+                var a = e;
+            }
         }
         #endregion
 

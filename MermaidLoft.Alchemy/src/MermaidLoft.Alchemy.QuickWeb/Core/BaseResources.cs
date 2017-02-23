@@ -1,4 +1,7 @@
 ﻿
+using MermaidLoft.Alchemy.QuickWeb.Spider;
+using System.Collections.Generic;
+
 namespace MermaidLoft.Alchemy.QuickWeb.Core
 {
     public class BaseResources
@@ -13,6 +16,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Core
         public string[] ProduceTypes { get; set; }
         public BaseResources()
         {
+            #region
             ProduceTypes = new string[]{ "保健食品/膳食营养补充食品",
                 "女士内衣/男士内衣/家居服",
                 "女装/女士精品",
@@ -96,6 +100,43 @@ namespace MermaidLoft.Alchemy.QuickWeb.Core
                 "摩托车/装备/配件",
                 "手机",
                 };
+            #endregion
+
+            #region 普通搜索排序
+            if (NormalSortTypes == null)
+            {
+                NormalSortTypes = new List<SortTypeKeyValue>();
+            }
+            var selectedKeyValue = new SortTypeKeyValue { Key = "默认", Value = new Dictionary<string, string> { { "queryType", "0" } } };
+            NormalSortTypes.Add(selectedKeyValue);
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "人气", Value = new Dictionary<string, string> { { "queryType", "2" } } });
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "价格从高到低", Value = new Dictionary<string, string> { { "queryType", "0" }, { "sortType", "3" } } });
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "价格从低到高", Value = new Dictionary<string, string> { { "queryType", "0" }, { "sortType", "4" } } });
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "销量", Value = new Dictionary<string, string> { { "queryType", "0" }, { "sortType", "9" } } });
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "收入比率", Value = new Dictionary<string, string> { { "queryType", "0" }, { "sortType", "1" } } });
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "月推广量", Value = new Dictionary<string, string> { { "queryType", "0" }, { "sortType", "5" } } });
+            NormalSortTypes.Add(new SortTypeKeyValue { Key = "月支出佣金", Value = new Dictionary<string, string> { { "queryType", "0" }, { "sortType", "7" } } });
+            #endregion
+            #region 高佣搜索排序
+            if (HighCommissionSortTypes == null)
+            {
+                HighCommissionSortTypes = new List<SortTypeKeyValue>();
+            }
+            var keyValue = new SortTypeKeyValue { Key = "默认", Value = new Dictionary<string, string> { { "sortType", "" } } };
+            HighCommissionSortTypes.Add(keyValue);
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "价格从高到低", Value = new Dictionary<string, string> { { "sortType", "3" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "价格从低到高", Value = new Dictionary<string, string> { { "sortType", "4" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "销量从高到低", Value = new Dictionary<string, string> { { "sortType", "9" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "收入比率从高到低", Value = new Dictionary<string, string> { { "sortType", "1" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "月推广量从高到低", Value = new Dictionary<string, string> { { "sortType", "5" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "月支出佣金从高到低", Value = new Dictionary<string, string> { { "sortType", "7" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "活动开始时间从近到远", Value = new Dictionary<string, string> { { "sortType", "13" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "活动剩余时间从长到短", Value = new Dictionary<string, string> { { "sortType", "11" } } });
+            HighCommissionSortTypes.Add(new SortTypeKeyValue { Key = "活动剩余时间从短到长", Value = new Dictionary<string, string> { { "sortType", "12" } } });
+            #endregion
         }
+
+        public List<SortTypeKeyValue> NormalSortTypes { get; set; }
+        public List<SortTypeKeyValue> HighCommissionSortTypes { get; set; }
     }
 }

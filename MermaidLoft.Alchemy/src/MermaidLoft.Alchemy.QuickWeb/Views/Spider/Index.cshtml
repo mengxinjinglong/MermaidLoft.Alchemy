@@ -1,0 +1,180 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "淘宝数据抓取界面";
+    //Layout = null;
+}
+
+    <div ng-app="alchemyApp" ng-controller="dataController">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="form-inline form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">排序方式:</span>
+                        <select class="form-control" ng-model="condition.SortTypeName">
+                            <option value="默认">默认</option>
+                            <option value="人气">人气</option>
+                            <option value="价格从高到低">价格从高到低</option>
+                            <option value="价格从低到高">价格从低到高</option>
+                            <option value="销量">销量</option>
+                            <option value="收入比率">收入比率</option>
+                            <option value="月推广量">月推广量</option>
+                            <option value="月支出佣金">月支出佣金</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="condition.freeShipment" ng-true-value="1" ng-false-value="" />
+                        </span>
+                        <span class="form-control">包邮</span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="condition.dxjh" ng-true-value="1" ng-false-value="" />
+                        </span>
+                        <span class="form-control">定向计划</span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="condition.dpyhq" ng-true-value="1" ng-false-value="" />
+                        </span>
+                        <span class="form-control">店铺优惠券</span>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="condition.hPayRate30" ng-true-value="1" ng-false-value="" />
+                        </span>
+                        <span class="form-control">月成交转化率高于行业均值</span>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" ng-model="condition.b2c" ng-true-value="1" ng-false-value="" />
+                        </span>
+                        <span class="form-control">天猫旗舰店</span>
+                    </div>
+                </div>
+                    <div class="form-inline form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">月销量</span>
+                            <input type="number" class="form-control" style="max-width:100px;" ng-model="condition.StartBiz30day" />
+                            <span class="input-group-addon">笔及以上</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">收入比率</span>
+                            <input type="number" class="form-control" style="max-width:100px;" ng-model="condition.StartTkRate" />
+                            <span class="input-group-addon">%&nbsp;-</span>
+                            <input type="number" class="form-control" style="max-width:100px;" ng-model="condition.EndTkRate" />
+                            <span class="input-group-addon">%</span>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon">价格</span>
+                            <input type="number" class="form-control" style="max-width:100px;" ng-model="condition.StartPrice" />
+                            <span class="input-group-addon">元&nbsp;-</span>
+                            <input type="number" class="form-control" style="max-width:100px;" ng-model="condition.EndPrice" />
+                            <span class="input-group-addon">元</span>
+                        </div>
+                    </div>
+                    <div class="input-group form-group input-group-lg">
+                        <input class="form-control" ng-model="condition.KeyWord" placeholder="搜索关键字" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="refreshPage()">查询</button>
+                        </span>
+                    </div>
+
+            </div>
+            <div class="panel-body">
+                <div class="table-container">
+                    <table class="table table-striped table-bordered table-hover" id="example">
+                        <thead>
+                            <tr>
+                                <th> 商品图片 </th>
+                                <th> 店铺名称 </th>
+                                <th> 价格（元）</th>
+                                <th> 佣金（元） </th>
+                                <th> 优惠券金额 </th>
+                                <th> 优惠券描述 </th>
+                                <th> 优惠券开始时间 </th>
+                                <th> 优惠券结束时间 </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--无数据-->
+                            <tr ng-if="pageItems.length == 0">
+                                <td class="text-center" colspan="7">暂无数据</td>
+                            </tr>
+                            <!--有数据-->
+                            <tr ng-repeat="item in pageItems">
+                                <td>
+                                    <a href="{{item.auctionUrl}}" title="{{item.title}}" target="_blank">
+                                        <img src="{{item.pictUrl}}" alt="{{item.title}}" style="height:100px;width:100px;"
+                                              />
+                                    </a>
+                                </td>
+                                <td> {{item.shopTitle}} </td>
+                                <td> {{item.zkPrice}} </td>
+                                <td> {{item.tkCommFee}} </td>
+                                <td> {{item.couponAmount}} </td>
+                                <td> {{item.couponInfo}} </td>
+                                <td> {{item.couponEffectiveStartTime}} </td>
+                                <td> {{item.couponEffectiveEndTime}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <!-- Pagation start https://angular-ui.github.io/bootstrap/ -->
+                <div>
+                    <ul class="pagination-lg" uib-pagination total-items="totalItems" ng-model="currentPage" boundary-links="true"
+                        ng-change="refreshPage()" items-per-page="pageSize" max-size="maxSize" rotate="true" boundary-link-numbers="true"
+                        first-text="首页" previous-text="上一页" next-text="下一页" last-text="尾页"></ul>
+                </div>
+                <!-- Pagation end -->
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/js/jquery.min.js" asp-append-version="true"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+    <script src="/js/modal.js" asp-append-version="true"></script>
+    <script src="/js/angular.min.js" asp-append-version="true"></script>
+    <script src="/js/ui-bootstrap-tpls-2.1.4.min.js" asp-append-version="true"></script>
+    <script src="/js/jquery.custom.msgbox.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        var app = angular.module('alchemyApp', ['ui.bootstrap']);
+
+        app.controller('dataController', function ($scope, $http) {
+
+            $scope.totalItems = 1000;
+            $scope.currentPage = 1;
+            $scope.maxSize = 5;
+            $scope.pageSize = 10;
+            $scope.pageItems = null;
+            //$scope.condition = null;
+            $scope.condition = { SpiderType: 0, pageSize: 10, ToPage: 1, SortTypeName: "默认" };
+            $scope.refreshPage = function () {
+                $scope.condition.ToPage = $scope.currentPage;
+                $scope.condition.pageSize = $scope.pageSize;
+                console.log($scope.condition);
+
+                $http.post('/spider/grab', $scope.condition).success(function (response) {
+                    console.log(response);
+                    $scope.pageItems = null;
+                    if (response.status == 0) {
+                        $scope.pageItems = response.data.data.pageList;
+                    } else {
+                    }
+                }).error(function (response) {
+                    console.log('ERROR:' + response);
+                });
+            };
+            //获取分页数据
+            $scope.refreshPage();
+        });
+    </script>

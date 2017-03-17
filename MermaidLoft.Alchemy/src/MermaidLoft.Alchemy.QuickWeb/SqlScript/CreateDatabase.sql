@@ -83,4 +83,33 @@ alter table Coupon add column ProductName varchar(512);
 alter table Coupon add column ProductType varchar(512);
 alter table Coupon add column Price double;
 
-2016.12.06:
+2017.03.14:
+
+create table BaseResource
+(
+  Id varchar(36) NOT NULL ,
+  ParentId varchar(36) NOT NULL ,
+  Name varchar(512) DEFAULT NULL,
+  Type varchar(512),
+  Description varchar(512),
+  AddTime datetime DEFAULT null,
+  EditTime datetime DEFAULT null,
+  Status int default 0,
+  PRIMARY KEY (Id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table Article
+(
+  Id varchar(36) NOT NULL ,
+  ArticleId int NOT NULL auto_increment ,
+  AuthorId varchar(36) NOT NULL ,
+  CategoryId varchar(36) DEFAULT NULL,
+  Title varchar(512) DEFAULT NULL,
+  Tags varchar(512) DEFAULT NULL,
+  Content text,
+  AddTime datetime DEFAULT null,
+  EditTime datetime DEFAULT null,
+  Hits bigint default 0,
+  Status int default 0,
+  PRIMARY KEY (ArticleId)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

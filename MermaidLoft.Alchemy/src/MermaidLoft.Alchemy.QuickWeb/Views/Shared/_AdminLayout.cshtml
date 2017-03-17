@@ -146,16 +146,23 @@ table tr:nth-child(even) {
                 <div class="hor-menu  ">
                     <ul class="nav navbar-nav">
                         <li class="menu-dropdown classic-menu-dropdown active">
-                            <a href="javascript:;">
+                            <a href="/coupon/index">
                                 首页
                                 <span class="arrow"></span>
                             </a>
                         </li>
-                        @if (ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"])
+
+                        @*@if (ViewData["IsAdmin"] != null && (bool)ViewData["IsAdmin"])*@
                         {
                             <li class="menu-dropdown mega-menu-dropdown">
                                 <a href="/user/index">
                                     用户管理
+                                    <span class="arrow"></span>
+                                </a>
+                            </li>
+                            <li class="menu-dropdown mega-menu-dropdown">
+                                <a href="/article/index">
+                                    文章管理
                                     <span class="arrow"></span>
                                 </a>
                             </li>

@@ -251,3 +251,4 @@ paket-files/
 .idea/
 *.sln.iml
 /MermaidLoft.Alchemy/src/MermaidLoft.Alchemy.QuickWeb/wwwroot
+*.ps1

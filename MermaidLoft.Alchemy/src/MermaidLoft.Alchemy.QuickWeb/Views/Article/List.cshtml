@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MermaidLoft.Alchemy.QuickWeb.Models;
+@model ArticlesViewModel
+@{
+    ViewData["Title"] = "文章列表";
+}
+<div class="row container" style="border-bottom: solid 1px #DBDBDB;margin-bottom:18px;">
+    <div class="col-lg-3">
+        <div class="input-group">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <form class="input-group navbar-brand" method="get">
+            <input name="pageIndex" value="1" hidden />
+            <input name="pageSize" value="@Model.PageSize" hidden />
+            <input type="text" name="key" value="@Model.Key" class="form-control" placeholder="请输入您要搜索的标题" />
+            <span class="input-group-btn">
+                <button class="btn btn-warning" type="submit"> 搜 索 </button>
+            </span>
+        </form><!-- /input-group -->
+    </div>
+</div>
+
+@if (@Model.Articles.Count() > 0)
+{
+    <div class="waterfallContainer text-left">
+
+        @foreach (var item in Model.Articles)
+        {
+            <div class="box">
+                <div class="bottom">
+                    <a href="view/@(item.ArticleId + ".html")" target="_blank">
+                        <span>@item.Title</span>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+    <nav>
+        <ul class="pagination pagination-lg">
+            @(Html.Raw(Model.Pagination))
+        </ul>
+    </nav>
+}
+else
+{
+    <h3>没有找到您要的文章。</h3>
+}

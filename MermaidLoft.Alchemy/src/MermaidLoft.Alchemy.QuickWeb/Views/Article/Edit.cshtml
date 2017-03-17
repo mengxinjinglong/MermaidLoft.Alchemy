@@ -40,7 +40,6 @@
                 $.MsgBox.Alert("温馨提示", "请填写标题！");
                 return;
             }
-            alert(1);
             $scope.model.content = CKEDITOR.instances["editor"].getData();
             console.log($scope.model);
             if ($scope.model.id == null || $scope.model.id.length == 0) {

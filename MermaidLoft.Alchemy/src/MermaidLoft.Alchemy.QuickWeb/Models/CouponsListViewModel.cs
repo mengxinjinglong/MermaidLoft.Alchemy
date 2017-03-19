@@ -18,7 +18,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
             get {
                 return new CreatePaginationHandle()
                     .Create(PageIndex,PageSize, 
-                    (TotalCount + 1) / PageSize,
+                    ((TotalCount + PageSize - 1)) / PageSize,
                     3,
                     string.Format("&title={0}&productTypeName={1}", Title,ProductTypeName));
             }

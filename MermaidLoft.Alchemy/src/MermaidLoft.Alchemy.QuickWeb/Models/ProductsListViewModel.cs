@@ -17,7 +17,7 @@ namespace MermaidLoft.Alchemy.QuickWeb.Models
             {
                 return new CreatePaginationHandle()
                     .Create(PageIndex, PageSize, 
-                    (TotalCount + 1) / PageSize, 
+                    ((TotalCount + PageSize - 1)) / PageSize, 
                     3,//显示两侧的N个节点
                     "&productName=" + ProductName);
             }

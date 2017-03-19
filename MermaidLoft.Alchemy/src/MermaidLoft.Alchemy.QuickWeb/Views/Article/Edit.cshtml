@@ -27,6 +27,7 @@
 <script type="text/javascript">
     CKEDITOR.replace('editor');
     CKEDITOR.config.height = 500;
+    CKEDITOR.config.extraPlugins = 'uploadimage';
     var app = angular.module('alchemyApp', ['ui.bootstrap']);
     app.controller('articleController', function ($scope, $http) {
         //$scope.model = null;

@@ -75,7 +75,7 @@ namespace MermaidLoft.Alchemy.BaseDomain.ArticleDomain.Implementation
                     return (await connection.QueryAsync<T>(sql, conditionDate));
                 }
                 else {
-                    sql = string.Format("SELECT * FROM {0} where 1=1 {1} limit {2},{3}",
+                    sql = string.Format("SELECT * FROM {0} where 1=1 {1}  order by AddTime desc limit {2},{3}",
                     ConfigSettings.ArticleTable,
                     conditionContent,
                     (pageIndex - 1) * pageSize, pageSize);

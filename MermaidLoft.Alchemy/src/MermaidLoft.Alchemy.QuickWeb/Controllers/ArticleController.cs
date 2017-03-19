@@ -51,9 +51,10 @@ namespace MermaidLoft.Alchemy.QuickWeb.Controllers
             return View();
         }
         [Authorize(Roles = UserType.Admin)]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(string id)
         {
             ViewData["userId"] = HttpContext.User.Claims.FirstOrDefault(item=> item.Type == ClaimTypes.PrimarySid).Value;
+            ViewData["id"] = id;
             return View();
         }
         [HttpGet]

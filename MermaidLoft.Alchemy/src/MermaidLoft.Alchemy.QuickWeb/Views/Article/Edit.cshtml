@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "写文章";
 }
+
 <script src="/js/jquery.min.js" asp-append-version="true"></script>
 <script src="/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
 <script src="/js/modal.js" asp-append-version="true"></script>
@@ -31,6 +32,15 @@
     var app = angular.module('alchemyApp', ['ui.bootstrap']);
     app.controller('articleController', function ($scope, $http) {
         //$scope.model = null;
+
+        $http.get('/article/get/' + '@ViewData["id"]').success(function (response) {
+            console.log(response.data);
+            $scope.model = response.data;
+            CKEDITOR.instances["editor"].setData(response.data.content);
+        }).error(function (response) {
+            $.MsgBox.Alert("温馨提示", response.message);
+        });
+
         $scope.save = function () {
             console.log($scope.model);
             if ($scope.model == null) {
@@ -42,6 +52,10 @@
                 return;
             }
             $scope.model.content = CKEDITOR.instances["editor"].getData();
+            if ($scope.model.content == null) {
+                $.MsgBox.Alert("温馨提示", "请填写内容！");
+                return;
+            }
             console.log($scope.model);
             if ($scope.model.id == null || $scope.model.id.length == 0) {
                 $scope.model.authorId = '@ViewData["userId"]';
@@ -58,6 +72,19 @@
                 });
                 return;
             }
+            $http.put('/article/put', $scope.model).success(function (response) {
+                if (response.status == 0) {
+                    $.MsgBox.Alert("温馨提示", "修改成功！");
+                    window.location.href = "/article/index";
+                } else {
+                    $.MsgBox.Alert("温馨提示", response.message);
+                }
+                console.log(response);
+            }).error(function (response) {
+                console.log(response);
+                $.MsgBox.Alert("温馨提示", response.message);
+            });
+            
         }
-     });
+    });
 </script>

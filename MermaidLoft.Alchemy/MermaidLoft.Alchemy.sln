@@ -1,36 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8921B3AD-5166-4383-BDEA-DF9CB1837436}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9274B72F-77E6-453E-A4D8-EDF60FA718E0}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MermaidLoft.Alchemy.QuickWeb", "src\MermaidLoft.Alchemy.QuickWeb\MermaidLoft.Alchemy.QuickWeb.xproj", "{E1663A6F-2859-4C98-BB26-5D17CE14748C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{752C0855-BF43-4B11-A00A-F772D735D49F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infrastructure", "src\Infrastructure\Infrastructure.xproj", "{4D4C2766-1B9D-4DD0-804D-45964234139E}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infrastructure.Dapper", "src\Extensions\Infrastructure.Dapper\Infrastructure.Dapper.xproj", "{C255F830-256C-4093-AA6E-CD07D92E6F4E}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infrastructure.NLog", "src\Extensions\Infrastructure.NLog\Infrastructure.NLog.xproj", "{25783D75-5B8D-42A7-BB70-F7529D434024}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infrastructure.Autofac", "src\Extensions\Infrastructure.Autofac\Infrastructure.Autofac.xproj", "{C92A1873-1F0B-4092-ADF9-DAD1179896E8}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infrastructure.JsonNet", "src\Extensions\Infrastructure.JsonNet\Infrastructure.JsonNet.xproj", "{B08DC80B-DFF4-4596-8363-804310753153}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Infrastructure.SeriLog", "src\Extensions\Infrastructure.SeriLog\Infrastructure.SeriLog.xproj", "{5665CF99-A6AF-4151-84B8-ED4C82822DD0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domains", "Domains", "{958FDF3B-6F32-4074-8E2C-BF5AA2D1D945}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MermaidLoft.Alchemy.BaseDomain", "src\Domains\MermaidLoft.Alchemy.BaseDomain\MermaidLoft.Alchemy.BaseDomain.xproj", "{48EBC926-1EE2-4902-8A10-7FADC0D69BE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MermaidLoft.Alchemy.QuickWeb", "src\MermaidLoft.Alchemy.QuickWeb\MermaidLoft.Alchemy.QuickWeb.csproj", "{E1663A6F-2859-4C98-BB26-5D17CE14748C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MermaidLoft.Alchemy.Common", "src\MermaidLoft.Alchemy.Common\MermaidLoft.Alchemy.Common.xproj", "{8A308071-A963-4219-A3BB-3088BA0B9E83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{4D4C2766-1B9D-4DD0-804D-45964234139E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Dapper", "src\Extensions\Infrastructure.Dapper\Infrastructure.Dapper.csproj", "{C255F830-256C-4093-AA6E-CD07D92E6F4E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.NLog", "src\Extensions\Infrastructure.NLog\Infrastructure.NLog.csproj", "{25783D75-5B8D-42A7-BB70-F7529D434024}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Autofac", "src\Extensions\Infrastructure.Autofac\Infrastructure.Autofac.csproj", "{C92A1873-1F0B-4092-ADF9-DAD1179896E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.JsonNet", "src\Extensions\Infrastructure.JsonNet\Infrastructure.JsonNet.csproj", "{B08DC80B-DFF4-4596-8363-804310753153}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.SeriLog", "src\Extensions\Infrastructure.SeriLog\Infrastructure.SeriLog.csproj", "{5665CF99-A6AF-4151-84B8-ED4C82822DD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MermaidLoft.Alchemy.BaseDomain", "src\Domains\MermaidLoft.Alchemy.BaseDomain\MermaidLoft.Alchemy.BaseDomain.csproj", "{48EBC926-1EE2-4902-8A10-7FADC0D69BE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MermaidLoft.Alchemy.Common", "src\MermaidLoft.Alchemy.Common\MermaidLoft.Alchemy.Common.csproj", "{8A308071-A963-4219-A3BB-3088BA0B9E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MermaidLoft.Alchemy.QuickStartConsole", "src\MermaidLoft.Alchemy.QuickStartConsole\MermaidLoft.Alchemy.QuickStartConsole.csproj", "{624A0A1C-DDD1-4AA1-8083-9F24C44F2FAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,20 +73,24 @@ Global
 		{8A308071-A963-4219-A3BB-3088BA0B9E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A308071-A963-4219-A3BB-3088BA0B9E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A308071-A963-4219-A3BB-3088BA0B9E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{624A0A1C-DDD1-4AA1-8083-9F24C44F2FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624A0A1C-DDD1-4AA1-8083-9F24C44F2FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624A0A1C-DDD1-4AA1-8083-9F24C44F2FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624A0A1C-DDD1-4AA1-8083-9F24C44F2FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E1663A6F-2859-4C98-BB26-5D17CE14748C} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
 		{752C0855-BF43-4B11-A00A-F772D735D49F} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
+		{958FDF3B-6F32-4074-8E2C-BF5AA2D1D945} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
+		{E1663A6F-2859-4C98-BB26-5D17CE14748C} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
 		{4D4C2766-1B9D-4DD0-804D-45964234139E} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
 		{C255F830-256C-4093-AA6E-CD07D92E6F4E} = {752C0855-BF43-4B11-A00A-F772D735D49F}
 		{25783D75-5B8D-42A7-BB70-F7529D434024} = {752C0855-BF43-4B11-A00A-F772D735D49F}
 		{C92A1873-1F0B-4092-ADF9-DAD1179896E8} = {752C0855-BF43-4B11-A00A-F772D735D49F}
 		{B08DC80B-DFF4-4596-8363-804310753153} = {752C0855-BF43-4B11-A00A-F772D735D49F}
 		{5665CF99-A6AF-4151-84B8-ED4C82822DD0} = {752C0855-BF43-4B11-A00A-F772D735D49F}
-		{958FDF3B-6F32-4074-8E2C-BF5AA2D1D945} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
 		{48EBC926-1EE2-4902-8A10-7FADC0D69BE6} = {958FDF3B-6F32-4074-8E2C-BF5AA2D1D945}
 		{8A308071-A963-4219-A3BB-3088BA0B9E83} = {8921B3AD-5166-4383-BDEA-DF9CB1837436}
 	EndGlobalSection
